@@ -6,7 +6,7 @@
 <title>新云 · 预算落图 ATLAS</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="vendor/leaflet.css">
-<link rel="stylesheet" href="styles-atlas.css?v=20261121l">
+<link rel="stylesheet" href="styles-atlas.css?v=20261122a">
 <style>
   .ai-explain{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:9px 16px;margin:10px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
   .ai-explain-head{display:contents}
@@ -71,6 +71,7 @@
         <button type="button" class="chip preset-chip" data-brief="乐园 500 万，暑期，地铁和公交">乐园 500</button>
       </div>
       <button id="aiBriefBtn" class="run" type="button">解析</button>
+      <span class="ai-progress" id="aiBriefProgress" role="progressbar" aria-label="AI 解析中" hidden><i></i></span>
       <span class="hint" id="aiBriefNote">说出行业、预算、档期、媒体，自动填下面的表；数字仍由引擎算。</span>
     </div>
     <div class="sentence s1">
@@ -133,6 +134,7 @@
     <div class="ai-explain-head">
       <span class="kicker">AI 解释 / WHY</span>
       <button class="run" id="aiExplainBtn" type="button">生成解释</button>
+      <span class="ai-progress" id="aiExplainProgress" role="progressbar" aria-label="AI 生成中" hidden><i></i></span>
       <span class="hint" id="aiExplainNote">AI 只解释取舍，不改数字。</span>
     </div>
     <p class="ai-explain-body" id="aiExplainBody">点“生成解释”，让 AI 用一段话说明为什么是这几条线、几块屏。</p>
@@ -236,7 +238,7 @@
   </footer>
 </main>
 
-<script src="data.js?v=20261121w"></script>
+<script src="data.js?v=20261121x"></script>
 <script src="tile-assets.js?v=20261121c"></script>
 <script src="map-assets.js"></script>
 <script src="map-network.js?v=20261121b"></script>
@@ -247,8 +249,8 @@
 <script src="vendor/leaflet.js"></script>
 <script src="app.js?v=20261121z8"></script>
 <script src="atlas.js?v=20261121l"></script>
-<script src="brief.js?v=20261121a" data-ai=""></script>
-<script src="ai-explain.js?v=20261121c" data-ai=""></script>
+<script src="brief.js?v=20261122b" data-ai=""></script>
+<script src="ai-explain.js?v=20261122c" data-ai=""></script>
 <script>
 document.addEventListener("click", function (e) {
   var chip = e.target.closest(".preset-chip");

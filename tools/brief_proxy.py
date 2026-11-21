@@ -4,7 +4,7 @@
 
 The static HTML never holds an API key. Run this on the demo machine:
 
-  python -I tools/brief_proxy.py --port 8790
+  python -I tools/brief_proxy.py --port 8791
 
 Then set the script tag in src/index-atlas.html:
 
@@ -31,7 +31,7 @@ import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.request import Request, build_opener, ProxyHandler
 
 ROOT = Path(__file__).resolve().parent.parent
 CFG = ROOT / "config.local.json"
@@ -41,18 +41,18 @@ SYSTEM_PROMPT = """你是户外媒体提案的 brief 参数解析器。只输出
 
 字段与允许值：
 - industryId: bank-insurance | private-hospital | food-beverage | health-supplement | theme-park
-- budget: 数字，单位元，1000000–5000000
-- weeks: 4 | 6
+- budget: 数字，单位元，1000000–5000000。超出范围就省略，不要截断、四舍五入或猜。
+- weeks: 4 | 6。只有文本明确写“4周”或“6周”才输出；写 2 周、3 周、8 周等不支持的值时，省略 weeks，不要猜。
 - windowId: kaimenhong（开门红/春节/Q1）| q2（春季/4-5月/Q2）| summer（暑期/7-8月）| midautumn（中秋国庆/9-10月）
 - media: bus | metro | both
-- radius: 1000 | 3000 | 5000（米）
-- discount: 1 | 0.92
+- radius: 1000 | 3000 | 5000（米）。只接受 1km / 3km / 5km；其他半径省略。
+- discount: 1 | 0.92。只有文本明确写“92折/0.92/九二折”或“刊例/不打折/1.0”才输出。
 
 示例：
-用户：银行 200 万，2027 开门红，陆家嘴 3km，地铁为主
+用户：银行 200 万，2027 开门红，3km，地铁+公交
 输出：{"industryId":"bank-insurance","budget":2000000,"windowId":"kaimenhong","radius":3000,"media":"both"}
 
-用户：医院 200 万 Q1 地铁出入口
+用户：医院 200 万 Q1 只要地铁出入口
 输出：{"industryId":"private-hospital","budget":2000000,"windowId":"kaimenhong","media":"metro"}
 
 用户：乐园 500 万 暑期 公交加地铁
@@ -68,7 +68,7 @@ EXPLAIN_PROMPT = """你是户外媒体公司的策略总监。下面是一份已
 1) 为什么选这个锚点和半径；
 2) 为什么地铁/公交是这个主次；
 3) 为什么是这些线路/口。
-只使用 JSON 里出现的信息；不要写任何金额、触达人次或新的数字；不要承诺效果；不要编客户、案例或媒体资源。
+只使用 JSON 里出现的信息；不要写任何数字，包括金额、口数、车辆数、线路数、触达人次、公里数、百分比；不要承诺效果；不要编客户、案例或媒体资源。所有数字由页面显示，解释只讲取舍。
 语气像在给客户当面讲，不要分点，不要 Markdown。只输出 JSON：{"explanation":"..."}"""
 
 
@@ -117,32 +117,49 @@ def extract_json(text):
     raise ValueError("model did not return JSON")
 
 
-def call_llm(ai, system, user, max_tokens=300, temperature=0):
+def call_llm(ai, system, user, max_tokens=700, temperature=0):
     base = str(ai["baseUrl"]).rstrip("/")
     url = base if base.endswith("/chat/completions") else base + "/chat/completions"
-    payload = {
-        "model": ai["model"],
-        "temperature": temperature,
-        "max_tokens": max_tokens,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-        "response_format": {"type": "json_object"},
-    }
-    req = Request(
-        url,
-        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + str(ai["apiKey"]),
-        },
-        method="POST",
-    )
-    with urlopen(req, timeout=20) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
-    content = (((data.get("choices") or [{}])[0].get("message") or {}).get("content") or "")
-    return extract_json(content)
+    opener = build_opener(ProxyHandler({}))  # dead local proxy env must not intercept
+
+    def once(mt):
+        payload = {
+            "model": ai["model"],
+            "temperature": temperature,
+            "max_tokens": mt,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            "response_format": {"type": "json_object"},
+        }
+        req = Request(
+            url,
+            data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + str(ai["apiKey"]),
+            },
+            method="POST",
+        )
+        with opener.open(req, timeout=45) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+
+    last_err = None
+    for attempt in range(2):
+        mt = max_tokens if attempt == 0 else min(max(max_tokens * 2, 1200), 2400)
+        data = once(mt)
+        choice = (data.get("choices") or [{}])[0]
+        content = ((choice.get("message") or {}).get("content") or "").strip()
+        if not content:
+            last_err = ValueError("model returned empty content (finish_reason=%s)" % choice.get("finish_reason"))
+            continue
+        try:
+            return extract_json(content)
+        except Exception as exc:
+            last_err = exc
+            continue
+    raise last_err or ValueError("model call failed")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -189,7 +206,7 @@ class Handler(BaseHTTPRequestHandler):
                 if not text:
                     self._send(400, {"error": "text is required"})
                     return
-                brief = call_llm(ai, SYSTEM_PROMPT, text, max_tokens=300, temperature=0)
+                brief = call_llm(ai, SYSTEM_PROMPT, text, max_tokens=700, temperature=0)
                 if isinstance(brief, dict) and set(brief.keys()) == {"brief"}:
                     brief = brief["brief"]
                 self._send(200, {"brief": brief, "source": "llm"})
@@ -199,7 +216,7 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(400, {"error": "plan is required"})
                 return
             user = json.dumps(plan, ensure_ascii=False)
-            result = call_llm(ai, EXPLAIN_PROMPT, user, max_tokens=500, temperature=0.2)
+            result = call_llm(ai, EXPLAIN_PROMPT, user, max_tokens=1800, temperature=0)
             explanation = ""
             if isinstance(result, dict):
                 explanation = str(result.get("explanation") or "").strip()
@@ -216,7 +233,7 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     global CFG
     ap = argparse.ArgumentParser()
-    ap.add_argument("--port", type=int, default=8790)
+    ap.add_argument("--port", type=int, default=8791)
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--config", default=str(CFG), help="path to config.local.json")
     args = ap.parse_args()

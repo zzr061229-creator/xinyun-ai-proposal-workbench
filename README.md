@@ -11,46 +11,30 @@
 
 ```text
 新云AI提案工作台/
-├─ README.md                 # 本文件
-├─ HANDOFF.md                # ★ 项目交接：边界 / 数据契约 / 预算真相 / 演示
-├─ docs/                     # 分析、介绍页、提交文档
-│  ├─ 00_项目分析.md          # 赛题拆解 / 评分反推 / 技术方案 / 48h 计划
-│  ├─ 开发任务书.md            # ★ P0 功能与验收标准（DS Harness 必读）
-│  ├─ 01_项目介绍.html        # 单文件项目介绍页（可离线打开）
-│  ├─ 项目介绍_通俗版.html     # 通俗讲解版
-│  ├─ 数据接入说明.md          # 红豆 API / 大数据接口实测与刷新策略
-│  ├─ 银行数据包_陆家嘴.md     # ★ 银行 P0：锚点/人流/画像/容量
-│  ├─ 02_项目体检报告.md       # 数据口径 / 预算硬伤 / P0 阻断项
-│  ├─ DS_HARNESS_启动.md      # API Key 配置 + 开发任务启动命令
-│  └─ 一页纸_模板.md          # 提交物「一页纸」待填模板
-├─ data/                     # 结构化数据（进 Git）
-│  ├─ README.md               # 数据说明 / 重新生成命令
-│  ├─ bus_inventory_2027Q2.csv
-│  ├─ metro_inventory_2027Q2.csv
-│  ├─ inventory_summary.json
-│  ├─ inventory_live.json     # CLI 实时拉取结果（431/861）
-│  ├─ manifest.json           # 数据索引（库存 + 覆盖）
-│  ├─ bus_aliases.json        # 覆盖公交名 → 库存线路名
-│  ├─ metro_station_map.json  # 覆盖站点 → 库存出入口
-│  ├─ app_data.json           # ★ 给原型的单文件数据包（库存+配置+覆盖）
-│  ├─ config/                 # pricing / contract / schedule / anchors / industries / footfall
-│  ├─ reports/                # qa / capacity / coverage_join 报告
-│  ├─ coverage/               # 10 个锚点，1/3km（迪士尼 5km；浦发 3 支行各 1km）
-│  ├─ footfall/               # 平台 2023-05 人流/画像快照（8 个点位）
-│  ├─ geo/                    # 线路折线/站点/地铁口坐标（8 个点位）
-│  └─ raw/                    # 红豆原始导出 xlsx（不进 Git）
-├─ materials/                # 赛题资料包 00–08（不进 Git）
-├─ extracted/                # 资料包文本/页面图（不进 Git）
-├─ tools/                    # 数据脚本
-│  ├─ extract_docs.py         # docx/xlsx/pptx/pdf → txt
-│  ├─ parse_inventory.py      # 红豆 xlsx → CSV + 汇总
-│  ├─ fetch_hongdou.py        # 红豆 API CLI（分页 + 去重 + 补漏）
-│  ├─ quote_reality.py        # 预算现实校验
-│  ├─ build_manifest.py       # 生成 data/manifest.json
-│  ├─ build_links.py          # 生成 bus_aliases / metro_station_map
-│  ├─ qa_data.py              # 库存/join/预算/证据 QA
-│  └─ build_app_data.py       # 生成 data/app_data.json
-└─ src/                      # ★ 原型代码（DS Harness 负责）
+├─ README.md / HANDOFF.md / CLAUDE.md
+├─ src/
+│  ├─ index-atlas.html        # ★ 演示入口
+│  ├─ index.html / index-b2.html  # 旧设计备份，不作为演示入口
+│  ├─ styles-atlas.css / app.js / engine.js / atlas.js
+│  ├─ brief.js / ai-explain.js / realmap.js / map.js
+│  ├─ map-network.js / map-citywide.js / map-assets.js
+│  ├─ data.js / tile-assets.js（生成物）
+│  ├─ vendor/                 # Leaflet 本地文件
+│  ├─ assets/tiles/           # z12–z16 离线瓦片（约 44MB，zip 不含）
+│  ├─ assets/map-*.png|jpg    # 静态底图
+│  ├─ build_data.py / build_tiles.py / build_citywide_map.py
+│  └─ test_engine.js          # 自测：node src/test_engine.js
+├─ data/
+│  ├─ config/                 # industries / anchors / bundles / windows / briefs / pricing
+│  ├─ coverage/               # 10 个锚点覆盖（1/3km，迪士尼 5km）
+│  ├─ footfall/               # 2023-05 人流（5 行业 + 浦发 3 支行）
+│  ├─ geo/                    # 公交折线 / 地铁口坐标（8 个点位）
+│  ├─ inventory_*.json        # 四档期库存快照
+│  └─ reports/                # QA / 容量 / join 报告
+├─ docs/                      # 分析、路演、一页纸、合规、档期、campaign
+├─ docs/submission/           # 提交包（一页纸 PDF / 截图 / zip）
+├─ tools/                     # 红豆/数据/QA 脚本
+└─ materials/ extracted/ data/raw/   # 不进 Git
 ```
 
 ## 数据快照
@@ -84,11 +68,11 @@
 ## 当前状态
 
 - [x] 红豆公交 431 / 地铁 861 真实库存导出；四档期快照（开门红/春季/暑期/中秋国庆）
-- [x] 大数据覆盖 10 个锚点；5 个核心锚点 2023-05 人流；139 条公交几何/人流；24 个在库站坐标
+- [x] 大数据覆盖 10 个锚点；5 个行业 / 浦发 3 支行 2023-05 人流；139 条公交几何/人流；24 个在库站坐标
 - [x] 五行业配置：银行 3 支行、食品 3 商圈、乐园 4 枢纽 + 24 站、医院/保健单锚点
 - [x] ATLAS 前端：预算条、地图联动、客户/销售双视图、CSV/HTML 导出、离线瓦片
 - [x] QA：`node src/test_engine.js` 2208 项 ALL PASS；`python tools/qa_data.py` 33 PASS / 2 WARN / 0 FAIL
-- [x] GitHub Pages 已上线全城版（远端 `1cca547`，Pages 从 master 发布）
+- [x] GitHub Pages 已上线全城版（远端 `2179a43`，Pages 从 master 发布）
 - [ ] 团队名/分工表等【待填】占位
 - [ ] `data/app_data.json` 仍是旧单文件包；前端实际用 `src/data.js`，不影响演示
 
@@ -109,7 +93,14 @@ python src/build_tiles.py       # 下载/补齐离线瓦片（需要网络）
 python src/build_citywide_map.py # 生成全城静态底图
 ```
 
-> `materials/`、`extracted/`、`data/raw/` 体积较大，默认不纳入 Git；`data/*.csv` 与 `inventory_summary.json` 纳入。
+自测（交付前跑）：
+
+```bash
+node src/test_engine.js   # 引擎/报价/排期，当前 2208 项 ALL PASS
+python tools/qa_data.py   # 库存/覆盖/join，当前 33 PASS / 2 WARN / 0 FAIL
+```
+
+> `materials/`、`extracted/`、`data/raw/` 体积较大，默认不纳入 Git；`data/*.csv` 与 `inventory_summary.json` 纳入。`src/assets/tiles/` 约 44MB，保留用于离线演示，但不打进提交 zip。
 
 ## 当前入口
 

@@ -163,7 +163,7 @@
 
   function parseWithAI(text, endpoint) {
     var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 4500) : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 18000) : null;
     return fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -220,7 +220,9 @@
     }
     var local = parseLocal(text);
     var endpoint = aiEndpoint();
+    var prog = document.getElementById("aiBriefProgress");
     btn.disabled = true;
+    if (prog) prog.hidden = !endpoint;
     setNote("", endpoint ? "AI 解析中…" : "规则解析中…");
 
     var chain = endpoint
@@ -238,12 +240,13 @@
         return;
       }
       var applied = App.applyBrief(brief) || {};
-      var label = res.source === "ai" ? "AI 解析" : (res.source === "local-fallback" ? "AI 不可用，规则解析" : "规则解析（离线）");
+      var label = res.source === "ai" ? "AI 解析（组委会模型）" : (res.source === "local-fallback" ? "AI 不可用，规则解析" : "规则解析（离线）");
       setNote("ok", label + "：" + describe(applied) + "。数字由引擎重算，AI 不改数。");
     }).catch(function (err) {
       setNote("err", "解析失败：" + (err && err.message ? err.message : String(err)));
     }).finally(function () {
       btn.disabled = false;
+      if (prog) prog.hidden = true;
     });
   }
 
@@ -255,7 +258,7 @@
     input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") { e.preventDefault(); run(); }
     });
-    if (aiEndpoint()) setNote("", "AI 模式已配置；离线时自动回退规则解析。");
+    if (aiEndpoint()) setNote("", "AI 模式已配置（组委会模型）；离线时自动回退规则解析。");
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

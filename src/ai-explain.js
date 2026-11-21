@@ -45,7 +45,7 @@
     var p = s.plan;
     var sm = p.summary || {};
     var st = p.stats || {};
-    var items = (p.items || []).slice(0, 12).map(function (x) {
+    var items = (p.items || []).slice(0, 6).map(function (x) {
       return {
         media: x.media === "metro" ? "地铁口" : "公交线路",
         name: x.media === "metro" ? (x.station + " " + x.exit) : x.name,
@@ -83,7 +83,7 @@
         availableBusFree: st.availableBusFree,
         availableMetroFree: st.availableMetroFree
       },
-      warnings: (p.warnings || []).slice(0, 4),
+      warnings: (p.warnings || []).slice(0, 3),
       items: items
     };
   }
@@ -142,7 +142,7 @@
 
   function requestExplain(payload, url) {
     var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 12000) : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 45000) : null;
     return fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -167,11 +167,13 @@
       return;
     }
     var url = endpoint();
+    var prog = document.getElementById("aiExplainProgress");
     var token = ++runToken;
     var sig = planSignature();
     lastSig = sig;
     btn.disabled = true;
     btn.textContent = "生成中…";
+    if (prog) prog.hidden = !url;
     setNote(url ? "AI 正在读这份方案…" : "未配置 AI，使用模板解释。");
 
     var chain = url
@@ -186,7 +188,7 @@
     chain.then(function (res) {
       if (token !== runToken || sig !== planSignature()) return;
       setBody(res.text);
-      if (res.source === "ai") setNote("AI 生成 · 只解释取舍，数字以页面为准");
+      if (res.source === "ai") setNote("AI 生成（组委会模型）· 只解释取舍，数字以页面为准");
       else if (res.source === "fallback") setNote("AI 不可用，已用模板解释");
       else setNote("模板解释（未配置 AI）");
     }).catch(function (err) {
@@ -197,6 +199,7 @@
       if (token !== runToken) return;
       btn.disabled = false;
       btn.textContent = "重新生成";
+      if (prog) prog.hidden = true;
     });
   }
 
@@ -206,7 +209,7 @@
     btn.addEventListener("click", run);
     if (typeof App.onRender === "function") App.onRender(invalidateIfChanged);
     invalidateIfChanged();
-    if (endpoint()) setNote("AI 已配置；点按钮生成解释。");
+    if (endpoint()) setNote("AI 已配置（组委会模型）；点按钮生成解释。");
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -448,3 +448,9 @@ body{font-variant-numeric:tabular-nums}
 .ai-brief .hint.ok{opacity:.95}
 .ai-brief .hint.err{color:var(--warn);opacity:1}
 .ai-brief .hint b{font-family:var(--num);font-weight:700}
+
+.ai-progress{display:inline-block;flex:0 0 auto;width:54px;height:3px;border-radius:999px;background:var(--line2);overflow:hidden;vertical-align:middle}
+.ai-progress[hidden]{display:none}
+.ai-progress i{display:block;width:42%;height:100%;border-radius:999px;background:var(--metro);animation:ai-slide 1.15s ease-in-out infinite}
+@keyframes ai-slide{0%{transform:translateX(-120%)}100%{transform:translateX(300%)}}
+@media (prefers-reduced-motion:reduce){.ai-progress i{animation-duration:2.4s}}

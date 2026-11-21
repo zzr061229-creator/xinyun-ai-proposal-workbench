@@ -5,6 +5,42 @@
 
 ---
 
+## 0. 当前接入：组委会模型（2026-11-22）
+
+本机已接入 B1X 发放的比赛模型，AI 解析与 AI 解释都走它：
+
+| 项 | 值 |
+|---|---|
+| 模型 | `deepseek-v4.1-flash-1017` |
+| OpenAI 兼容地址 | `https://token.b1x.work/v1` |
+| 密钥 | 在 `config.local.json` 的 `ai.apiKey`（已 gitignore，不提交） |
+| 额度 | 比赛专用余额，到期 2026-11-22 23:00（北京时间） |
+
+启动（端口 8791 在本机可用；8790 被系统占用）：
+
+```bash
+python -I tools/brief_proxy.py --port 8791
+```
+
+或双击 `tools/start_ai_demo.bat`：会同时起代理、静态服务（8788）并打开带 `?ai=1` 的页面。
+
+打开：
+
+```text
+http://127.0.0.1:8788/src/index-atlas.html?ai=1
+```
+
+首屏应显示「AI 模式已配置（组委会模型）」；输入一句话点「解析」，或点「生成解释」，结果会标注「AI 解析（组委会模型）」/「AI 生成（组委会模型）」。
+
+注意：
+
+- 密钥只在本地代理里，不进前端、不进 Git；`config.local.json` 不要提交。
+- 线上 Pages 是静态站，没有代理；不加 `?ai=1` 或换别人的机器时，自动回退规则解析/模板解释，页面不会坏。
+- 比赛密钥到期后 AI 自动不可用，仍可用规则解析与模板解释。
+- 模型是 reasoning 模型，会先输出 `reasoning_content`；代理已把 `max_tokens` 调高并做一次重试，正常 2–15 秒。
+
+---
+
 ## 1. 现在能做什么
 
 在 ATLAS 首屏输入一句中文，例如：
@@ -38,7 +74,7 @@
 
 ## 3. 接在线大模型（可选）
 
-> 当前机器状态：`config.local.json` 的 `ai.apiKey` 为空，环境里也没有 `DEEPSEEK_API_KEY`；所以现在默认走规则/模板。填入 key 并重启代理后，同一套代码就会走 DeepSeek，不需要改页面。
+> 当前机器状态：已按第 0 节接入组委会模型；`config.local.json` 的 `ai` 指向 `https://token.b1x.work/v1`，密钥不入 Git。代理未启动时仍走规则/模板。
 
 ### 3.1 配置 key（不进 Git）
 
@@ -47,9 +83,9 @@
 ```json
 {
   "ai": {
-    "baseUrl": "https://api.deepseek.com/v1",
-    "apiKey": "sk-你的key",
-    "model": "deepseek-chat"
+    "baseUrl": "https://token.b1x.work/v1",
+    "apiKey": "sk-你的比赛密钥",
+    "model": "deepseek-v4.1-flash-1017"
   }
 }
 ```
@@ -177,19 +213,19 @@ POST /api/explain       {plan}  → {explanation:"..."}
 - 或分别改 `brief.js` / `ai-explain.js` 的 `data-ai`。
 - 也可以只开其中一个：只配解析、不配解释，解释会走模板。
 
-### DeepSeek 配置
+### 组委会模型配置（当前）
 
-`config.local.json` 已预留（apiKey 为空）：
+`config.local.json` 已配置（密钥不入 Git）：
 
 ```json
 "ai": {
-  "baseUrl": "https://api.deepseek.com/v1",
-  "apiKey": "sk-你的key",
-  "model": "deepseek-chat"
+  "baseUrl": "https://token.b1x.work/v1",
+  "apiKey": "sk-你的比赛密钥",
+  "model": "deepseek-v4.1-flash-1017"
 }
 ```
 
-也支持环境变量（不用改文件）：
+密钥到期后（2026-11-22 23:00）AI 自动不可用，回退规则/模板。也支持环境变量（不用改文件）：
 
 ```bash
 export DEEPSEEK_API_KEY=sk-...
