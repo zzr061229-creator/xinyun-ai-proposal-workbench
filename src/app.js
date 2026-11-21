@@ -858,11 +858,31 @@ function syncControls() {
     if (!state.leaflet.getZoom()) state.leaflet.setView(center, leafletZoomFor(radius));
   }
 
+  // A slow network can initialize the map before its container has its final
+  // size; Leaflet then fits a 0×0 box and locks to max zoom. Refit once the
+  // real size is known (and on later resizes).
+  function refitMapToSize() {
+    if (!state.leaflet || !state.lastMapSample) return;
+    var size = state.leaflet.getSize();
+    if (!size.x || !size.y) return;
+    var last = state.lastFitSize;
+    if (last && Math.abs(last.x - size.x) < 24 && Math.abs(last.y - size.y) < 24) return;
+    state.lastFitSize = { x: size.x, y: size.y };
+    state.mapZoom = null;
+    var sm = state.lastMapSample;
+    frameMap([sm.center.lat, sm.center.lng], sm.radius, sm.anchors);
+    state.mapKey = sm.mapKey || state.mapKey;
+  }
+
   function renderLeafletMap(sample) {
     if (!window.L) return;
     var center = [Number(sample.center.lat), Number(sample.center.lng)];
     var anchors = (sample.anchors && sample.anchors.length) ? sample.anchors.slice() : [];
     if (!anchors.length) anchors = [{ lat: center[0], lng: center[1], radius: sample.radius, label: sample.anchorLabel }];
+    state.lastMapSample = {
+      center: sample.center, radius: sample.radius, anchors: anchors,
+      mapKey: sample.mapKey || (sample.activeAnchor + "|" + sample.radius)
+    };
     var ot = offlineTileMeta();
     var useOfflineTiles = state.mapMode !== "online" && !!ot;
     var url = useOfflineTiles ? ot.tileRoot + "/{z}/{x}/{y}.png" : "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -900,6 +920,10 @@ function syncControls() {
       state.leafletLayers = window.L.layerGroup().addTo(state.leaflet);
       state.leaflet.on("zoomend", function () { state.mapZoom = state.leaflet.getZoom(); });
       attachTiles();
+      if (window.ResizeObserver && !state.mapRO) {
+        state.mapRO = new ResizeObserver(function () { setTimeout(refitMapToSize, 0); });
+        state.mapRO.observe(document.getElementById("map"));
+      }
     } else {
       if (state.tileUrl !== url) {
         state.leaflet.setMinZoom(minZ);
@@ -1006,8 +1030,11 @@ function syncControls() {
     });
 
     setTimeout(function () {
-      if (state.leaflet) state.leaflet.invalidateSize();
-    }, 0);
+      if (state.leaflet) {
+        state.leaflet.invalidateSize();
+        refitMapToSize();
+      }
+    }, 350);
   }
 
   function mapNodes() {
