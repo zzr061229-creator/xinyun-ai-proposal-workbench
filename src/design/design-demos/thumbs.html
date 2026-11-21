@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六候选缩略图 · 新云提案工作台</title>
+<style>
+  :root{
+    --ink:#111; --paper:#F4F1EA; --muted:#6E6A62;
+    --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    --serif:"Songti SC","SimSun",Georgia,serif;
+    --mono:"JetBrains Mono","Consolas","SFMono-Regular",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#0C0E0F;color:#E8E6E0;font-family:var(--sans);padding:28px 32px 40px}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #2A3035;padding-bottom:12px;margin-bottom:18px}
+  .head h1{font-size:20px;margin:0;letter-spacing:.02em;font-weight:800}
+  .head span{font-family:var(--mono);font-size:10px;color:#8B979F;letter-spacing:.12em;text-transform:uppercase}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1520px}
+  @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .cell{display:flex;flex-direction:column;gap:8px}
+  .cap{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#8B979F;text-transform:uppercase}
+  .cap b{color:#E8E6E0;font-weight:600}
+  .thumb{aspect-ratio:480/300;width:100%;position:relative;overflow:hidden;border:1px solid #2A3035;background:#111;font-size:10px}
+
+  /* A — transit control */
+  .a{background:#080A0D;color:#E8E6E0;font-family:var(--sans)}
+  .a .bar{height:18px;border-bottom:1px solid #222C33;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font:8px var(--mono);color:#8B979F;letter-spacing:.06em}
+  .a .body{display:grid;grid-template-columns:86px 1fr 92px;height:calc(100% - 18px)}
+  .a .rail{border-right:1px solid #222C33;padding:7px 7px;display:flex;flex-direction:column;gap:6px}
+  .a .lab{font:7px var(--mono);color:#8B979F;letter-spacing:.08em}
+  .a .val{font:700 15px var(--mono);color:#F2F0EF;line-height:1}
+  .a .scr{height:4px;background:#1A2228;border-radius:2px;position:relative;margin-top:2px}
+  .a .scr i{position:absolute;left:0;top:0;bottom:0;width:40%;background:#FF5A3C}
+  .a .map{position:relative;overflow:hidden}
+  .a .dot{position:absolute;width:4px;height:4px;border-radius:50%;background:#FF5A3C;box-shadow:0 0 8px #FF5A3C88}
+  .a .cand{position:absolute;width:3px;height:3px;border-radius:50%;background:#60717A;opacity:.7}
+  .a .ring{position:absolute;left:26%;top:20%;width:64%;aspect-ratio:1;border:1px dashed #FFB27A66;border-radius:50%}
+  .a .ring2{position:absolute;left:38%;top:32%;width:40%;aspect-ratio:1;border:1px solid #FFB27A33;border-radius:50%}
+  .a .q{border-left:1px solid #222C33;padding:8px;display:flex;flex-direction:column;justify-content:space-between}
+  .a .net{font:700 24px var(--mono);letter-spacing:-.04em;color:#FFB27A;line-height:1}
+  .a .qrow{display:flex;justify-content:space-between;font:7px var(--mono);color:#8B979F;border-top:1px solid #1A2228;padding-top:3px}
+  .a .btn{background:#FF5A3C;color:#0B0D14;font:700 8px var(--sans);padding:5px 6px;text-align:center;letter-spacing:.04em}
+
+  /* B — field dossier */
+  .b{background:#FAF8F2;color:#151515;padding:10px 12px;font-family:var(--sans)}
+  .b .mast{display:flex;justify-content:space-between;border-bottom:2px solid #151515;padding-bottom:4px;font:8px var(--mono);letter-spacing:.08em}
+  .b h3{font-family:var(--serif);font-size:25px;line-height:1.02;margin:9px 0 4px;letter-spacing:-.03em}
+  .b h3 em{font-style:normal;background:linear-gradient(transparent 62%, #F2C94C 62%)}
+  .b .deck{font-size:8px;line-height:1.45;color:#4A463F;max-width:92%}
+  .b .cols{display:grid;grid-template-columns:1.35fr .9fr;gap:10px;margin-top:7px}
+  .b .data{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid #151515;border-left:2px solid #151515}
+  .b .data div{border-right:2px solid #151515;border-bottom:2px solid #151515;padding:3px 4px}
+  .b .data b{display:block;font:700 13px var(--mono);line-height:1.1}
+  .b .data span{font:7px var(--mono);color:#6E6A62;letter-spacing:.04em}
+  .b .data .hi{background:#F2C94C}
+  .b .mapbox{border:1px solid #151515;position:relative;height:112px;overflow:hidden}
+  .b .route{position:absolute;inset:8px;background:
+    linear-gradient(90deg,transparent 49%,#D8D2C4 49%,#D8D2C4 51%,transparent 51%),
+    linear-gradient(0deg,transparent 49%,#D8D2C4 49%,#D8D2C4 51%,transparent 51%);
+    opacity:.45}
+  .b .pin{position:absolute;width:9px;height:9px;border:1.5px solid #C8443A;border-radius:50%;background:#FAF8F2;color:#C8443A;font:6px var(--mono);display:flex;align-items:center;justify-content:center}
+  .b .ann{position:absolute;font:7px var(--mono);color:#2F5FD0;border-bottom:1px solid #2F5FD0;padding-bottom:1px}
+  .b .tbl{margin-top:7px;border-top:2px solid #151515;font:7px var(--mono)}
+  .b .tr{display:grid;grid-template-columns:1.2fr .5fr .4fr .7fr .7fr;gap:4px;border-bottom:1px solid #D8D2C4;padding:2px 0}
+  .b .th{color:#6E6A62;letter-spacing:.04em}
+
+  /* C — municipal modern */
+  .c{background:#F1EAD9;color:#171717;padding:10px 12px;font-family:var(--sans);position:relative;overflow:hidden}
+  .c .geo{position:absolute;right:-22px;top:-30px;width:150px;height:150px;border-radius:50%;background:#D9381E}
+  .c .geo:after{content:"";position:absolute;left:-46px;top:60px;width:92px;height:92px;border-radius:50%;background:#E0A93B}
+  .c .geo2{position:absolute;left:-30px;bottom:-46px;width:120px;height:120px;border-radius:50%;background:#2E5D73;opacity:.9}
+  .c .top{position:relative;display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #171717;padding-bottom:5px}
+  .c .vt{writing-mode:vertical-rl;font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.12em;line-height:1.05}
+  .c h3{font-family:var(--serif);font-size:28px;line-height:.95;margin:0;letter-spacing:-.04em;position:relative;z-index:1}
+  .c .meta{font:7px var(--mono);letter-spacing:.06em;margin-top:3px}
+  .c .body{position:relative;display:grid;grid-template-columns:70px 1fr 86px;gap:8px;margin-top:8px}
+  .c .vlab{writing-mode:vertical-rl;font:7px var(--mono);letter-spacing:.14em;color:#6E6A62}
+  .c .map{height:104px;border:1px solid #171717;position:relative;overflow:hidden;background:#F7F2E6}
+  .c .arc{position:absolute;left:18%;top:4%;width:70%;aspect-ratio:1;border:1.5px solid #D9381E;border-radius:50%;border-left-color:transparent;border-bottom-color:transparent;transform:rotate(12deg)}
+  .c .arc2{position:absolute;left:30%;top:18%;width:46%;aspect-ratio:1;border:1px solid #2E5D73;border-radius:50%;border-right-color:transparent;border-top-color:transparent}
+  .c .pt{position:absolute;width:5px;height:5px;background:#D9381E;border-radius:50%}
+  .c .pt.s{width:7px;height:7px;background:#171717;border:1px solid #F1EAD9}
+  .c .ledger{font:7px var(--mono)}
+  .c .lr{display:flex;justify-content:space-between;border-bottom:1px solid #C9BFA9;padding:2px 0}
+  .c .lr b{font-weight:600}
+  .c .band{position:absolute;left:0;right:0;bottom:0;background:#D9381E;color:#F1EAD9;font:7px var(--mono);letter-spacing:.08em;padding:4px 12px;display:flex;justify-content:space-between}
+
+  /* D — Vignelli */
+  .d{background:#fff;color:#111;padding:10px 12px;font-family:Arial,Helvetica,sans-serif}
+  .d .mast{display:flex;justify-content:space-between;border-bottom:4px solid #D22;padding-bottom:3px;font:8px Arial;letter-spacing:.06em}
+  .d h3{font-size:22px;line-height:.95;margin:8px 0 3px;letter-spacing:-.03em}
+  .d .route{position:relative;height:120px;margin-top:6px;border:1px solid #ddd}
+  .d .line{position:absolute;background:#D22;height:3px;transform-origin:left center}
+  .d .stop{position:absolute;width:10px;height:10px;border:3px solid #D22;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
+  .d .stop.s{background:#111;border-color:#111}
+  .d .lbl{position:absolute;font:6px Arial;transform:translate(-50%,8px);white-space:nowrap}
+  .d .foot{display:flex;justify-content:space-between;font:7px Arial;border-top:1px solid #111;margin-top:6px;padding-top:3px}
+
+  /* E — terminal */
+  .e{background:#0B0D14;color:#F2F0EF;padding:12px;font-family:var(--mono)}
+  .e .prompt{font-size:8px;color:#64FFDA;letter-spacing:.03em;line-height:1.7}
+  .e .prompt b{color:#F2F0EF;font-weight:400}
+  .e .out{margin-top:8px;font-size:7px;color:#8892B0;line-height:1.8;border-left:1px solid #64FFDA;padding-left:8px}
+  .e .big{font:700 30px var(--mono);letter-spacing:-.05em;color:#F2F0EF;margin-top:6px}
+  .e .big small{font-size:10px;color:#64FFDA}
+  .e .cube{position:absolute;right:18px;bottom:18px;width:54px;height:54px;transform:rotateX(55deg) rotateZ(45deg);background:#151C22;border:1px solid #64FFDA55;box-shadow:10px 10px 0 #64FFDA11}
+
+  /* F — shanghai deco */
+  .f{background:#17352F;color:#F1EAD9;padding:12px 14px;position:relative;overflow:hidden}
+  .f .fan{position:absolute;right:-30px;top:-40px;width:190px;height:190px;border-radius:50%;
+    background:repeating-conic-gradient(from 0deg,#C9A24A 0deg 4deg,transparent 4deg 12deg);opacity:.65}
+  .f .fan2{position:absolute;right:10px;top:8px;width:110px;height:110px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#9E2A1D 0deg 7deg,transparent 7deg 18deg);opacity:.7}
+  .f .frame{position:absolute;inset:7px;border:1px solid #C9A24A;pointer-events:none}
+  .f .kicker{font:8px var(--mono);letter-spacing:.18em;color:#C9A24A}
+  .f h3{font-family:var(--serif);font-size:29px;line-height:.95;margin:8px 0 4px;letter-spacing:-.03em;position:relative;z-index:1}
+  .f .sub{font:8px var(--sans);color:#D8CBB0;max-width:66%;line-height:1.5}
+  .f .cal{position:absolute;right:18px;bottom:20px;width:64px;border:1px solid #C9A24A;background:#0F2621;padding:4px;font:6px var(--mono);color:#D8CBB0}
+  .f .cal b{display:block;font:700 13px var(--mono);color:#F1EAD9;margin-bottom:2px}
+  .f .bottom{position:absolute;left:0;right:0;bottom:0;background:#9E2A1D;color:#F1EAD9;font:7px var(--mono);letter-spacing:.1em;padding:4px 14px}
+</style>
+</head>
+<body>
+<div class="head"><h1>六候选 · 新云提案工作台</h1><span>REAL PLAN / 200万 · 6周 · 3口+11辆 · 195.2万</span></div>
+<div class="grid">
+
+  <div class="cell">
+    <div class="cap"><span><b>A</b> TRANSIT CONTROL / 调度台</span><span>Bloomberg × Terminal-Core</span></div>
+    <div class="thumb a">
+      <div class="bar"><span>新云 / FLIGHT DECK</span><span>● SNAPSHOT 11:31</span></div>
+      <div class="body">
+        <div class="rail">
+          <div class="lab">BUDGET</div><div class="val">200<small>万</small></div><div class="scr"><i></i></div>
+          <div class="lab">MEDIA</div><div class="val" style="font-size:9px">地铁 + 公交</div>
+          <div class="lab">WEEKS</div><div class="val">06</div>
+          <div class="btn">生成 / RUN</div>
+        </div>
+        <div class="map">
+          <div class="ring"></div><div class="ring2"></div>
+          <div class="dot" style="left:48%;top:38%"></div>
+          <div class="dot" style="left:60%;top:30%"></div>
+          <div class="dot" style="left:38%;top:55%"></div>
+          <div class="cand" style="left:30%;top:62%"></div><div class="cand" style="left:66%;top:44%"></div><div class="cand" style="left:54%;top:66%"></div><div class="cand" style="left:42%;top:26%"></div>
+        </div>
+        <div class="q">
+          <div><div class="lab">NET / 6W</div><div class="net">195.2</div><div class="lab">万元</div></div>
+          <div><div class="qrow"><span>BUS</span><b>11</b></div><div class="qrow"><span>METRO</span><b>3</b></div><div class="qrow"><span>BAL</span><b>4.8</b></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cap"><span><b>B</b> FIELD DOSSIER / 作战手册</span><span>POPEYE data spread</span></div>
+    <div class="thumb b">
+      <div class="mast"><span>新云传媒 · 投放作战手册</span><span>NO. 2027-Q2 / 01</span></div>
+      <h3>200 万，<br>先打穿 <em>3 个口</em>。</h3>
+      <div class="deck">美华 3km · 地铁导流 + 公交覆盖 · 6 周 · 14 条明细 · 每条都能回到红豆空位。</div>
+      <div class="cols">
+        <div>
+          <div class="data">
+            <div class="hi"><b>195.2</b><span>净价 / 万</span></div><div><b>11</b><span>公交 / 辆</span></div><div><b>3</b><span>地铁 / 口</span></div>
+            <div><b>06</b><span>周期 / 周</span></div><div><b>4.8</b><span>余额 / 万</span></div><div><b>41</b><span>覆盖 / 条</span></div>
+          </div>
+          <div class="tbl">
+            <div class="tr th"><span>媒体</span><span>级别</span><span>数量</span><span>净价</span><span>空位</span></div>
+            <div class="tr"><span>吴中路 1号口</span><span>A++</span><span>1</span><span>38.4</span><span>1/1</span></div>
+            <div class="tr"><span>宋园路 1号口</span><span>A++</span><span>1</span><span>38.4</span><span>1/1</span></div>
+            <div class="tr"><span>739 · 大三侧</span><span>A++</span><span>4</span><span>26.3</span><span>5/5</span></div>
+            <div class="tr"><span>141 · 大三侧</span><span>S</span><span>3</span><span>24.3</span><span>9/9</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="mapbox">
+            <div class="route"></div>
+            <div class="pin" style="left:58%;top:38%">1</div><div class="pin" style="left:46%;top:52%">2</div><div class="pin" style="left:64%;top:58%">3</div>
+            <div class="ann" style="left:6%;top:8%">3km / 锚点美华</div>
+            <div class="ann" style="left:52%;top:78%">地铁口 3</div>
+          </div>
+          <div class="tbl" style="border-top:1px solid #151515;margin-top:6px">
+            <div class="tr"><span>净价</span><span>195.2 万</span><span></span><span>预算</span><span>200 万</span></div>
+            <div class="tr"><span>折扣</span><span>92%</span><span></span><span>制作</span><span>2.7 万</span></div>
+            <div class="tr"><span>余额</span><span>4.8 万</span><span></span><span>监测</span><span>0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cap"><span><b>C</b> MUNICIPAL MODERN / 市政现代</span><span>田中一光 × 上海 1930s</span></div>
+    <div class="thumb c">
+      <div class="geo"></div><div class="geo2"></div>
+      <div class="top">
+        <div class="vt">城市投放提案</div>
+        <div><h3>200<br>万，<br>3 个口。</h3><div class="meta">上海美华妇儿医院 / 3KM / 2027 Q2</div></div>
+      </div>
+      <div class="body">
+        <div class="vlab">BRIEF / 预算 200</div>
+        <div class="map">
+          <div class="arc"></div><div class="arc2"></div>
+          <div class="pt s" style="left:54%;top:34%"></div><div class="pt s" style="left:42%;top:48%"></div><div class="pt s" style="left:62%;top:58%"></div>
+          <div class="pt" style="left:30%;top:64%"></div><div class="pt" style="left:70%;top:42%"></div>
+        </div>
+        <div class="ledger">
+          <div class="lr"><span>净价</span><b>195.2</b></div><div class="lr"><span>公交</span><b>11</b></div><div class="lr"><span>地铁</span><b>3</b></div><div class="lr"><span>余额</span><b>4.8</b></div>
+        </div>
+      </div>
+      <div class="band"><span>新云传媒 · MEDIA ATLAS</span><span>SCHEMATIC / NOT TO SCALE</span></div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cap"><span><b>D</b> VIGNELLI TRANSIT STANDARDS</span><span>备选 / best designer</span></div>
+    <div class="thumb d">
+      <div class="mast"><span>NEW CLOUD / MEDIA STANDARDS</span><span>200W · 6W · 3 EXITS</span></div>
+      <h3>One city.<br>One plan.</h3>
+      <div class="route">
+        <div class="line" style="left:12%;top:72%;width:62%;transform:rotate(-29deg)"></div>
+        <div class="line" style="left:34%;top:28%;width:52%;transform:rotate(18deg);background:#111;height:2px"></div>
+        <div class="stop s" style="left:12%;top:72%"></div><div class="stop" style="left:36%;top:55%"></div><div class="stop" style="left:58%;top:43%"></div><div class="stop s" style="left:78%;top:34%"></div>
+        <div class="lbl" style="left:12%;top:76%">MEIHUA</div><div class="lbl" style="left:58%;top:47%">3 EXITS</div><div class="lbl" style="left:78%;top:38%">BUS 11</div>
+      </div>
+      <div class="foot"><span>¥1,952,000 NET</span><span>INVENTORY 2027-04-01 / 05-15</span></div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cap"><span><b>E</b> TERMINAL-CORE STANDALONE</span><span>备选 / seconds wheel 16</span></div>
+    <div class="thumb e">
+      <div class="prompt">$ <b>plan</b> --budget 200w --anchor meihua --weeks 6<br>
+      &gt; loading inventory ......... 431 bus / 861 metro<br>
+      &gt; coverage 3km ............... 41 candidates<br>
+      &gt; select ..................... 3 metro + 11 bus</div>
+      <div class="big">195.2<small> 万净价</small></div>
+      <div class="out">quote.media 197.2 · prod 2.7 · discount 0.92<br>balance 4.8 · rows 14 · status OK</div>
+      <div class="cube"></div>
+    </div>
+  </div>
+
+  <div class="cell">
+    <div class="cap"><span><b>F</b> SHANGHAI MODERNE DECO</span><span>备选 / seconds wheel east 4</span></div>
+    <div class="thumb f">
+      <div class="frame"></div><div class="fan"></div><div class="fan2"></div>
+      <div class="kicker">新云传媒 · 1930S SHANGHAI MODERNE</div>
+      <h3>把上海<br>排成一份<br>提案。</h3>
+      <div class="sub">200 万 / 6 周 / 3 个地铁口 + 11 辆公交 / 净价 195.2 万</div>
+      <div class="cal"><b>04</b>2027<br>Q2 / 6W</div>
+      <div class="bottom"><span>MEDIA ATLAS · SHANGHAI</span><span>SCHEMATIC / NOT TO SCALE</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
