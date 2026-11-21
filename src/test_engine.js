@@ -101,6 +101,32 @@ for (const ind of data.industries) {
   }
 }
 
+// ------------------------------------------------------- park citywide
+console.log("\n== 乐园全城铺送（4 枢纽 + 24 站在库）==");
+{
+  const parkBrief = (budget, weeks) => ({
+    industryId: "theme-park", anchor: "上海迪士尼度假区", radius: 5000,
+    budget: budget * 10000, weeks, media: { bus: true, metro: true }, startDate: "2027-07-01"
+  });
+  const p500 = Engine.selectPlan(data, parkBrief(500, 6));
+  console.log(`park citywide 500万/6周: ${p500.summary.metroCount} 口 / ${p500.summary.metroStations} 站 / ${p500.summary.metroDistricts} 区 + ${p500.summary.busCount} 辆，净价 ${wan(p500.quote.net)} 万`);
+  assert(p500.summary.citywide === true, "park 500: citywide flag");
+  assert(p500.summary.metroCount >= 4, `park 500: metro exits >= 4 (got ${p500.summary.metroCount})`);
+  assert(p500.summary.metroStations >= 4, `park 500: metro stations >= 4 (got ${p500.summary.metroStations})`);
+  assert(p500.summary.metroDistricts >= 3, `park 500: metro districts >= 3 (got ${p500.summary.metroDistricts})`);
+  assert(p500.summary.busCount > 0, "park 500: bus > 0");
+  assert(!p500.warnings.some((w) => /只地铁不可行|没有红豆可售地铁口/.test(w)), "park 500: no metro-infeasible warning");
+  p500.items.filter((x) => x.media === "metro").forEach((x) => {
+    assert(!!x.district, `park 500: metro ${x.station} has district`);
+  });
+  [100, 200].forEach((b) => {
+    const p = Engine.selectPlan(data, parkBrief(b, b === 100 ? 4 : 6));
+    assert(p.summary.metroCount >= 1, `park ${b}: metro >= 1 (got ${p.summary.metroCount})`);
+    assert(p.summary.busCount >= 1, `park ${b}: bus >= 1`);
+    assert(p.quote.net <= b * 10000 + 1, `park ${b}: within budget`);
+  });
+}
+
 // ------------------------------------------------------- only-metro / only-bus
 console.log("\n== 只地铁 / 只公交（200 万 / 6 周）==");
 for (const ind of data.industries) {

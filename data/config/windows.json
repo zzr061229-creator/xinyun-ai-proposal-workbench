@@ -54,9 +54,11 @@
       ],
       "anchorIds": [
         "renmin-guangchang",
+        "lujiazui",
+        "xujiahui",
         "disney"
       ],
-      "reason": "饮用水/乐园暑期：高温即饮与亲子出游高峰；人民广场做城市客流，迪士尼做家庭客群（公交为主，地铁 0 口）。",
+      "reason": "饮用水/乐园暑期：高温即饮与亲子出游高峰；乐园用人民广场/陆家嘴/徐家汇/迪士尼 4 枢纽铺全城，地铁引流 + 环园公交收口。",
       "inventoryFile": "data/inventory_summer.json",
       "snapshotAt": "2026-11-21 17:05:21",
       "status": "verified"

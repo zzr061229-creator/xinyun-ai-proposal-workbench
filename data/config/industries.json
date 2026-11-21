@@ -140,22 +140,31 @@
           "fullName": "上海迪士尼度假区",
           "isDefault": true,
           "anchorIds": [
+            "renmin-guangchang",
+            "lujiazui",
+            "xujiahui",
             "disney"
           ],
           "status": "verified",
-          "note": "品牌与乐园锚点为公开信息；具体活动/IP/票价以官方公告为准。"
+          "note": "品牌与 4 个客源枢纽为公开信息；具体活动/IP/票价以官方公告为准。"
         }
       ],
       "defaultBrandId": "shanghai-disney",
       "defaultAnchorIds": [
+        "renmin-guangchang",
+        "lujiazui",
+        "xujiahui",
         "disney"
       ],
-      "anchorBundleIds": [],
+      "anchorMode": "network",
+      "anchorBundleIds": [
+        "disney-city"
+      ],
       "mediaMix": {
-        "metro": 0.2,
-        "bus": 0.8
+        "metro": 0.45,
+        "bus": 0.55
       },
-      "radiusDefault": 5000,
+      "radiusDefault": 3000,
       "weeksPresets": [
         4,
         6
@@ -165,7 +174,7 @@
           "windowId": "summer",
           "label": "暑期（2027-07-01～08-11）",
           "status": "verified",
-          "reason": "亲子客流高峰；暑期库存已验证（迪士尼 5km 公交 75 辆，地铁 0 口）。"
+          "reason": "亲子客流高峰；暑期库存已验证（迪士尼 5km 公交 75 辆；全城 24 个在库地铁站可用）。"
         },
         {
           "windowId": "midautumn",
@@ -193,8 +202,8 @@
       ],
       "complianceNotice": "占位模板：合规条目为通用清单，未逐条经法务复核。",
       "narrative": {
-        "positioning": "上海迪士尼度假区 / 亲子家庭 / 暑期与节假日",
-        "audience": "长三角家庭客群 + 本地亲子与游客",
+        "positioning": "上海迪士尼度假区 / 全城客源铺送 / 暑期与节假日",
+        "audience": "全城 7 个区的亲子家庭 + 长三角到沪游客；地铁站在客源端截流，公交在环园端收口。",
         "coreMessage": "欢乐 / 安全 / 家庭",
         "note": "不编具体活动、IP、票价、开园时间；活动以官方公告为准。"
       },
@@ -208,42 +217,51 @@
       },
       "weightsStatus": "industry_lightweight_v1",
       "notes": [
-        "五行业各一：乐园固定上海迪士尼 + 迪士尼锚点（3km/5km 已覆盖）。",
-        "迪士尼站不在红豆 861 口地铁库存；3km 公交可售约 39 辆，500 万需用 5km。",
-        "暑期/中秋国庆库存已抓取验证（inventory_summer / inventory_midautumn）；乐园默认暑期。",
-        "媒体配比 0.2/0.8 为策划预设，未校准。"
+        "乐园改为“全城 4 枢纽 + 24 个在库地铁站 + 环园 5km 公交”：人民广场 3km / 陆家嘴 3km / 徐家汇 3km / 迪士尼 5km。",
+        "地铁层覆盖 7 个区的 24 个红豆在库站；其中 20 站有平台 2023-05 人流，4 站无数据标“—”，不估算。",
+        "迪士尼站不在红豆 861 口地铁库存；环园仍以公交为主，5km 暑期可售 75 辆。",
+        "媒体配比 0.45/0.55 为策划预设，未校准；公交名额按 30/28/22/20 权重分给 4 个枢纽。"
       ],
       "budgetPresets": [
         {
           "budget": 1000000,
-          "label": "迪士尼 3km（公交为主）",
+          "label": "全城 4 枢纽 + 环园（轻量）",
           "anchorIds": [
+            "renmin-guangchang",
+            "lujiazui",
+            "xujiahui",
             "disney"
           ],
-          "anchorMode": "single",
-          "note": "3km 覆盖 10 条（8 公交/2 地铁线）；迪士尼站不在红豆地铁库存，方案以公交为主。"
+          "anchorMode": "network",
+          "note": "1.0：2 口 + 11 辆（98.9 万）；0.92：2 口 + 13 辆（99.3 万）。地铁先铺 2 个区，环园 5km 保留基本盘。"
         },
         {
           "budget": 2000000,
-          "label": "迪士尼 3km 主推",
+          "label": "全城 4 枢纽 + 环园（主推）",
           "anchorIds": [
+            "renmin-guangchang",
+            "lujiazui",
+            "xujiahui",
             "disney"
           ],
-          "anchorMode": "single",
-          "note": "200 万单点；3km 公交可售约 39 辆，必要时切 5km。"
+          "anchorMode": "network",
+          "note": "1.0：2 口 + 17 辆（199.4 万）；0.92：2 口 + 19 辆（196.6 万）。地铁 2 个区，公交 16 条线。"
         },
         {
           "budget": 5000000,
-          "label": "迪士尼 5km 饱和",
+          "label": "全城铺送（4 枢纽 + 24 站）",
           "anchorIds": [
+            "renmin-guangchang",
+            "lujiazui",
+            "xujiahui",
             "disney"
           ],
-          "anchorMode": "single",
-          "note": "500 万用 5km 公交为主；地铁口为 0（迪士尼站不在红豆 861 口库存）。"
+          "anchorMode": "network",
+          "note": "1.0：5 口 + 42 辆（497.8 万）；0.92：6 口 + 44 辆（496.7 万）。地铁 5–6 个区；仍不称“全城覆盖”。"
         }
       ],
       "defaultWindowId": "summer",
-      "logic": "全城触达：触达 55% · 级别 15% · 性价比 15% · 空位 10% · 距离 5%"
+      "logic": "全城客源铺送：触达 55% · 级别 15% · 性价比 15% · 空位 10% · 距离 5%"
     },
     "bank-insurance": {
       "industryId": "bank-insurance",

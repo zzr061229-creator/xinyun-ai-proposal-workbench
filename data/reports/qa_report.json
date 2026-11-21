@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21 19:27:58",
+  "generatedAt": "2026-11-21 21:33:37",
   "checks": [
     {
       "id": "inventory_counts",
@@ -49,17 +49,17 @@
     {
       "id": "coverage_files",
       "status": "pass",
-      "detail": "15 个 CSV / 472 行（公交 391 / 地铁 81）；旧版汇总行 0 个，已跳过"
+      "detail": "18 个 CSV / 569 行（公交 471 / 地铁 98）；旧版汇总行 0 个，已跳过"
     },
     {
       "id": "coverage_required_fields",
       "status": "pass",
-      "detail": "全部 472 行均含 mediaType / 媒体名称 / 最近站点 / 最近距离"
+      "detail": "全部 569 行均含 mediaType / 媒体名称 / 最近站点 / 最近距离"
     },
     {
       "id": "coverage_media_type",
       "status": "pass",
-      "detail": "mediaType：bus 391 / metro 81"
+      "detail": "mediaType：bus 471 / metro 98"
     },
     {
       "id": "coverage_bus_join",
@@ -69,17 +69,17 @@
     {
       "id": "coverage_bus_join_rows",
       "status": "pass",
-      "detail": "行级 391 = 可售 332 + 空位不足 38 + 不在库 21（同名线路在 1km/3km 文件重复出现，故与唯一线路数不同）"
+      "detail": "行级 471 = 可售 395 + 空位不足 48 + 不在库 28（同名线路在 1km/3km 文件重复出现，故与唯一线路数不同）"
     },
     {
       "id": "coverage_metro_join",
       "status": "pass",
-      "detail": "候选 31 站 = 库存内 24 + 不在库 7；按覆盖行 81 行 = 库存内 64 + 不在库 17；不在库：世纪大道、北新泾、宝山路、真北路、虹桥路、虹漕路、迪士尼"
+      "detail": "候选 32 站 = 库存内 24 + 不在库 8；按覆盖行 98 行 = 库存内 78 + 不在库 20；不在库：世纪大道、北新泾、南京东路、宝山路、真北路、虹桥路、虹漕路、迪士尼"
     },
     {
       "id": "coverage_metro_exits",
       "status": "pass",
-      "detail": "展开去重 93 口 = 可选 82（free>0 且 grade 非空） + 空位不足 6（free=0，grade 非空） + grade为空 5；按覆盖行重复展开 293 次（可选 244/不足 31/grade空 18）"
+      "detail": "展开去重 93 口 = 可选 82（free>0 且 grade 非空） + 空位不足 6（free=0，grade 非空） + grade为空 5；按覆盖行重复展开 355 次（可选 295/不足 40/grade空 20）"
     },
     {
       "id": "coverage_metro_station_availability",
@@ -94,7 +94,7 @@
     {
       "id": "coverage_manifest",
       "status": "pass",
-      "detail": "manifest 15 条与 CSV 行数/公交/地铁计数一致"
+      "detail": "manifest 18 条与 CSV 行数/公交/地铁计数一致"
     },
     {
       "id": "coverage_manifest_inventory",
@@ -159,17 +159,17 @@
     {
       "id": "coverage_evidence_required",
       "status": "pass",
-      "detail": "全部 472 行具备 queryDate=2026-11-21、nearestDistance、nearestStation"
+      "detail": "全部 569 行具备 queryDate=2026-11-21、nearestDistance、nearestStation"
     },
     {
       "id": "coverage_evidence_matched",
       "status": "pass",
-      "detail": "434/472 行可完整反查 freeCount + grade（在库行全部具备）"
+      "detail": "521/569 行可完整反查 freeCount + grade（在库行全部具备）"
     },
     {
       "id": "coverage_evidence_expected_missing",
       "status": "warn",
-      "detail": "38/472 行指向不在红豆可售库的媒体（公交 4 个线路名 / 地铁 7 个站），无法反查 freeCount/grade；这是“覆盖候选 → 可售校验”的正常差异，前端应显示“不在可售库”而不是静默丢弃"
+      "detail": "48/569 行指向不在红豆可售库的媒体（公交 4 个线路名 / 地铁 8 个站），无法反查 freeCount/grade；这是“覆盖候选 → 可售校验”的正常差异，前端应显示“不在可售库”而不是静默丢弃"
     },
     {
       "id": "coverage_query_date",
@@ -226,12 +226,12 @@
       }
     },
     "coverage": {
-      "files": 15,
-      "rows": 472,
-      "busRows": 391,
-      "metroRows": 81,
+      "files": 18,
+      "rows": 569,
+      "busRows": 471,
+      "metroRows": 98,
       "uniqueBusNames": 156,
-      "uniqueMetroStations": 31,
+      "uniqueMetroStations": 32,
       "bus": {
         "candidates": 156,
         "matched": 132,
@@ -268,20 +268,21 @@
           "旅游2线"
         ],
         "rows": {
-          "total": 391,
-          "matched": 332,
-          "usable": 332,
-          "insufficient": 38,
-          "notInInventory": 21
+          "total": 471,
+          "matched": 395,
+          "usable": 395,
+          "insufficient": 48,
+          "notInInventory": 28
         }
       },
       "metro": {
-        "candidates": 31,
+        "candidates": 32,
         "inInventory": 24,
-        "notInInventory": 7,
+        "notInInventory": 8,
         "notInInventoryNames": [
           "世纪大道",
           "北新泾",
+          "南京东路",
           "宝山路",
           "真北路",
           "虹桥路",
@@ -289,9 +290,9 @@
           "迪士尼"
         ],
         "rows": {
-          "total": 81,
-          "stationInInventory": 64,
-          "stationNotInInventory": 17
+          "total": 98,
+          "stationInInventory": 78,
+          "stationNotInInventory": 20
         },
         "stations": [
           {
@@ -420,10 +421,10 @@
           "selectable": 82,
           "insufficient": 6,
           "gradeEmpty": 5,
-          "rowExpandedTotal": 293,
-          "rowExpandedSelectable": 244,
-          "rowExpandedInsufficient": 31,
-          "rowExpandedGradeEmpty": 18
+          "rowExpandedTotal": 355,
+          "rowExpandedSelectable": 295,
+          "rowExpandedInsufficient": 40,
+          "rowExpandedGradeEmpty": 20
         }
       },
       "perFile": [
@@ -610,6 +611,48 @@
           "formulaCells": 0
         },
         {
+          "file": "覆盖分析_浦发银行上海分行_1000米.csv",
+          "path": "coverage/覆盖分析_浦发银行上海分行_1000米.csv",
+          "rows": 41,
+          "bus": 36,
+          "metro": 5,
+          "busUsableRows": 26,
+          "busInsufficientRows": 8,
+          "busNotInInventoryRows": 2,
+          "metroStations": 3,
+          "metroStationsInInventory": 3,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_浦发银行九江路支行_1000米.csv",
+          "path": "coverage/覆盖分析_浦发银行九江路支行_1000米.csv",
+          "rows": 33,
+          "bus": 27,
+          "metro": 6,
+          "busUsableRows": 22,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 4,
+          "metroStations": 3,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_浦发银行徐家汇支行_1000米.csv",
+          "path": "coverage/覆盖分析_浦发银行徐家汇支行_1000米.csv",
+          "rows": 23,
+          "bus": 17,
+          "metro": 6,
+          "busUsableRows": 15,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 1,
+          "metroStations": 2,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
           "file": "覆盖分析_陆家嘴_1000米.csv",
           "path": "coverage/覆盖分析_陆家嘴_1000米.csv",
           "rows": 37,
@@ -784,9 +827,9 @@
       ]
     },
     "evidence": {
-      "rows": 472,
-      "complete": 434,
-      "expectedMissing": 38,
+      "rows": 569,
+      "complete": 521,
+      "expectedMissing": 48,
       "inInventoryIncomplete": 0,
       "missingBase": 0,
       "missingReasons": {},

@@ -59,6 +59,13 @@
   var DAY_MS = 86400000;
 
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function meters(lng1, lat1, lng2, lat2) {
+    var R = 6371000, rad = Math.PI / 180;
+    var dLat = (lat2 - lat1) * rad, dLng = (lng2 - lng1) * rad;
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }
   function priceOf(media, grade) {
     var table = media === "metro" ? PRICING.metro : PRICING.bus;
     var fallback = media === "metro" ? PRICING.metroDefault : PRICING.busDefault;
@@ -165,6 +172,8 @@
     var coverageBusRows = 0;
     var coverageMetroRows = 0;
     var coverageTotal = 0;
+    var citywideMetroExits = 0;
+    var citywideStationNames = new Set();
 
     function mergeAnchor(list, name) {
       if (list.indexOf(name) < 0) list.push(name);
@@ -302,9 +311,77 @@
       });
     });
 
+    // 全城铺送：地铁候选不只看 4 个枢纽覆盖内的站，而是把红豆在库的
+    // 24 个站全部放进池子；每个口按最近枢纽取人流文件，没有平台数据的
+    // 口保持 null（显示“—”），不估算。公交仍由 4 个枢纽的覆盖决定。
+    var ind = (data.industries || []).find(function (x) { return x.id === brief.industryId; });
+    var bundle = ind && ind.anchorBundle;
+    if (bundle && bundle.citywide) {
+      var hubs = members.filter(function (m) { return !!m._cov; }).map(function (m) {
+        return {
+          anchor: m.anchor,
+          label: m.label || shortAnchor(data, m.anchor),
+          weight: m.weight,
+          lng: Number(m._cov.center.lng),
+          lat: Number(m._cov.center.lat)
+        };
+      }).filter(function (h) { return isFinite(h.lng) && isFinite(h.lat); });
+      var exitGeo = {};
+      Object.keys(data.geo || {}).forEach(function (a) {
+        var g = data.geo[a] || {};
+        Object.keys(g.exits || {}).forEach(function (id) {
+          if (!exitGeo[id]) exitGeo[id] = g.exits[id];
+        });
+      });
+      Object.keys(data.stations || {}).forEach(function (name) {
+        var st = data.stations[name];
+        if (!st || !st.inInventory || !st.coord) return;
+        var best = null, bestD = Infinity;
+        hubs.forEach(function (h) {
+          var d = meters(st.coord.lng, st.coord.lat, h.lng, h.lat);
+          if (d < bestD) { bestD = d; best = h; }
+        });
+        if (!best) return;
+        (st.exits || []).forEach(function (e) {
+          if (!(e.free >= 1) || !e.grade) return;
+          if (metroMap.has(e.id)) return;
+          var gp = exitGeo[e.id] || st.coord;
+          metroMap.set(e.id, {
+            media: "metro",
+            id: e.id,
+            station: name,
+            exit: e.exit,
+            name: name + " " + e.exit,
+            subName: e.exit,
+            grade: e.grade,
+            free: e.free,
+            total: e.total,
+            contract: e.contract,
+            reserved: e.reserved,
+            area: e.area || "",
+            district: e.district || "",
+            distance: Math.round(bestD),
+            pointName: name,
+            pointLng: gp.lng,
+            pointLat: gp.lat,
+            pointDistance: Math.round(bestD),
+            anchors: [best.anchor],
+            anchorLabel: best.label,
+            reachAnchor: best.anchor,
+            localRadius: Math.max(3000, Math.round(bestD)),
+            weight: best.weight,
+            citywide: true,
+            stationLines: []
+          });
+          citywideMetroExits += 1;
+          citywideStationNames.add(name);
+        });
+      });
+    }
+
     var bus = Array.from(busMap.values());
     var metro = Array.from(metroMap.values());
-    attachReach(data, members, bus, metro);
+    attachReach(data, members, bus, metro, !!(bundle && bundle.citywide));
     // 行业权重里的“触达”维度：在本次候选内做 0–1 归一化。
     var reachMax = 0;
     bus.concat(metro).forEach(function (c) {
@@ -328,6 +405,10 @@
       coverageMetroRows: coverageMetroRows,
       coverageBusLines: coverageBusNames.size,
       coverageStations: coverageStationNames.size,
+      citywide: !!(bundle && bundle.citywide),
+      citywideMetroExits: citywideMetroExits,
+      citywideStations: uniq(metro.map(function (m) { return m.station; })).length,
+      citywideDistricts: uniq(metro.filter(function (m) { return m.district; }).map(function (m) { return m.district; })).length,
       busLines: bus.length,
       metroExits: metro.length,
       metroStations: uniq(metro.map(function (m) { return m.station; })).length,
@@ -336,8 +417,15 @@
       availableBusFree: bus.reduce(function (s, b) { return s + b.free; }, 0),
       availableMetroFree: metro.reduce(function (s, m) { return s + m.free; }, 0)
     };
-    if (orphanBus.size) warnings.push("覆盖里有 " + orphanBus.size + " 条公交线路不在红豆可售库：" + Array.from(orphanBus).slice(0, 4).join("、"));
-    if (orphanStations.size) warnings.push("覆盖里有 " + orphanStations.size + " 个地铁站不在红豆可售库：" + Array.from(orphanStations).slice(0, 4).join("、"));
+    if (orphanBus.size && !(bundle && bundle.citywide)) {
+      warnings.push("覆盖里有 " + orphanBus.size + " 条公交线路不在红豆可售库：" + Array.from(orphanBus).slice(0, 4).join("、"));
+    }
+    if (orphanStations.size) {
+      var orphanNames = Array.from(orphanStations).slice(0, 4).join("、");
+      warnings.push(bundle && bundle.citywide
+        ? "覆盖范围内 " + orphanStations.size + " 个站不在红豆库（" + orphanNames + "）；全城模式已改用 24 个在库站。"
+        : "覆盖里有 " + orphanStations.size + " 个地铁站不在红豆可售库：" + orphanNames);
+    }
     if (Number(radiusKey) === 1000 && metro.length === 0) warnings.push("1km 内没有可售地铁口，建议切 3km。");
     return {
       bus: bus, metro: metro, stats: stats, warnings: warnings,
@@ -351,10 +439,29 @@
   // 锚点没有平台人流文件 → reachSource = "sample"：公交按 05 样本级别均值估算
   // （reachEst，元/辆/天口径），地铁 null。
   // 网点模式：每个候选按它最近的网点（reachAnchor）取对应人流文件，不混用别的网点。
-  function attachReach(data, members, bus, metro) {
+  function attachReach(data, members, bus, metro, citywide) {
     var ffBy = {};
     members.forEach(function (m) { ffBy[m.anchor] = footfallOf(data, m.anchor); });
     function ffOf(c) { return ffBy[c.reachAnchor] || null; }
+    // 站点级 aggregateReach 不依赖“最近枢纽”：同一个站在任何一个人流文件里
+    // 都有同口径的站点合计，全城模式可以在缺出口数据时用它，避免把有数据的
+    // 站误标成“无数据”。
+    var stationAgg = {};
+    Object.keys(data.footfall || {}).forEach(function (a) {
+      var ff = data.footfall[a] || {};
+      Object.keys(ff.stations || {}).forEach(function (st) {
+        var v = (ff.stations[st] || {}).aggregateReach;
+        if (stationAgg[st] == null && v != null) stationAgg[st] = v;
+      });
+    });
+    // 候选池里这个站有没有任何一个“可售口”带出口级数据；有的话就保留
+    // 出口口径，不能拿整站合计去抬另一个无数据口。
+    var candHasData = {};
+    metro.forEach(function (c) {
+      var ff = ffOf(c);
+      var e = ff && (ff.exits || {})[c.id];
+      if (e && e.dailyReach != null) candHasData[c.station] = true;
+    });
     bus.forEach(function (c) {
       var ff = ffOf(c);
       if (ff) {
@@ -370,12 +477,28 @@
     });
     metro.forEach(function (c) {
       if (ffOf(c)) {
-        var e = (ffOf(c).exits || {})[c.id];
-        c.dailyReach = e && e.dailyReach != null ? e.dailyReach : null;
-        c.reachSource = c.dailyReach != null ? "platform" : "none";
+        var ff = ffOf(c);
+        var e = (ff.exits || {})[c.id];
+        if (e && e.dailyReach != null) {
+          c.dailyReach = e.dailyReach;
+          c.reachSource = "platform";
+          c.reachScope = "exit";
+        } else if (citywide && !candHasData[c.station]) {
+          // 只给“候选口全都没有出口级数据”的站退回站点 aggregateReach；
+          // 像人民广场这种已有出口数据的站，不能用整站合计去抬某个无数据口。
+          var agg = stationAgg[c.station];
+          c.dailyReach = agg == null ? null : agg;
+          c.reachSource = agg == null ? "none" : "platform";
+          c.reachScope = agg == null ? "none" : "station";
+        } else {
+          c.dailyReach = null;
+          c.reachSource = "none";
+          c.reachScope = "none";
+        }
       } else {
         c.dailyReach = null;
         c.reachSource = "sample";
+        c.reachScope = "none";
       }
       c.reachEst = null;
     });
@@ -432,7 +555,7 @@
         list.forEach(function (x) { if (x.dailyReach == null) missing.push(x.station + " " + x.exit); });
         if (!known.length) return;
         var maxOne = Math.max.apply(null, known.map(function (x) { return x.dailyReach; }));
-        var v = maxOne, method = "单口";
+        var v = maxOne, method = list.some(function (x) { return x.reachScope === "station"; }) ? "站点口径" : "单口";
         if (list.length >= 2) {
           var agg = ((ff.stations || {})[st] || {}).aggregateReach;
           v = agg != null ? Math.max(agg, maxOne) : maxOne;
@@ -595,6 +718,8 @@
       maintenance: c.maintenance || 0,
       company: c.company || "",
       area: c.area || "",
+      district: c.district || "",
+      citywide: !!c.citywide,
       unitPrice: priceOf(media, c.grade),
       months: round2(monthsOf(weeks)),
       listSubtotal: listSubtotal,
@@ -609,6 +734,7 @@
       reachAnchor: c.reachAnchor || (c.anchors || [])[0] || "",
       dailyReach: c.dailyReach == null ? null : c.dailyReach,
       reachSource: c.reachSource || "none",
+      reachScope: c.reachScope || "none",
       reachEst: c.reachEst == null ? null : c.reachEst,
       reason: reasonOf(data, c),
       substitutes: pickSubstitutes(c, allCandidates[media], selectedIds, radius, maxEff, weeks, discount, W)
@@ -648,6 +774,7 @@
     var monitoringRate = pricing.monitoringRate == null ? PRICING.monitoringRate : Number(pricing.monitoringRate);
     var startDate = brief.startDate || (data.meta && data.meta.range && data.meta.range.start) || "2027-04-01";
     var ind = (data.industries || []).find(function (x) { return x.id === brief.industryId; });
+    var bundle = ind && ind.anchorBundle;
     var W = weightsFor(data, brief);
     var mixShare = ind && ind.mediaMix && ind.mediaMix.metro != null ? Number(ind.mediaMix.metro) : null;
 
@@ -686,21 +813,47 @@
     var stationCounts = new Map();
     var metroSpent = 0;
 
+    function tryPickMetro(c, maxPerStation) {
+      if (selectedMetroIds.has(c.id)) return false;
+      if ((stationCounts.get(c.station) || 0) >= maxPerStation) return false;
+      var cost = unitNet("metro", c.grade, weeks, discount);
+      if (metroSpent + cost > metroBudget) return false;
+      selectedMetro.push(c);
+      selectedMetroIds.add(c.id);
+      stationCounts.set(c.station, (stationCounts.get(c.station) || 0) + 1);
+      metroSpent += cost;
+      return true;
+    }
+
     if (media.metro) {
-      metroSorted.forEach(function (c) {
-        if (metroSpent + unitNet("metro", c.grade, weeks, discount) > metroBudget) return;
-        if ((stationCounts.get(c.station) || 0) >= MAX_EXITS_PER_STATION) return;
-        selectedMetro.push(c);
-        selectedMetroIds.add(c.id);
-        stationCounts.set(c.station, (stationCounts.get(c.station) || 0) + 1);
-        metroSpent += unitNet("metro", c.grade, weeks, discount);
-      });
+      if (bundle && bundle.spreadMetro) {
+        // 全城铺送：先做到“每站 1 口、每区 1 站”，再补第二站/第二口。
+        // 这样同样的钱不会全砸在一个站，而是铺到多个区；有平台人流的站
+        // 仍按触达/级别优先，缺数据的站不会被强行塞进方案。
+        var districtStations = {};
+        metroSorted.forEach(function (c) {
+          if (stationCounts.get(c.station)) return;
+          var d = c.district || "_";
+          if ((districtStations[d] || 0) >= 1) return;
+          if (tryPickMetro(c, 1)) districtStations[d] = (districtStations[d] || 0) + 1;
+        });
+        metroSorted.forEach(function (c) {
+          if (selectedMetroIds.has(c.id)) return;
+          var d = c.district || "_";
+          var sameStation = (stationCounts.get(c.station) || 0) > 0;
+          if (!sameStation && (districtStations[d] || 0) >= 2) return;
+          tryPickMetro(c, MAX_EXITS_PER_STATION);
+        });
+      } else {
+        metroSorted.forEach(function (c) { tryPickMetro(c, MAX_EXITS_PER_STATION); });
+      }
     }
 
     // 纯公交（或该锚点没有可售地铁口）时允许铺到 20 条线，避免预算排不满。
-    var busLineCap = share === 0 ? Math.min(20, busSorted.length) : MAX_BUS_LINES;
-    var qtyCap = share === 0 ? Math.max(MAX_QTY_PER_LINE, 8) : MAX_QTY_PER_LINE;
-    var bundle = ind && ind.anchorBundle;
+    var busLineCap = share === 0 ? Math.min(20, busSorted.length)
+      : (bundle && bundle.maxBusLines ? Math.min(bundle.maxBusLines, busSorted.length) : MAX_BUS_LINES);
+    var qtyCap = share === 0 ? Math.max(MAX_QTY_PER_LINE, 8)
+      : (bundle && bundle.maxQtyPerLine ? bundle.maxQtyPerLine : MAX_QTY_PER_LINE);
     var busQuota = !!(bundle && bundle.allocateBusByWeight && bundle.members && bundle.members.length > 1);
     var busRanked;
     if (busQuota) {
@@ -759,6 +912,16 @@
           var mc = metroSorted[i];
           if (selectedMetroIds.has(mc.id)) continue;
           if ((stationCounts.get(mc.station) || 0) >= MAX_EXITS_PER_STATION) continue;
+          if (bundle && bundle.spreadMetro) {
+            var sameStation = (stationCounts.get(mc.station) || 0) > 0;
+            if (!sameStation) {
+              var dSet = {};
+              selectedMetro.forEach(function (x) {
+                if ((x.district || "_") === (mc.district || "_")) dSet[x.station] = 1;
+              });
+              if (Object.keys(dSet).length >= 2) continue;
+            }
+          }
           var mp = unitNet("metro", mc.grade, weeks, discount);
           if (mp > remaining) continue;
           selectedMetro.push(mc);
@@ -867,6 +1030,9 @@
         metroCount: metroCount,
         busLines: busLines,
         metroStations: metroStations,
+        metroDistricts: uniq(items.filter(function (it) { return it.media === "metro"; })
+          .map(function (it) { return it.district; }).filter(Boolean)).length,
+        citywide: !!(bundle && bundle.citywide),
         weeks: weeks,
         days: weeks * 7,
         anchors: anchors.length ? anchors : (built.anchors || []),

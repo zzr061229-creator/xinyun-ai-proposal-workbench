@@ -33,11 +33,11 @@ python -m http.server 8788
 | 私立医院 | 上海美华妇儿医院 | 美华 | 1/3km | industries.json | 平台 2023-05 |
 | 食品饮料 | 农夫山泉（饮用水，对外只说“同品类”） | 3 商圈：人民广场商圈 + 徐家汇商圈 + 陆家嘴商圈 | 每点 1km | industries.json + anchor_bundles.json | 平台 2023-05（3 点） |
 | 保健品 | 汤臣倍健 | 徐家汇 | 1/3km | industries.json | 平台 2023-05 |
-| 乐园 | 上海迪士尼 | 上海迪士尼度假区 | 3/5km | industries.json | 平台 2023-05（公交） |
+| 乐园 | 上海迪士尼 | 4 枢纽：人民广场 + 陆家嘴 + 徐家汇 + 迪士尼；另加全城 24 个在库地铁站 | 3/5km | industries.json + anchor_bundles.json | 平台 2023-05（4 点；20/24 站有数据） |
 
 - 单一来源 = `data/config/industries.json` + `data/config/anchor_bundles.json`。`app.js` 里的硬编码 INDUSTRIES 已删除，改读 `APP_DATA.industries`。
 - 多网点：`industries.json` 的 `anchorBundleIds` 指向 bundle；每个 member 有 `anchor / label / radius / weight`。银行三个网点是真实支行，覆盖按网点坐标 1km 重抓（2026-11-21），见 `data/coverage/覆盖分析_浦发银行*_1000米.json`；人流按平台 2023-05 线路/出口级缓存复用（`data/footfall/spdb-*_202305.json`）。引擎 `anchorsOf()` 把成员并成一个候选池，同一条公交线/同一个地铁口只留一次，距离和触达按最近的网点归位（`anchorLabel / reachAnchor`），评分用各网点自己的半径。`status: sample` 表示网点组合是演示假设。
-- 单点行业（医院/保健/乐园）不配 bundle，行为与旧版一致。
+- 单点行业（医院/保健）不配 bundle；乐园是 `disney-city` bundle（`citywide: true`）：4 枢纽负责公交，地铁候选扩到 24 个在库站并按区铺开。
 - `build_data.py` 里有显式 `DEMO_LINEUP`：当 industries.json 的默认品牌/锚点与上表不一致或 `status≠ready` 时兜底，并打印 `[warn]`。industries.json 已与上表对齐，当前无 fallback；DEMO_LINEUP 只作兜底。
 - 合规文案优先取配置 `compliance[].requirement`；银行额外加“对外只说「浦发上海分行在陆家嘴」，不说总部”。insight：ready 行业取配置 narrative，兜底行业用 DEMO_LINEUP 文案。
 - deep link：`?industry=bank|hospital|food|health|park`（或完整 id）。
@@ -130,7 +130,7 @@ ProposalApp.applyBrief(brief)  // 结构化 brief → 状态 → 重算，返回
 | 医院 · 美华（Q2） | 2 口 + 15 辆 | 199.0 万 | 平台 2023-05 |
 | 食品 · 3 商圈（暑期，按人流 40/38/22） | 2 口 + 15 辆 | 196.2 万 | 平台 2023-05（3 点），日均约 209.5 万人次 |
 | 保健品 · 徐家汇（中秋国庆） | 2 口 + 15 辆 | 197.6 万 | 平台 2023-05 |
-| 乐园 · 迪士尼 5km（暑期） | 0 口 + 31 辆 | 198.0 万 | 平台 2023-05（公交；红豆无迪士尼站地铁口 → 全公交） |
+| 乐园 · 全城 4 枢纽 + 24 站（暑期） | 5 口 + 42 辆 | 497.8 万 | 平台 2023-05（4 点；20/24 站有数据，4 站标“—”；迪士尼站本身无地铁口 → 环园公交） |
 
 单锚点回归（测试用，陆家嘴金融城 3km）：
 
@@ -143,7 +143,7 @@ ProposalApp.applyBrief(brief)  // 结构化 brief → 状态 → 重算，返回
 
 > 这是引擎按打分实际选出的组合。`docs/项目总览` §6 的“目标组合”（如 200 万 1.0 = 3 口 + 10 辆 196.7 万）是人工配比口径，两者都不超预算；路演讲数时以页面实时结果为准。
 
-测试覆盖（当前 **ALL PASS**，2165 项检查）：五行业 × 100/200/500 万 × 4/6 周不超预算；银行真实 3 支行并集去重、200/500 万三网点均覆盖、`reachAnchor` 分网点触达；只地铁 / 只公交（迪士尼只地铁 = 空方案 + “只地铁不可行” warning）；折扣 1.0 与 0.92（行净价 = (刊例+制作)×折扣）；同站 ≤2 口；qty ≤ 空位；行净价和 = 总净价；地铁同站触达不相加；无标签 = null；陆家嘴 87 条、join 152/156 与 24/31。
+测试覆盖（当前 **ALL PASS**，2208 项检查）：五行业 × 100/200/500 万 × 4/6 周不超预算；银行真实 3 支行并集去重、200/500 万三网点均覆盖、`reachAnchor` 分网点触达；乐园全城 500 万 ≥4 口/≥4 站/≥3 区 + 100/200 万地铁公交均 >0；只地铁 / 只公交（单锚点迪士尼只地铁 = 空方案 + “只地铁不可行” warning）；折扣 1.0 与 0.92（行净价 = (刊例+制作)×折扣）；同站 ≤2 口；qty ≤ 空位；行净价和 = 总净价；地铁同站触达不相加；无标签 = null；陆家嘴 87 条、join 152/156 与 24/31。
 
 ## 浏览器 QA（Edge headless）
 

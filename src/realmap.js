@@ -116,6 +116,12 @@
       var pt = project(p.lng, p.lat);
       if (p.selected) {
         selected.push({ kind: "metro", p: p, x: pt.x, y: pt.y });
+      } else if (p.stationDot) {
+        // citywide overview: 24 station dots must survive the export downscale
+        svg.appendChild(el("circle", {
+          cx: pt.x, cy: pt.y, r: 7, fill: "#FFFFFF", "fill-opacity": 0.65,
+          stroke: opts.candidateColor || "#2F5FD0", "stroke-width": 2.4, "stroke-opacity": 0.9
+        }));
       } else {
         svg.appendChild(el("rect", {
           x: pt.x - 3, y: pt.y - 3, width: 6, height: 6,

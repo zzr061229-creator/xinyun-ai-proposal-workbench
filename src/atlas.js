@@ -144,7 +144,9 @@
     var st = state.plan.stats, s = state.plan.summary;
     var orphan = (st.orphanBus || []).concat(st.orphanStations || []);
     var steps = [
-      { n: st.coverageTotal, u: "条", t: "大数据覆盖", d: st.coverageBusLines + " 条公交线 · " + st.coverageStations + " 个地铁站落在 " + (st.anchorCount > 1 ? st.anchorCount + " 个" + (state.anchorBundle && state.anchorBundle.unitLabel || "网点") : (state.radius / 1000) + "km 内") },
+      { n: st.coverageTotal, u: "条", t: "大数据覆盖", d: st.citywide
+        ? st.coverageBusLines + " 条公交线 · 4 枢纽覆盖；地铁另加 " + st.citywideStations + " 个在库站（全城 " + st.citywideDistricts + " 个区）"
+        : st.coverageBusLines + " 条公交线 · " + st.coverageStations + " 个地铁站落在 " + (st.anchorCount > 1 ? st.anchorCount + " 个" + (state.anchorBundle && state.anchorBundle.unitLabel || "网点") : (state.radius / 1000) + "km 内") },
       { n: st.busLines + st.metroExits, u: "项", t: "红豆可售", d: st.busLines + " 条线 " + st.availableBusFree + " 辆空车 · " + st.metroStations + " 站 " + st.metroExits + " 个空口" + (orphan.length ? " · 不在库：" + orphan.join("、") : "") },
       { n: state.plan.items.length, u: "行", t: "预算内选中", d: s.busCount + " 辆公交 + " + s.metroCount + " 个地铁口 · 同线去重 · 同站 ≤2 口" }
     ];

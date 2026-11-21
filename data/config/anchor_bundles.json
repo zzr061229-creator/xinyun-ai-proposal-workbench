@@ -36,6 +36,56 @@
       "unitLabel": "网点"
     },
     {
+      "bundleId": "disney-city",
+      "industryId": "theme-park",
+      "brandId": "shanghai-disney",
+      "status": "verified",
+      "mode": "network",
+      "citywide": true,
+      "spreadMetro": true,
+      "allocateBusByWeight": true,
+      "maxBusLines": 20,
+      "maxQtyPerLine": 4,
+      "label": "迪士尼全城铺送",
+      "shortLabel": "迪士尼全城",
+      "unitLabel": "枢纽",
+      "mapAssetKey": "network-citywide",
+      "mapBounds": {
+        "minLng": 121.35,
+        "maxLng": 121.73,
+        "minLat": 31.08,
+        "maxLat": 31.29
+      },
+      "note": "4 个真实客源枢纽：人民广场 / 陆家嘴 / 徐家汇 / 迪士尼；地铁层用 24 个红豆在库站铺到 7 个区，公交层保留迪士尼 5km 环园，并由中心三枢纽分担跨区干线。24 站中 20 站有平台 2023-05 人流，4 站无数据标“—”，不估算。",
+      "weightLabel": "公交名额权重（策划假设）：人民广场 30% / 陆家嘴 28% / 徐家汇 22% / 迪士尼 20%",
+      "members": [
+        {
+          "anchorId": "renmin-guangchang",
+          "label": "人民广场（市中心）",
+          "radius": 3000,
+          "weight": 0.3
+        },
+        {
+          "anchorId": "lujiazui",
+          "label": "陆家嘴（东）",
+          "radius": 3000,
+          "weight": 0.28
+        },
+        {
+          "anchorId": "xujiahui",
+          "label": "徐家汇（西）",
+          "radius": 3000,
+          "weight": 0.22
+        },
+        {
+          "anchorId": "disney",
+          "label": "迪士尼（环园）",
+          "radius": 5000,
+          "weight": 0.2
+        }
+      ]
+    },
+    {
       "bundleId": "nongfu-retail-stores",
       "industryId": "food-beverage",
       "brandId": "nongfu-spring",

@@ -609,6 +609,53 @@ def osm_check(geo):
 
 
 # ---------------------------------------------------------------------------
+# 地铁站坐标 — 供“全城铺送”模式在 24 个在库站之间选点
+# ---------------------------------------------------------------------------
+def attach_station_coords(stations, geo, coverage):
+    """Attach one WGS84 centroid per station.
+
+    Priority: platform exit POIs in data/geo/*.json (GCJ-02 → WGS84), then the
+    station-level points carried by coverage rows (BD-09 → WGS84). No guessing:
+    stations without either source keep no coord and are skipped by the engine.
+    """
+    pts = {}
+
+    def add(name, lng, lat):
+        name = (name or "").strip()
+        if not name or lng is None or lat is None:
+            return
+        pts.setdefault(name, []).append((float(lng), float(lat)))
+
+    for g in (geo or {}).values():
+        for st, pt in (g.get("stations") or {}).items():
+            if isinstance(pt, (list, tuple)) and len(pt) >= 2:
+                add(st, pt[0], pt[1])
+    for radii in (coverage or {}).values():
+        for cov in (radii or {}).values():
+            for row in (cov.get("list") or []):
+                if row.get("mediaType") != "metro":
+                    continue
+                add(row.get("pointName"), row.get("pointLng"), row.get("pointLat"))
+
+    missing = []
+    for name, s in stations.items():
+        v = pts.get(name) or []
+        if not v:
+            if s.get("inInventory"):
+                missing.append(name)
+            continue
+        s["coord"] = {
+            "lng": round(sum(x[0] for x in v) / len(v), 6),
+            "lat": round(sum(x[1] for x in v) / len(v), 6),
+        }
+    in_inv = sum(1 for s in stations.values() if s.get("inInventory"))
+    with_coord = sum(1 for s in stations.values() if s.get("inInventory") and s.get("coord"))
+    print(f"[coords] inInventory stations {in_inv}, with coord {with_coord}" +
+          (f", missing {missing}" if missing else ""))
+    return missing
+
+
+# ---------------------------------------------------------------------------
 # 多锚点/网点组合 — anchor_bundles.json
 # ---------------------------------------------------------------------------
 def build_bundles(bundle_cfg, anchors_cfg, coverage):
@@ -642,6 +689,11 @@ def build_bundles(bundle_cfg, anchors_cfg, coverage):
             "brandId": b.get("brandId") or "",
             "status": b.get("status") or "sample",
             "mode": b.get("mode") or "network",
+            "citywide": bool(b.get("citywide")),
+            "spreadMetro": bool(b.get("spreadMetro")),
+            "maxBusLines": int(b.get("maxBusLines") or 0),
+            "maxQtyPerLine": int(b.get("maxQtyPerLine") or 0),
+            "mapBounds": b.get("mapBounds") or None,
             "label": b.get("label") or b["bundleId"],
             "shortLabel": b.get("shortLabel") or b.get("label") or b["bundleId"],
             "mapAssetKey": b.get("mapAssetKey") or "",
@@ -711,6 +763,7 @@ def build_industries(ind_cfg, anchors_cfg, bundles=None):
             "branchPoint": branch,
             "defaultWindowId": c.get("defaultWindowId") or "",
             "seasonalWindows": c.get("seasonalWindows") or [],
+            "mediaMix": c.get("mediaMix") or {},
             "scoringWeights": c.get("scoringWeights") or {},
             "weightsStatus": c.get("weightsStatus") or "",
             "logic": c.get("logic") or "",
@@ -792,6 +845,7 @@ def main():
     anchors = build_anchors(anchors_cfg, coverage, manifest)
     footfall, ff_report = build_footfall(id_to_name, aliases, st_idx)
     geo, geo_report = build_geo(id_to_name, aliases, st_idx, coverage)
+    attach_station_coords(stations, geo, coverage)
     windows, window_inventory = build_windows(windows_cfg, inv)
     bundle_cfg = load_json(CONFIG / "anchor_bundles.json", {}) or {}
     bundles = build_bundles(bundle_cfg, anchors_cfg, coverage)

@@ -212,6 +212,12 @@ var PRICING_CFG = (DATA && DATA.pricing) || {};
   function bundleNames(b) {
     return (b ? b.members : []).map(function (m) { return m.label || shortAnchor(m.anchor); });
   }
+  function bundleRadiusText(b) {
+    var rs = (b ? b.members : []).map(function (m) { return Math.round(Number(m.radius || 0) / 1000); })
+      .filter(function (x) { return x > 0; });
+    var u = rs.filter(function (x, i) { return rs.indexOf(x) === i; }).sort(function (a, b) { return a - b; });
+    return u.length ? u.join("/") + "km" : "";
+  }
   function anchorSummary() {
     var b = currentBundle();
     if (!b) return shortAnchor(state.anchor) + " " + (state.radius / 1000) + "km";
@@ -244,10 +250,9 @@ var PRICING_CFG = (DATA && DATA.pricing) || {};
     var el = $("#radiusChips");
     if (!el) return;
     if (b) {
-      var r0 = b.members[0].radius || state.radius;
       var bu = b.unitLabel || "网点";
       el.innerHTML = '<button type="button" class="chip on" data-bundle="1" title="多点模式：每个' + bu + '单独取覆盖，半径由配置决定">' +
-        b.members.length + " " + bu + " · " + (r0 / 1000) + "km/点</button>";
+        b.members.length + " " + bu + " · " + esc(bundleRadiusText(b)) + (b.citywide ? " · 全城" : "") + "</button>";
       return;
     }
     var avail = availableRadii(state.anchor).filter(function (r) { return p.radii.indexOf(r) >= 0; });
@@ -278,9 +283,11 @@ var PRICING_CFG = (DATA && DATA.pricing) || {};
     if ($("#briefCompliance")) $("#briefCompliance").textContent = "合规：" + complianceText(p);
     var note;
     if (b) {
-      note = "锚点：" + bundleNames(b).join(" / ") + " · 每点 " + (b.members[0].radius / 1000) + "km" +
-        (b.weightLabel ? " · " + b.weightLabel : "") +
-        (b.status === "sample" ? " · " + (b.unitLabel || "网点") + "选点为演示假设" : "");
+      note = b.citywide
+        ? "锚点：4 个客源枢纽 · " + bundleRadiusText(b) + " · 全城 " + (state.plan && state.plan.summary.metroStations || 0) + "/" + (state.plan && state.plan.stats ? state.plan.stats.citywideStations : 24) + " 站"
+        : "锚点：" + bundleNames(b).join(" / ") + " · " + bundleRadiusText(b) +
+          (b.weightLabel ? " · " + b.weightLabel : "") +
+          (b.status === "sample" ? " · " + (b.unitLabel || "网点") + "选点为演示假设" : "");
     } else {
       note = "锚点：" + state.anchor + " · " + (state.radius / 1000) + "km";
       if (p.note) note = p.note + " · " + (state.radius / 1000) + "km";
@@ -411,6 +418,11 @@ function syncControls() {
     state.anchor = primary ? primary.anchor : ((DATA.coverage || {})[p.anchor] ? p.anchor : ((DATA.anchors || [])[0] || {}).name);
     var prefR = Number(primary ? primary.radius : p.radiusDefault || 0);
     state.radius = (prefR && availableRadii(state.anchor).indexOf(prefR) >= 0) ? prefR : chooseRadius(state.anchor, p.radii);
+    var bf = briefOf(p.id);
+    if (bf && p.anchorBundle && p.anchorBundle.citywide &&
+        Number(bf.primaryBudgetWan) >= 100 && Number(bf.primaryBudgetWan) <= 500) {
+      state.budget = Number(bf.primaryBudgetWan) * 10000;
+    }
     var win = windowForIndustry(p.id);
     if (win) state.windowId = win.id;
     state.mapZoom = null;
@@ -507,6 +519,7 @@ function syncControls() {
       anchors: bundle ? bundle.members.map(function (m) {
         return { anchor: m.anchor, radius: m.radius, weight: m.weight, label: m.label };
       }) : null,
+      citywide: !!(bundle && bundle.citywide),
       radius: state.radius,
       discount: state.discount,
       startDate: (win && win.start) || "2027-04-01",
@@ -602,7 +615,11 @@ function syncControls() {
     $("#heroTitle").innerHTML = title;
     if (p) {
       var b = currentBundle();
-      var spread = b ? "<b>三个网点一起铺，每个点 1 公里。</b>" : "<b>先赢下最近的 " + (state.radius / 1000) + " 公里。</b>";
+      var spread = b
+        ? (b.citywide
+          ? "<b>全城 4 个枢纽 + " + (p.summary.metroStations || 0) + " 个地铁站引流，迪士尼 5km 公交收口。</b>"
+          : "<b>" + b.members.length + " 个" + (b.unitLabel || "网点") + "一起铺，" + bundleRadiusText(b) + "。</b>")
+        : "<b>先赢下最近的 " + (state.radius / 1000) + " 公里。</b>";
       $("#heroDeck").innerHTML = bus + " 辆公交 + " + metro + " 个地铁口；" + p.summary.weeks + " 周；净价 " + wan(p.quote.net) + " 万，余额 " + wan(p.quote.remaining) + " 万。每条都能回到红豆的空位、合同、预定与查询档期。" + spread;
       $("#heroMeta").innerHTML = "<span>ACTIVE <b>" + esc(anchorSummary()) + "</b></span>" +
         "<span>WEEKS <b>" + p.summary.weeks + "</b></span>" +
@@ -744,19 +761,26 @@ function syncControls() {
   }
   function fmtInt(n) { return Math.round(Number(n || 0)).toLocaleString("zh-CN"); }
   function reachText(it) {
-    if (it.dailyReach != null) return fmtInt(it.dailyReach) + (it.media === "bus" ? " 人次/日（线路）" : " 人次/日（单口）");
+    if (it.dailyReach != null) {
+      var scope = it.media === "bus" ? "线路" : (it.reachScope === "station" ? "站点" : "单口");
+      return fmtInt(it.dailyReach) + " 人次/日（" + scope + "）";
+    }
     if (it.reachSource === "sample" && it.reachEst != null) return "≈" + (it.reachEst / 10000).toFixed(1) + " 万/辆/日（05 样本估算）";
     return "无数据";
   }
   function reachCell(it) {
-    if (it.dailyReach != null) return fmtInt(it.dailyReach);
+    if (it.dailyReach != null) {
+      var tag = it.reachScope === "station" ? '<span title="该口无出口级数据，用站点 aggregateReach（平台已去重）" style="color:var(--muted);font-size:10px"> 站</span>' : "";
+      return fmtInt(it.dailyReach) + tag;
+    }
     if (it.reachSource === "sample" && it.reachEst != null) return '<span title="05 历史提案样本级别均值，每辆/日">≈' + (it.reachEst / 10000).toFixed(1) + "万/辆·样本</span>";
     return '<span class="nodata" style="color:var(--muted)">无数据</span>';
   }
   function reachSourceText(s) {
     if (!s) return "—";
-    if (s.reachSource === "platform") return "平台数据（" + s.reachLabel + "）";
-    if (s.reachSource === "mixed") return "平台数据 + 样本估算（" + s.reachLabel + "）";
+    var lab = String(s.reachLabel || "").replace(/^平台\s*/, "");
+    if (s.reachSource === "platform") return "平台数据（" + lab + "）";
+    if (s.reachSource === "mixed") return "平台数据 + 样本估算（" + lab + "）";
     if (s.reachSource === "sample") return "样本估算（05 历史提案）";
     return "—";
   }
@@ -839,9 +863,13 @@ function syncControls() {
 
   // Frame the whole coverage circle (plus a little air) unless the user or a
   // ?zoom= deep link already chose a zoom level. Network mode frames all nodes.
-  function frameMap(center, radius, anchors) {
+  function frameMap(center, radius, anchors, bounds) {
     if (state.mapZoom) { state.leaflet.setView(center, state.mapZoom); return; }
     state.leaflet.invalidateSize();
+    if (bounds) {
+      state.leaflet.fitBounds([[bounds.minLat, bounds.minLng], [bounds.maxLat, bounds.maxLng]], { padding: [22, 22] });
+      return;
+    }
     if (anchors && anchors.length > 1) {
       var pts = [];
       anchors.forEach(function (a) {
@@ -860,7 +888,8 @@ function syncControls() {
 
   // A slow network can initialize the map before its container has its final
   // size; Leaflet then fits a 0×0 box and locks to max zoom. Refit once the
-  // real size is known (and on later resizes).
+  // real size is known (and on later resizes). Keep `bounds` in the snapshot:
+  // the citywide plan frames 4 hubs + 24 stations by bounds, not by anchors.
   function refitMapToSize() {
     if (!state.leaflet || !state.lastMapSample) return;
     state.leaflet.invalidateSize();
@@ -871,7 +900,7 @@ function syncControls() {
     state.lastFitSize = { x: size.x, y: size.y };
     state.mapZoom = null;
     var sm = state.lastMapSample;
-    frameMap([sm.center.lat, sm.center.lng], sm.radius, sm.anchors);
+    frameMap([sm.center.lat, sm.center.lng], sm.radius, sm.anchors, sm.bounds);
     state.mapKey = sm.mapKey || state.mapKey;
   }
 
@@ -881,7 +910,10 @@ function syncControls() {
     var anchors = (sample.anchors && sample.anchors.length) ? sample.anchors.slice() : [];
     if (!anchors.length) anchors = [{ lat: center[0], lng: center[1], radius: sample.radius, label: sample.anchorLabel }];
     state.lastMapSample = {
-      center: sample.center, radius: sample.radius, anchors: anchors,
+      center: sample.center,
+      radius: sample.radius,
+      anchors: anchors,
+      bounds: sample.bounds || null,
       mapKey: sample.mapKey || (sample.activeAnchor + "|" + sample.radius)
     };
     var ot = offlineTileMeta();
@@ -917,7 +949,7 @@ function syncControls() {
       // Don't hijack page scroll: wheel-zoom only after the map is clicked.
       state.leaflet.on("click focus", function () { state.leaflet.scrollWheelZoom.enable(); });
       state.leaflet.on("mouseout blur", function () { state.leaflet.scrollWheelZoom.disable(); });
-      frameMap(center, sample.radius, anchors);
+      frameMap(center, sample.radius, anchors, sample.bounds);
       state.leafletLayers = window.L.layerGroup().addTo(state.leaflet);
       state.leaflet.on("zoomend", function () { state.mapZoom = state.leaflet.getZoom(); });
       attachTiles();
@@ -933,7 +965,7 @@ function syncControls() {
       }
       var key = sample.mapKey || (sample.activeAnchor + "|" + sample.radius);
       if (state.mapKey !== key) {
-        frameMap(center, sample.radius, anchors);
+        frameMap(center, sample.radius, anchors, sample.bounds);
         state.mapKey = key;
       }
     }
@@ -1013,11 +1045,11 @@ function syncControls() {
       if (p.lat == null) return;
       var pt = [Number(p.lat), Number(p.lng)];
       var marker = window.L.circleMarker(pt, {
-        radius: p.selected ? 8 : (p.exit ? 3 : 4),
+        radius: p.selected ? 8 : (p.stationDot ? 5 : (p.exit ? 3 : 4)),
         color: p.selected ? T.metroSel : T.cand,
-        weight: p.selected ? 2.6 : 1.2,
+        weight: p.selected ? 2.6 : (p.stationDot ? 1.6 : 1.2),
         fillColor: p.selected ? T.metroSel : T.cand,
-        fillOpacity: p.selected ? 0.35 : 0,
+        fillOpacity: p.selected ? 0.35 : (p.stationDot ? 0.12 : 0),
         className: p.selected ? "metro-selected" : "metro-candidate"
       });
       marker.bindTooltip(p.label + (p.selected ? " · 已选" : "") + (p.anchorLabel ? " · " + p.anchorLabel : ""), {
@@ -1056,14 +1088,18 @@ function syncControls() {
     var nodes = mapNodes();
     var p = state.plan;
     var st = p ? p.stats : null;
+    var s = p ? p.summary : null;
     var items = p ? p.items : [];
     var selectedBus = new Set(items.filter(function (x) { return x.media === "bus"; }).map(function (x) { return x.line; }));
     var selectedMetro = new Set(items.filter(function (x) { return x.media === "metro"; }).map(function (x) { return x.station; }));
     var primary = nodes[0];
     $("#mapTitle").textContent = b
-      ? (b.shortLabel || b.label) + " · " + ((primary ? primary.radius : state.radius) / 1000) + "KM"
+      ? (b.citywide
+        ? (b.shortLabel || b.label) + " · " + (s ? s.metroStations : 0) + " / " + (st ? st.citywideStations : 24) + " 站"
+        : (b.shortLabel || b.label) + " · " + ((primary ? primary.radius : state.radius) / 1000) + "KM")
       : shortAnchor(state.anchor) + " / " + (state.radius / 1000) + "KM";
-    $("#mapStats").textContent = "COVERAGE " + (st ? st.coverageTotal : "—") + " / STOCK " + (st ? (st.busLines + st.metroExits) : "—");
+    $("#mapStats").textContent = "COVERAGE " + (st ? st.coverageTotal : "—") + " / STOCK " + (st ? (st.busLines + st.metroExits) : "—") +
+      (b && b.citywide ? " / CITY " + (st ? st.citywideStations : 24) + " ST · SEL " + (s ? s.metroStations : 0) : "");
     if (!nodes.length) {
       $("#mapStatic").innerHTML = "";
       $("#mapBadge").textContent = "该锚点没有覆盖数据";
@@ -1115,42 +1151,91 @@ function syncControls() {
     items.forEach(function (x) { if (x.media === "metro") (metroItemsByStation[x.station] = metroItemsByStation[x.station] || []).push(x); });
     var metro = [];
     var seenSt = {};
-    nodes.forEach(function (node) {
-      var geo = geoOf(node.anchor);
-      node.cov.list.filter(function (r) { return r.mediaType === "metro"; }).forEach(function (r) {
-        var st = r.pointName;
-        if (seenSt[st]) return;
-        seenSt[st] = true;
-        var selItems = metroItemsByStation[st] || [];
-        var selIds = selItems.map(function (x) { return x.id; });
-        var invExits = ((DATA.stations || {})[st] || {}).exits || [];
-        var placed = {};
-        if (geo && geo.exits) {
-          invExits.forEach(function (e) {
-            var ge = geo.exits[e.id];
-            if (!ge) return;
-            placed[e.id] = true;
-            var sel = selIds.indexOf(e.id) >= 0;
-            metro.push({ station: st, exit: e.exit, label: st + " " + e.exit, lng: ge.lng, lat: ge.lat,
-              selected: sel, selectedIds: sel ? [e.id] : [], real: true, distance: Math.round(r.minDistance),
-              anchorLabel: node.label });
-          });
-        }
-        var rest = selIds.filter(function (id) { return !placed[id]; });
-        var anyPlaced = Object.keys(placed).length > 0;
-        if (rest.length || !anyPlaced) {
-          metro.push({ station: st, exit: "", label: st + (rest.length ? " " + selItems.filter(function (x) { return rest.indexOf(x.id) >= 0; }).map(function (x) { return x.exit; }).join("/") : ""),
-            lng: r.pointLng, lat: r.pointLat, selected: rest.length > 0, selectedIds: rest, real: false,
-            distance: Math.round(r.minDistance), anchorLabel: node.label });
-        }
+    if (b && b.citywide) {
+      // 全城：24 个在库站都上图（灰点），选中的口画蓝环；
+      // 口有真实坐标用出入口坐标，没有就用站中心，绝不把站中心伪装成口。
+      var exitGeo = {};
+      Object.keys(DATA.geo || {}).forEach(function (a) {
+        var g = DATA.geo[a] || {};
+        Object.keys(g.exits || {}).forEach(function (id) { if (!exitGeo[id]) exitGeo[id] = g.exits[id]; });
       });
+      Object.keys(DATA.stations || {}).forEach(function (name) {
+        var st = DATA.stations[name];
+        if (!st || !st.inInventory || !st.coord) return;
+        var firstDistrict = (st.exits || []).map(function (e) { return e.district; }).filter(Boolean)[0] || "";
+        var selItems = metroItemsByStation[name] || [];
+        metro.push({
+          station: name, exit: "", label: name,
+          lng: st.coord.lng, lat: st.coord.lat,
+          selected: false, selectedIds: [], real: false, distance: 0,
+          stationDot: true, anchorLabel: firstDistrict
+        });
+        selItems.forEach(function (it) {
+          var ge = exitGeo[it.id];
+          metro.push({
+            station: name, exit: it.exit, label: name + " " + it.exit,
+            lng: (ge || st.coord).lng, lat: (ge || st.coord).lat,
+            selected: true, selectedIds: [it.id], real: !!ge, distance: 0,
+            anchorLabel: it.district || firstDistrict
+          });
+        });
+      });
+    } else {
+      nodes.forEach(function (node) {
+        var geo = geoOf(node.anchor);
+        node.cov.list.filter(function (r) { return r.mediaType === "metro"; }).forEach(function (r) {
+          var st = r.pointName;
+          if (seenSt[st]) return;
+          seenSt[st] = true;
+          var selItems = metroItemsByStation[st] || [];
+          var selIds = selItems.map(function (x) { return x.id; });
+          var invExits = ((DATA.stations || {})[st] || {}).exits || [];
+          var placed = {};
+          if (geo && geo.exits) {
+            invExits.forEach(function (e) {
+              var ge = geo.exits[e.id];
+              if (!ge) return;
+              placed[e.id] = true;
+              var sel = selIds.indexOf(e.id) >= 0;
+              metro.push({ station: st, exit: e.exit, label: st + " " + e.exit, lng: ge.lng, lat: ge.lat,
+                selected: sel, selectedIds: sel ? [e.id] : [], real: true, distance: Math.round(r.minDistance),
+                anchorLabel: node.label });
+            });
+          }
+          var rest = selIds.filter(function (id) { return !placed[id]; });
+          var anyPlaced = Object.keys(placed).length > 0;
+          if (rest.length || !anyPlaced) {
+            metro.push({ station: st, exit: "", label: st + (rest.length ? " " + selItems.filter(function (x) { return rest.indexOf(x.id) >= 0; }).map(function (x) { return x.exit; }).join("/") : ""),
+              lng: r.pointLng, lat: r.pointLat, selected: rest.length > 0, selectedIds: rest, real: false,
+              distance: Math.round(r.minDistance), anchorLabel: node.label });
+          }
+        });
+      });
+    }
+    var boundsPts = [];
+    nodes.forEach(function (n) {
+      var dLat = n.radius / 111000;
+      var dLng = n.radius / (111000 * Math.cos(n.center.lat * Math.PI / 180));
+      boundsPts.push([n.center.lng - dLng, n.center.lat - dLat], [n.center.lng + dLng, n.center.lat + dLat]);
     });
+    if (b && b.citywide) {
+      Object.keys(DATA.stations || {}).forEach(function (name) {
+        var st = DATA.stations[name];
+        if (st && st.inInventory && st.coord) boundsPts.push([st.coord.lng, st.coord.lat]);
+      });
+    }
     var sample = {
       center: primary.center,
       radius: primary.radius,
       activeAnchor: state.anchor,
       anchorLabel: shortAnchor(state.anchor),
       anchors: nodes.map(function (n) { return { lng: n.center.lng, lat: n.center.lat, radius: n.radius, label: String(n.label || "").replace(/（[^）]*）/g, "") }; }),
+      bounds: boundsPts.length ? {
+        minLng: Math.min.apply(null, boundsPts.map(function (p) { return p[0]; })) - 0.012,
+        maxLng: Math.max.apply(null, boundsPts.map(function (p) { return p[0]; })) + 0.012,
+        minLat: Math.min.apply(null, boundsPts.map(function (p) { return p[1]; })) - 0.01,
+        maxLat: Math.max.apply(null, boundsPts.map(function (p) { return p[1]; })) + 0.01
+      } : null,
       mapKey: b ? b.bundleId + "|" + nodes.map(function (n) { return n.anchor; }).join(",") : state.anchor + "|" + state.radius,
       lines: lines,
       geoNote: geoNote,
@@ -1251,7 +1336,9 @@ function syncControls() {
         var f = (meta.coverageFiles || []).find(function (x) { return x.anchor === m.anchor && Number(x.radius) === Number(m.radius); });
         return (m.label || shortAnchor(m.anchor)) + " " + (m.radius / 1000) + "km" + (f ? "（" + f.count + " 条）" : "");
       }).join("；");
-      anchorText = (b.label || "多点模式") + " · " + b.members.length + " 个" + (b.unitLabel || "网点") + " · 每点 " + (b.members[0].radius / 1000) + "km · 品牌 " + state.brand +
+      anchorText = (b.label || "多点模式") + " · " + b.members.length + " 个" + (b.unitLabel || "网点") + " · " + bundleRadiusText(b) +
+        (b.citywide ? " · 全城 " + (state.plan ? state.plan.summary.metroStations : 0) + " 站" : "") +
+        " · 品牌 " + state.brand +
         (b.status === "sample" ? " · " + (b.unitLabel || "网点") + "选点为演示假设" : "");
     } else {
       covText = cf ? cf.file : "—";
@@ -1279,7 +1366,7 @@ function syncControls() {
       var info = p && p.summary.reachInfo;
       var miss = info && info.missing && info.missing.length ? "；无数据 " + info.missing.length + " 项未计（" + info.missing.slice(0, 3).join("、") + "）" : "";
       var bu = b.unitLabel || "网点";
-      return "平台数据（2023-05，触达人群-日均人次）：三个" + bu + "各取本点人流；公交 = 车辆数 × 线路日均触达；地铁同站多口按合并去重、不相加；" + bu + "之间未去重" + miss;
+      return "平台数据（2023-05，触达人群-日均人次）：" + b.members.length + " 个" + bu + "各取本点人流；公交 = 车辆数 × 线路日均触达；地铁同站多口按合并去重、不相加；" + bu + "之间未去重" + miss;
     }
     if (ff) {
       var info2 = p && p.summary.reachInfo;
@@ -1332,7 +1419,7 @@ function syncControls() {
         it.grade, it.qty, it.free + "/" + it.total, it.months, it.unitPrice,
         it.listSubtotal, d.toFixed(2), it.net,
         it.dailyReach != null ? it.dailyReach : (it.reachSource === "sample" && it.reachEst != null ? "≈" + it.reachEst + "/辆(样本)" : "无数据"),
-        it.dailyReach != null ? "平台2023-05" : (it.reachSource === "sample" ? "05样本估算" : "无数据"),
+        it.dailyReach != null ? (it.reachScope === "station" ? "平台2023-05(站点)" : "平台2023-05") : (it.reachSource === "sample" ? "05样本估算" : "无数据"),
         Math.round(it.distance), it.pointName || "", it.reason
       ].map(csvCell).join(","));
     });
@@ -1365,7 +1452,11 @@ function syncControls() {
     var s = p.summary;
     var b = currentBundle();
     var anchorShort = b ? (b.shortLabel || b.label) : state.anchor;
-    var anchorLine = b ? b.members.map(function (m) { return (m.label || shortAnchor(m.anchor)) + " " + (m.radius / 1000) + "km"; }).join(" / ") : (state.anchor + " " + (state.radius / 1000) + "km");
+    var anchorLine = b
+      ? (b.citywide
+        ? (b.shortLabel || b.label) + " · " + b.members.length + " 枢纽 + " + (p.stats.citywideStations || 24) + " 站在库 / 选中 " + p.summary.metroStations + " 站"
+        : b.members.map(function (m) { return (m.label || shortAnchor(m.anchor)) + " " + (m.radius / 1000) + "km"; }).join(" / "))
+      : (state.anchor + " " + (state.radius / 1000) + "km");
     var mapSvg = $("#mapStatic") ? $("#mapStatic").outerHTML : "";
     mapSvg = mapSvg.replace(/\shidden(="[^"]*")?/, "");
     if (state.mapDataUri) {
@@ -1457,7 +1548,9 @@ function syncControls() {
       "<div class='netbox'><div class='lab'>净价 / 万元</div><div class='net'>" + wan(q.net) + "<small>万</small></div><div class='pill'>预算内 · 用掉 " + usage + "%</div></div></section>" +
       "<section class='stats'>" + stats + "</section>" +
       "<section class='card'><div class='strip'>" + segs + "</div><div class='legend'><span><i class='metro'></i>地铁口 <b>" + metroPct + "%</b></span><span><i class='bus'></i>公交 <b>" + busPct + "%</b></span><span>净价 <b>" + wan(q.net) + " 万</b> / 预算 <b>" + Math.round(state.budget / 10000) + " 万</b></span></div></section>" +
-      "<section class='block'><h2><span class='no'>00</span>campaign 假设书</h2>" + briefHtml + "</section>" +
+      "<section class='block'><h2><span class='no'>00</span>campaign 假设书</h2>" +
+        (function () { var bf = briefOf(state.industryId); return bf && bf.oneLine ? "<p class='fine'>" + esc(bf.oneLine) + "</p>" : ""; })() +
+        briefHtml + "</section>" +
       "<section class='block'><h2><span class='no'>01</span>品牌理解 / INSIGHT</h2><p><b>" + esc(profile().brand) + "</b> · " + esc(profile().insight) + "</p><p class='fine'>合规提示：" + esc(complianceText(profile())) + (profile().complianceNotice ? "（" + esc(profile().complianceNotice) + "）" : "") + "</p></section>" +
       "<section class='block'><h2><span class='no'>02</span>覆盖与选中 / MAP</h2><div class='map-card'>" + mapSvg + "</div><div class='mlegend'><span><i></i>已选公交线路</span><span><i class='ring'></i>已选地铁口</span><span>距离 = 线路最近经过点位的距离</span></div></section>" +
       "<section class='block'><h2><span class='no'>03</span>清单 / MANIFEST</h2><table class='manifest'><thead><tr><th>类型</th><th>媒体 / 名称</th><th>级别</th><th>数量</th><th>空位</th><th>周数</th><th>刊例</th><th>净价</th><th>日均触达</th><th>距离</th><th>理由</th></tr></thead><tbody>" + rows + "</tbody></table><p class='fine'>触达：" + esc(reachSum) + "。2023 数据仅作相对权重，不代表 2027 绝对值。</p></section>" +
@@ -1470,6 +1563,7 @@ function syncControls() {
   }
 
   window.ProposalApp.buildProposalHtml = buildProposalHtml;
+  window.ProposalApp.buildCsv = buildCsv;
 
   function exportHtml() {
     var p = state.plan;
