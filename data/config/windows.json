@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-11-21 17:06:10",
+  "notes": [
+    "四个窗口均为 6 周；库存来自红豆 admin-api，快照时间见 snapshotAt。",
+    "2027 春节为 2 月 6 日；开门红窗口 1/4–2/14 覆盖节前 5 周 + 节后 8 天，未过度后延。",
+    "2027 中秋为 9 月 15 日，国庆 10 月 1 日；中秋国庆窗口 8/30–10/10 同时覆盖两个节点。",
+    "Q2 沿用已有 inventory_live.json（2027-04-01～05-15），窗口取 4/1–5/12 六周。"
+  ],
+  "windows": [
+    {
+      "id": "kaimenhong",
+      "name": "开门红",
+      "start": "2027-01-04",
+      "end": "2027-02-14",
+      "weeks": 6,
+      "industries": [
+        "bank-insurance"
+      ],
+      "anchorIds": [
+        "lujiazui"
+      ],
+      "reason": "银行开门红：节前 5 周是网点/财富管理获客高峰，节后 8 天承接返工；陆家嘴 CBD 与地铁口到达优先。",
+      "inventoryFile": "data/inventory_kaimenhong.json",
+      "snapshotAt": "2026-11-21 17:04:54",
+      "status": "verified"
+    },
+    {
+      "id": "q2",
+      "name": "春季 Q2",
+      "start": "2027-04-01",
+      "end": "2027-05-12",
+      "weeks": 6,
+      "industries": [
+        "private-hospital"
+      ],
+      "anchorIds": [
+        "meihua"
+      ],
+      "reason": "医院春季：五一前后家庭健康消费与院区到访稳定；美华 3km 覆盖已验证，地铁+公交均衡。",
+      "inventoryFile": "data/inventory_live.json",
+      "snapshotAt": "2026-11-21 11:31:36",
+      "status": "verified"
+    },
+    {
+      "id": "summer",
+      "name": "暑期",
+      "start": "2027-07-01",
+      "end": "2027-08-11",
+      "weeks": 6,
+      "industries": [
+        "food-beverage",
+        "theme-park"
+      ],
+      "anchorIds": [
+        "renmin-guangchang",
+        "disney"
+      ],
+      "reason": "饮用水/乐园暑期：高温即饮与亲子出游高峰；人民广场做城市客流，迪士尼做家庭客群（公交为主，地铁 0 口）。",
+      "inventoryFile": "data/inventory_summer.json",
+      "snapshotAt": "2026-11-21 17:05:21",
+      "status": "verified"
+    },
+    {
+      "id": "midautumn",
+      "name": "中秋国庆",
+      "start": "2027-08-30",
+      "end": "2027-10-10",
+      "weeks": 6,
+      "industries": [
+        "health-supplement"
+      ],
+      "anchorIds": [
+        "xujiahui"
+      ],
+      "reason": "保健品中秋国庆：双节送礼与家庭团聚场景；徐家汇商圈地铁+公交覆盖，适合礼盒与家庭营养叙事。",
+      "inventoryFile": "data/inventory_midautumn.json",
+      "snapshotAt": "2026-11-21 17:05:42",
+      "status": "verified"
+    }
+  ]
+}

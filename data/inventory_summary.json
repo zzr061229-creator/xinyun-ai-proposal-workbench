@@ -1,0 +1,102 @@
+{
+  "bus": {
+    "rows": 431,
+    "total": 2525.0,
+    "available": 1376.0,
+    "contract": 571.0,
+    "reserved": 371.0,
+    "grades": {
+      "A++": {
+        "rows": 200,
+        "total": 1431.0,
+        "available": 757.0,
+        "contract": 356.0,
+        "reserved": 218.0
+      },
+      "A+": {
+        "rows": 181,
+        "total": 556.0,
+        "available": 310.0,
+        "contract": 166.0,
+        "reserved": 1.0
+      },
+      "S": {
+        "rows": 48,
+        "total": 511.0,
+        "available": 286.0,
+        "contract": 45.0,
+        "reserved": 152.0
+      },
+      "AA": {
+        "rows": 2,
+        "total": 27.0,
+        "available": 23.0,
+        "contract": 4.0,
+        "reserved": 0.0
+      }
+    }
+  },
+  "metro": {
+    "rows": 861,
+    "total": 861.0,
+    "available": 824.0,
+    "contract": 35.0,
+    "reserved": 2.0,
+    "grades": {
+      "A++": {
+        "rows": 502,
+        "total": 502.0,
+        "available": 469.0,
+        "contract": 31.0,
+        "reserved": 2.0
+      },
+      "(空)": {
+        "rows": 5,
+        "total": 5.0,
+        "available": 3.0,
+        "contract": 2.0,
+        "reserved": 0.0
+      },
+      "A+": {
+        "rows": 354,
+        "total": 354.0,
+        "available": 352.0,
+        "contract": 2.0,
+        "reserved": 0.0
+      }
+    }
+  },
+  "bus_columns": [
+    "resourceType",
+    "线路",
+    "运营公司",
+    "线路等级",
+    "媒体类型",
+    "总车辆数（可售）",
+    "保养影响容量",
+    "合同车数",
+    "预定车数",
+    "空位数",
+    "可能续约数"
+  ],
+  "metro_columns": [
+    "地铁编号",
+    "站点属性",
+    "出入口名称",
+    "所属辖区",
+    "商业区域",
+    "分类标签",
+    "提示",
+    "绿化及地铁Logo",
+    "特殊情况",
+    "高德线路",
+    "运营公司",
+    "格栅类型",
+    "媒体等级",
+    "数量",
+    "合同数",
+    "预定数",
+    "可能续约数",
+    "空位数"
+  ]
+}

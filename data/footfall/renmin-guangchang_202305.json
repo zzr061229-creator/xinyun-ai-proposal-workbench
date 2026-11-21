@@ -1,0 +1,2105 @@
+{
+  "version": "1.0.0",
+  "anchorId": "renmin-guangchang",
+  "anchorName": "人民广场",
+  "month": "2023-05",
+  "dataMonth": "202305",
+  "fetchedAt": "2026-11-21 17:02:19",
+  "source": "新云大数据平台指标接口（visitorsFlowrateAndcrowdSpeed / crowdAge / crowdGender / crowdConsumption / crowdHouse / regionAttribute / circleCross）",
+  "method": "覆盖分析里的公交线路名/地铁站名 → 平台标签 ID；按 2023-05、500m 网格查询区域人流与画像。",
+  "notes": [
+    "2023-05 平台数据，只作相对权重与预估，不代表 2027 绝对值。",
+    "同一地铁站各出入口 PV/UV 基本相同；站点 aggregateReach 为多口合并去重触达，不把各口相加。",
+    "公交 PV 是线路沿线区域口径，数值偏大；方案优先用 dailyReach（触达人次）。",
+    "分时客流为平台 visitorsFlowrate 四段原值，平台未标单位，只作相对比较。",
+    "无平台标签的站点/线路显示“无数据”，不估算。",
+    "覆盖有、平台无标签的公交线：840路、旅游10线、旅游1线、旅游2线。",
+    "无平台标签的地铁站：一大会址·黄陂南路、宝山路。"
+  ],
+  "summary": {
+    "busLines": 66,
+    "busRequested": 70,
+    "metroStations": 5,
+    "metroExits": 31,
+    "metroMissingStations": [
+      "一大会址·黄陂南路",
+      "宝山路"
+    ]
+  },
+  "bus": {
+    "lines": [
+      {
+        "name": "69路",
+        "labelId": 6690,
+        "grade": "A++",
+        "dailyTrips": 1984093,
+        "dailyPeople": 1151856,
+        "dailyReach": 159529,
+        "flowByPeriod": [
+          39130,
+          58599,
+          46272,
+          31018
+        ]
+      },
+      {
+        "name": "96路",
+        "labelId": 6166,
+        "grade": "A++",
+        "dailyTrips": 1125857,
+        "dailyPeople": 644842,
+        "dailyReach": 153961,
+        "flowByPeriod": [
+          22192,
+          34364,
+          26558,
+          17249
+        ]
+      },
+      {
+        "name": "740路",
+        "labelId": 6730,
+        "grade": "A+",
+        "dailyTrips": 1795634,
+        "dailyPeople": 1042953,
+        "dailyReach": 150101,
+        "flowByPeriod": [
+          33859,
+          51144,
+          40284,
+          26714
+        ]
+      },
+      {
+        "name": "66路",
+        "labelId": 6687,
+        "grade": "A++",
+        "dailyTrips": 1401816,
+        "dailyPeople": 744645,
+        "dailyReach": 149268,
+        "flowByPeriod": [
+          30198,
+          44388,
+          35388,
+          24285
+        ]
+      },
+      {
+        "name": "95路",
+        "labelId": 6850,
+        "grade": "A++",
+        "dailyTrips": 1549034,
+        "dailyPeople": 847855,
+        "dailyReach": 142061,
+        "flowByPeriod": [
+          28171,
+          41902,
+          33596,
+          23208
+        ]
+      },
+      {
+        "name": "63路",
+        "labelId": 6684,
+        "grade": "A++",
+        "dailyTrips": 1031146,
+        "dailyPeople": 561856,
+        "dailyReach": 141977,
+        "flowByPeriod": [
+          21062,
+          32100,
+          25122,
+          16538
+        ]
+      },
+      {
+        "name": "17路",
+        "labelId": 6540,
+        "grade": "A++",
+        "dailyTrips": 1369039,
+        "dailyPeople": 762999,
+        "dailyReach": 140580,
+        "flowByPeriod": [
+          25577,
+          38994,
+          30428,
+          20213
+        ]
+      },
+      {
+        "name": "82路",
+        "labelId": 6153,
+        "grade": "A++",
+        "dailyTrips": 1334784,
+        "dailyPeople": 697203,
+        "dailyReach": 136090,
+        "flowByPeriod": [
+          18799,
+          28301,
+          22271,
+          14868
+        ]
+      },
+      {
+        "name": "94路",
+        "labelId": 6346,
+        "grade": "S",
+        "dailyTrips": 1173952,
+        "dailyPeople": 664854,
+        "dailyReach": 133831,
+        "flowByPeriod": [
+          20574,
+          30521,
+          24169,
+          16421
+        ]
+      },
+      {
+        "name": "100路",
+        "labelId": 6384,
+        "grade": "A+",
+        "dailyTrips": 1008898,
+        "dailyPeople": 534072,
+        "dailyReach": 133578,
+        "flowByPeriod": [
+          22350,
+          32595,
+          26134,
+          18016
+        ]
+      },
+      {
+        "name": "136路",
+        "labelId": 6462,
+        "grade": "A++",
+        "dailyTrips": 1319995,
+        "dailyPeople": 743703,
+        "dailyReach": 132527,
+        "flowByPeriod": [
+          27593,
+          40880,
+          32480,
+          22025
+        ]
+      },
+      {
+        "name": "786路",
+        "labelId": 6138,
+        "grade": "A++",
+        "dailyTrips": 860344,
+        "dailyPeople": 464190,
+        "dailyReach": 127772,
+        "flowByPeriod": [
+          14835,
+          22020,
+          17521,
+          11871
+        ]
+      },
+      {
+        "name": "隧道三线",
+        "labelId": 6316,
+        "grade": "A++",
+        "dailyTrips": 1295938,
+        "dailyPeople": 668526,
+        "dailyReach": 116855,
+        "flowByPeriod": [
+          17647,
+          26910,
+          20991,
+          13907
+        ]
+      },
+      {
+        "name": "43路",
+        "labelId": 6339,
+        "grade": "A++",
+        "dailyTrips": 1077981,
+        "dailyPeople": 608449,
+        "dailyReach": 116422,
+        "flowByPeriod": [
+          18978,
+          27778,
+          22205,
+          15357
+        ]
+      },
+      {
+        "name": "985路",
+        "labelId": 6176,
+        "grade": "A++",
+        "dailyTrips": 1581731,
+        "dailyPeople": 846872,
+        "dailyReach": 114148,
+        "flowByPeriod": [
+          24047,
+          35605,
+          28238,
+          19251
+        ]
+      },
+      {
+        "name": "926路",
+        "labelId": 6164,
+        "grade": "S",
+        "dailyTrips": 893151,
+        "dailyPeople": 501720,
+        "dailyReach": 111402,
+        "flowByPeriod": [
+          9844,
+          15410,
+          11845,
+          7618
+        ]
+      },
+      {
+        "name": "58路",
+        "labelId": 6671,
+        "grade": "其他",
+        "dailyTrips": 1046024,
+        "dailyPeople": 591531,
+        "dailyReach": 111297,
+        "flowByPeriod": [
+          17538,
+          25920,
+          20607,
+          14098
+        ]
+      },
+      {
+        "name": "824路",
+        "labelId": 6365,
+        "grade": "A++",
+        "dailyTrips": 1434983,
+        "dailyPeople": 806901,
+        "dailyReach": 106763,
+        "flowByPeriod": [
+          18659,
+          28580,
+          22321,
+          14587
+        ]
+      },
+      {
+        "name": "167路",
+        "labelId": 6100,
+        "grade": "A++",
+        "dailyTrips": 1743301,
+        "dailyPeople": 952345,
+        "dailyReach": 104821,
+        "flowByPeriod": [
+          27667,
+          41683,
+          32793,
+          21827
+        ]
+      },
+      {
+        "name": "106路",
+        "labelId": 6395,
+        "grade": "其他",
+        "dailyTrips": 723638,
+        "dailyPeople": 411100,
+        "dailyReach": 104178,
+        "flowByPeriod": [
+          15102,
+          22273,
+          17779,
+          12141
+        ]
+      },
+      {
+        "name": "798路",
+        "labelId": 6148,
+        "grade": "A++",
+        "dailyTrips": 1048924,
+        "dailyPeople": 565832,
+        "dailyReach": 103431,
+        "flowByPeriod": [
+          12056,
+          18427,
+          14339,
+          9414
+        ]
+      },
+      {
+        "name": "55路",
+        "labelId": 6112,
+        "grade": "S",
+        "dailyTrips": 1380528,
+        "dailyPeople": 731644,
+        "dailyReach": 102711,
+        "flowByPeriod": [
+          21540,
+          32002,
+          25404,
+          17211
+        ]
+      },
+      {
+        "name": "隧道六线",
+        "labelId": 6315,
+        "grade": "A++",
+        "dailyTrips": 1287452,
+        "dailyPeople": 666598,
+        "dailyReach": 102567,
+        "flowByPeriod": [
+          17158,
+          25873,
+          20179,
+          13485
+        ]
+      },
+      {
+        "name": "955路",
+        "labelId": 6845,
+        "grade": "A++",
+        "dailyTrips": 1754147,
+        "dailyPeople": 979491,
+        "dailyReach": 102442,
+        "flowByPeriod": [
+          29112,
+          43482,
+          34464,
+          23233
+        ]
+      },
+      {
+        "name": "33路",
+        "labelId": 6629,
+        "grade": "A++",
+        "dailyTrips": 713544,
+        "dailyPeople": 399128,
+        "dailyReach": 102180,
+        "flowByPeriod": [
+          13899,
+          20738,
+          16383,
+          11094
+        ]
+      },
+      {
+        "name": "537路",
+        "labelId": 6658,
+        "grade": "A++",
+        "dailyTrips": 1328370,
+        "dailyPeople": 732778,
+        "dailyReach": 99893,
+        "flowByPeriod": [
+          21546,
+          32178,
+          25505,
+          17201
+        ]
+      },
+      {
+        "name": "89路",
+        "labelId": 6345,
+        "grade": "A++",
+        "dailyTrips": 997799,
+        "dailyPeople": 546900,
+        "dailyReach": 99244,
+        "flowByPeriod": [
+          18902,
+          28187,
+          22328,
+          15029
+        ]
+      },
+      {
+        "name": "845路",
+        "labelId": 6794,
+        "grade": "其他",
+        "dailyTrips": 1208627,
+        "dailyPeople": 672741,
+        "dailyReach": 97627,
+        "flowByPeriod": [
+          18948,
+          27968,
+          22308,
+          15220
+        ]
+      },
+      {
+        "name": "741路",
+        "labelId": 6731,
+        "grade": "其他",
+        "dailyTrips": 868185,
+        "dailyPeople": 478219,
+        "dailyReach": 97237,
+        "flowByPeriod": [
+          16409,
+          24434,
+          19457,
+          13233
+        ]
+      },
+      {
+        "name": "185路",
+        "labelId": 6564,
+        "grade": "其他",
+        "dailyTrips": 985605,
+        "dailyPeople": 552599,
+        "dailyReach": 96451,
+        "flowByPeriod": [
+          21732,
+          30488,
+          24078,
+          16705
+        ]
+      },
+      {
+        "name": "986路区间",
+        "labelId": 6177,
+        "grade": "A++",
+        "dailyTrips": 930168,
+        "dailyPeople": 512967,
+        "dailyReach": 95993,
+        "flowByPeriod": [
+          12121,
+          18223,
+          14391,
+          9637
+        ]
+      },
+      {
+        "name": "927路",
+        "labelId": 6372,
+        "grade": "A++",
+        "dailyTrips": 1167785,
+        "dailyPeople": 644499,
+        "dailyReach": 93599,
+        "flowByPeriod": [
+          20030,
+          30214,
+          23755,
+          15877
+        ]
+      },
+      {
+        "name": "912路",
+        "labelId": 6371,
+        "grade": "A++",
+        "dailyTrips": 961168,
+        "dailyPeople": 551511,
+        "dailyReach": 91888,
+        "flowByPeriod": [
+          15073,
+          22202,
+          17774,
+          12151
+        ]
+      },
+      {
+        "name": "941路",
+        "labelId": 6165,
+        "grade": "A++",
+        "dailyTrips": 1606874,
+        "dailyPeople": 874581,
+        "dailyReach": 90211,
+        "flowByPeriod": [
+          32022,
+          48406,
+          37963,
+          25232
+        ]
+      },
+      {
+        "name": "838路",
+        "labelId": 6790,
+        "grade": "A++",
+        "dailyTrips": 1104350,
+        "dailyPeople": 622896,
+        "dailyReach": 89199,
+        "flowByPeriod": [
+          19549,
+          29255,
+          23153,
+          15506
+        ]
+      },
+      {
+        "name": "932路",
+        "labelId": 6375,
+        "grade": "A++",
+        "dailyTrips": 941941,
+        "dailyPeople": 536741,
+        "dailyReach": 89171,
+        "flowByPeriod": [
+          15757,
+          23615,
+          18674,
+          12569
+        ]
+      },
+      {
+        "name": "779路",
+        "labelId": 6132,
+        "grade": "A++",
+        "dailyTrips": 1202125,
+        "dailyPeople": 636955,
+        "dailyReach": 88074,
+        "flowByPeriod": [
+          12808,
+          19402,
+          14908,
+          9873
+        ]
+      },
+      {
+        "name": "455路",
+        "labelId": 6111,
+        "grade": "A++",
+        "dailyTrips": 1272182,
+        "dailyPeople": 681103,
+        "dailyReach": 86456,
+        "flowByPeriod": [
+          16766,
+          25152,
+          19532,
+          13159
+        ]
+      },
+      {
+        "name": "218路",
+        "labelId": 6354,
+        "grade": "A++",
+        "dailyTrips": 1334041,
+        "dailyPeople": 753082,
+        "dailyReach": 86446,
+        "flowByPeriod": [
+          19836,
+          29517,
+          23376,
+          15863
+        ]
+      },
+      {
+        "name": "浦东62路",
+        "labelId": 6274,
+        "grade": "A++",
+        "dailyTrips": 826649,
+        "dailyPeople": 459599,
+        "dailyReach": 85310,
+        "flowByPeriod": [
+          10174,
+          15470,
+          11863,
+          7847
+        ]
+      },
+      {
+        "name": "浦东100路",
+        "labelId": 6223,
+        "grade": "A++",
+        "dailyTrips": 801646,
+        "dailyPeople": 420714,
+        "dailyReach": 82730,
+        "flowByPeriod": [
+          12276,
+          18670,
+          14571,
+          9647
+        ]
+      },
+      {
+        "name": "576路",
+        "labelId": 6115,
+        "grade": "A++",
+        "dailyTrips": 1487648,
+        "dailyPeople": 793401,
+        "dailyReach": 81992,
+        "flowByPeriod": [
+          26705,
+          40012,
+          31607,
+          21201
+        ]
+      },
+      {
+        "name": "454路",
+        "labelId": 6110,
+        "grade": "A++",
+        "dailyTrips": 533904,
+        "dailyPeople": 287706,
+        "dailyReach": 81764,
+        "flowByPeriod": [
+          8109,
+          12078,
+          9556,
+          6421
+        ]
+      },
+      {
+        "name": "85路",
+        "labelId": 6157,
+        "grade": "A++",
+        "dailyTrips": 1006265,
+        "dailyPeople": 533081,
+        "dailyReach": 81711,
+        "flowByPeriod": [
+          11976,
+          17924,
+          13857,
+          9331
+        ]
+      },
+      {
+        "name": "583路",
+        "labelId": 6117,
+        "grade": "A++",
+        "dailyTrips": 1502982,
+        "dailyPeople": 823415,
+        "dailyReach": 80020,
+        "flowByPeriod": [
+          16750,
+          25281,
+          19836,
+          13156
+        ]
+      },
+      {
+        "name": "980路",
+        "labelId": 6173,
+        "grade": "A++",
+        "dailyTrips": 1585062,
+        "dailyPeople": 858899,
+        "dailyReach": 80017,
+        "flowByPeriod": [
+          23665,
+          35660,
+          28089,
+          18778
+        ]
+      },
+      {
+        "name": "783路",
+        "labelId": 6135,
+        "grade": "A++",
+        "dailyTrips": 1327549,
+        "dailyPeople": 691162,
+        "dailyReach": 79802,
+        "flowByPeriod": [
+          16843,
+          25672,
+          19988,
+          13271
+        ]
+      },
+      {
+        "name": "992路",
+        "labelId": 6184,
+        "grade": "A+",
+        "dailyTrips": 1617745,
+        "dailyPeople": 852939,
+        "dailyReach": 79479,
+        "flowByPeriod": [
+          19657,
+          29629,
+          23134,
+          15460
+        ]
+      },
+      {
+        "name": "18路",
+        "labelId": 6336,
+        "grade": "A++",
+        "dailyTrips": 610576,
+        "dailyPeople": 342200,
+        "dailyReach": 79287,
+        "flowByPeriod": [
+          11229,
+          17107,
+          13358,
+          8798
+        ]
+      },
+      {
+        "name": "969路",
+        "labelId": 6168,
+        "grade": "A++",
+        "dailyTrips": 990747,
+        "dailyPeople": 553372,
+        "dailyReach": 78237,
+        "flowByPeriod": [
+          12944,
+          19626,
+          15347,
+          10202
+        ]
+      },
+      {
+        "name": "81路",
+        "labelId": 6151,
+        "grade": "A++",
+        "dailyTrips": 1192743,
+        "dailyPeople": 639299,
+        "dailyReach": 77574,
+        "flowByPeriod": [
+          11796,
+          17775,
+          13705,
+          9143
+        ]
+      },
+      {
+        "name": "782路",
+        "labelId": 6134,
+        "grade": "A++",
+        "dailyTrips": 940452,
+        "dailyPeople": 537201,
+        "dailyReach": 75030,
+        "flowByPeriod": [
+          13630,
+          20311,
+          16091,
+          10885
+        ]
+      },
+      {
+        "name": "隧道一线",
+        "labelId": 6317,
+        "grade": "A++",
+        "dailyTrips": 721677,
+        "dailyPeople": 403512,
+        "dailyReach": 74477,
+        "flowByPeriod": [
+          10764,
+          15998,
+          12712,
+          8592
+        ]
+      },
+      {
+        "name": "774路",
+        "labelId": 6128,
+        "grade": "A++",
+        "dailyTrips": 1121604,
+        "dailyPeople": 605742,
+        "dailyReach": 74316,
+        "flowByPeriod": [
+          13342,
+          20275,
+          15621,
+          10371
+        ]
+      },
+      {
+        "name": "451路",
+        "labelId": 6108,
+        "grade": "A++",
+        "dailyTrips": 1555203,
+        "dailyPeople": 846759,
+        "dailyReach": 74162,
+        "flowByPeriod": [
+          18961,
+          28389,
+          22372,
+          15010
+        ]
+      },
+      {
+        "name": "548路",
+        "labelId": 6661,
+        "grade": "其他",
+        "dailyTrips": 970251,
+        "dailyPeople": 532529,
+        "dailyReach": 71882,
+        "flowByPeriod": [
+          14854,
+          22137,
+          17493,
+          11764
+        ]
+      },
+      {
+        "name": "736路",
+        "labelId": 6361,
+        "grade": "A++",
+        "dailyTrips": 830547,
+        "dailyPeople": 450956,
+        "dailyReach": 71095,
+        "flowByPeriod": [
+          12145,
+          18572,
+          14454,
+          9614
+        ]
+      },
+      {
+        "name": "789路",
+        "labelId": 6141,
+        "grade": "A++",
+        "dailyTrips": 1219823,
+        "dailyPeople": 675896,
+        "dailyReach": 69893,
+        "flowByPeriod": [
+          17694,
+          26566,
+          20921,
+          14049
+        ]
+      },
+      {
+        "name": "963路",
+        "labelId": 6852,
+        "grade": "A++",
+        "dailyTrips": 1215847,
+        "dailyPeople": 692166,
+        "dailyReach": 67115,
+        "flowByPeriod": [
+          21557,
+          30858,
+          24433,
+          17047
+        ]
+      },
+      {
+        "name": "775路",
+        "labelId": 6129,
+        "grade": "A++",
+        "dailyTrips": 1006268,
+        "dailyPeople": 508522,
+        "dailyReach": 66429,
+        "flowByPeriod": [
+          12862,
+          19335,
+          15231,
+          10248
+        ]
+      },
+      {
+        "name": "780路",
+        "labelId": 6133,
+        "grade": "A++",
+        "dailyTrips": 880746,
+        "dailyPeople": 493515,
+        "dailyReach": 60445,
+        "flowByPeriod": [
+          11952,
+          18034,
+          14176,
+          9547
+        ]
+      },
+      {
+        "name": "911路双层",
+        "labelId": 6161,
+        "grade": "其他",
+        "dailyTrips": 948967,
+        "dailyPeople": 557642,
+        "dailyReach": 55420,
+        "flowByPeriod": [
+          8116,
+          12855,
+          9791,
+          6247
+        ]
+      },
+      {
+        "name": "沪南线",
+        "labelId": 6203,
+        "grade": "A+",
+        "dailyTrips": 1702474,
+        "dailyPeople": 917479,
+        "dailyReach": 49938,
+        "flowByPeriod": [
+          18296,
+          27265,
+          21496,
+          14459
+        ]
+      },
+      {
+        "name": "986路",
+        "labelId": 6857,
+        "grade": "A++",
+        "dailyTrips": 1778825,
+        "dailyPeople": 999976,
+        "dailyReach": 49203,
+        "flowByPeriod": [
+          22164,
+          33587,
+          26358,
+          17504
+        ]
+      },
+      {
+        "name": "961路",
+        "labelId": 6167,
+        "grade": "A++",
+        "dailyTrips": 1334503,
+        "dailyPeople": 686259,
+        "dailyReach": 40457,
+        "flowByPeriod": [
+          13590,
+          20622,
+          16093,
+          10749
+        ]
+      },
+      {
+        "name": "866路",
+        "labelId": 6369,
+        "grade": "A++",
+        "dailyTrips": 174779,
+        "dailyPeople": 93913,
+        "dailyReach": 37899,
+        "flowByPeriod": [
+          3423,
+          5164,
+          4071,
+          2718
+        ]
+      }
+    ]
+  },
+  "metro": {
+    "stations": [
+      {
+        "station": "人民广场",
+        "exitCount": 8,
+        "dailyTrips": 69052,
+        "dailyPeople": 61232,
+        "aggregateReach": 102705,
+        "exits": [
+          {
+            "station": "人民广场",
+            "exit": "10号口",
+            "labelId": 400,
+            "grade": "A++",
+            "dailyTrips": 15939,
+            "dailyPeople": 6870,
+            "dailyReach": 20134,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "11号口",
+            "labelId": 423,
+            "grade": "A++",
+            "dailyTrips": 57836,
+            "dailyPeople": 37914,
+            "dailyReach": 24985,
+            "flowByPeriod": [
+              56,
+              89,
+              67,
+              42
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "12号口",
+            "labelId": 446,
+            "grade": "A++",
+            "dailyTrips": 15939,
+            "dailyPeople": 6870,
+            "dailyReach": 2389,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "16号口",
+            "labelId": 1379,
+            "grade": "A++",
+            "dailyTrips": 69052,
+            "dailyPeople": 61232,
+            "dailyReach": 19922,
+            "flowByPeriod": [
+              53,
+              78,
+              62,
+              43
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "20号口",
+            "labelId": 1378,
+            "grade": "A++",
+            "dailyTrips": 69052,
+            "dailyPeople": 61232,
+            "dailyReach": 13638,
+            "flowByPeriod": [
+              53,
+              78,
+              62,
+              43
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "3号口",
+            "labelId": 422,
+            "grade": "A++",
+            "dailyTrips": 21267,
+            "dailyPeople": 9168,
+            "dailyReach": 43651,
+            "flowByPeriod": [
+              101,
+              148,
+              118,
+              82
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "8号口",
+            "labelId": 445,
+            "grade": "A++",
+            "dailyTrips": 15939,
+            "dailyPeople": 6870,
+            "dailyReach": 19310,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "station": "人民广场",
+            "exit": "9号口",
+            "labelId": 468,
+            "grade": "A++",
+            "dailyTrips": 15939,
+            "dailyPeople": 6870,
+            "dailyReach": 27324,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "station": "南京西路",
+        "exitCount": 1,
+        "dailyTrips": 53340,
+        "dailyPeople": 36740,
+        "aggregateReach": 37210,
+        "exits": [
+          {
+            "station": "南京西路",
+            "exit": "4号口",
+            "labelId": 407,
+            "grade": "A++",
+            "dailyTrips": 53340,
+            "dailyPeople": 36740,
+            "dailyReach": 37210,
+            "flowByPeriod": [
+              63,
+              96,
+              75,
+              51
+            ]
+          }
+        ]
+      },
+      {
+        "station": "豫园",
+        "exitCount": 6,
+        "dailyTrips": 141770,
+        "dailyPeople": 84348,
+        "aggregateReach": 45983,
+        "exits": [
+          {
+            "station": "豫园",
+            "exit": "1号口",
+            "labelId": 593,
+            "grade": "A++",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 96389,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          },
+          {
+            "station": "豫园",
+            "exit": "3号口",
+            "labelId": 603,
+            "grade": "A++",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 15127,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          },
+          {
+            "station": "豫园",
+            "exit": "4号口",
+            "labelId": 613,
+            "grade": "A++",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 67964,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          },
+          {
+            "station": "豫园",
+            "exit": "5号口",
+            "labelId": 9322,
+            "grade": "S",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 24796,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          },
+          {
+            "station": "豫园",
+            "exit": "6号口",
+            "labelId": 9021,
+            "grade": "S",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 32607,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          },
+          {
+            "station": "豫园",
+            "exit": "7号口",
+            "labelId": 9321,
+            "grade": "S",
+            "dailyTrips": 141770,
+            "dailyPeople": 84348,
+            "dailyReach": 39015,
+            "flowByPeriod": [
+              3079,
+              4747,
+              3686,
+              2435
+            ]
+          }
+        ]
+      },
+      {
+        "station": "静安寺",
+        "exitCount": 15,
+        "dailyTrips": 100947,
+        "dailyPeople": 62467,
+        "aggregateReach": 7146,
+        "exits": [
+          {
+            "station": "静安寺",
+            "exit": "10号口",
+            "labelId": 9340,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 2345,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "11号口",
+            "labelId": 9341,
+            "grade": "S",
+            "dailyTrips": 100947,
+            "dailyPeople": 62467,
+            "dailyReach": 1009,
+            "flowByPeriod": [
+              1865,
+              2650,
+              2147,
+              1546
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "12号口",
+            "labelId": 9082,
+            "grade": "S",
+            "dailyTrips": 86835,
+            "dailyPeople": 53546,
+            "dailyReach": 868,
+            "flowByPeriod": [
+              1185,
+              1757,
+              1387,
+              960
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "13A口",
+            "labelId": 9081,
+            "grade": "S",
+            "dailyTrips": 15044,
+            "dailyPeople": 8899,
+            "dailyReach": 454,
+            "flowByPeriod": [
+              80,
+              119,
+              94,
+              65
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "13B口",
+            "labelId": 9345,
+            "grade": "S",
+            "dailyTrips": 15044,
+            "dailyPeople": 8899,
+            "dailyReach": 508,
+            "flowByPeriod": [
+              80,
+              119,
+              94,
+              65
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "14号口",
+            "labelId": 9344,
+            "grade": "S",
+            "dailyTrips": 16777,
+            "dailyPeople": 5533,
+            "dailyReach": 1411,
+            "flowByPeriod": [
+              102,
+              153,
+              120,
+              82
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "15号口",
+            "labelId": 9083,
+            "grade": "S",
+            "dailyTrips": 16777,
+            "dailyPeople": 5533,
+            "dailyReach": 366,
+            "flowByPeriod": [
+              102,
+              153,
+              120,
+              82
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "1号口",
+            "labelId": 9338,
+            "grade": "S",
+            "dailyTrips": 16777,
+            "dailyPeople": 5533,
+            "dailyReach": 2042,
+            "flowByPeriod": [
+              102,
+              153,
+              120,
+              82
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "2号口",
+            "labelId": 9339,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 6924,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "3号口",
+            "labelId": 9346,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 256,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "4号口",
+            "labelId": 9348,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 3662,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "5号口",
+            "labelId": 9343,
+            "grade": "S",
+            "dailyTrips": 16777,
+            "dailyPeople": 5533,
+            "dailyReach": 168,
+            "flowByPeriod": [
+              102,
+              153,
+              120,
+              82
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "6号口",
+            "labelId": 9347,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 2309,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "8号口",
+            "labelId": 9349,
+            "grade": "S",
+            "dailyTrips": 14321,
+            "dailyPeople": 8596,
+            "dailyReach": 1037,
+            "flowByPeriod": [
+              169,
+              247,
+              197,
+              137
+            ]
+          },
+          {
+            "station": "静安寺",
+            "exit": "9号口",
+            "labelId": 9342,
+            "grade": "S",
+            "dailyTrips": 25570,
+            "dailyPeople": 13419,
+            "dailyReach": 1025,
+            "flowByPeriod": [
+              164,
+              252,
+              195,
+              130
+            ]
+          }
+        ]
+      },
+      {
+        "station": "马当路",
+        "exitCount": 1,
+        "dailyTrips": 103285,
+        "dailyPeople": 53721,
+        "aggregateReach": 40963,
+        "exits": [
+          {
+            "station": "马当路",
+            "exit": "1号口",
+            "labelId": 555,
+            "grade": "A++",
+            "dailyTrips": 103285,
+            "dailyPeople": 53721,
+            "dailyReach": 40963,
+            "flowByPeriod": [
+              1633,
+              2314,
+              1898,
+              1326
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "areaProfile": {
+    "basis": "人民广场站 8 个出入口合并区域",
+    "businessDistricts": [
+      {
+        "name": "人民广场南京东路商圈",
+        "polygon": [
+          [
+            121.470146,
+            31.231394
+          ],
+          [
+            121.470163,
+            31.231781
+          ],
+          [
+            121.470117,
+            31.231915
+          ],
+          [
+            121.469971,
+            31.232078
+          ],
+          [
+            121.469728,
+            31.232306
+          ],
+          [
+            121.46944,
+            31.232536
+          ],
+          [
+            121.469173,
+            31.232854
+          ],
+          [
+            121.468868,
+            31.233378
+          ],
+          [
+            121.469097,
+            31.233457
+          ],
+          [
+            121.468638,
+            31.234198
+          ],
+          [
+            121.468501,
+            31.23459
+          ],
+          [
+            121.468001,
+            31.235421
+          ],
+          [
+            121.469452,
+            31.235973
+          ],
+          [
+            121.469995,
+            31.236181
+          ],
+          [
+            121.470522,
+            31.236429
+          ],
+          [
+            121.471249,
+            31.236751
+          ],
+          [
+            121.472131,
+            31.237168
+          ],
+          [
+            121.473515,
+            31.237828
+          ],
+          [
+            121.474268,
+            31.238004
+          ],
+          [
+            121.474989,
+            31.238153
+          ],
+          [
+            121.476705,
+            31.238551
+          ],
+          [
+            121.478944,
+            31.239136
+          ],
+          [
+            121.480073,
+            31.239478
+          ],
+          [
+            121.481051,
+            31.239824
+          ],
+          [
+            121.481796,
+            31.240113
+          ],
+          [
+            121.48224,
+            31.240229
+          ],
+          [
+            121.482717,
+            31.240336
+          ],
+          [
+            121.483911,
+            31.240544
+          ],
+          [
+            121.48414,
+            31.239876
+          ],
+          [
+            121.484336,
+            31.239273
+          ],
+          [
+            121.48456,
+            31.238669
+          ],
+          [
+            121.484848,
+            31.238038
+          ],
+          [
+            121.485124,
+            31.237211
+          ],
+          [
+            121.485358,
+            31.236425
+          ],
+          [
+            121.485836,
+            31.234799
+          ],
+          [
+            121.486019,
+            31.234095
+          ],
+          [
+            121.48618,
+            31.233456
+          ],
+          [
+            121.486473,
+            31.232205
+          ],
+          [
+            121.486733,
+            31.231192
+          ],
+          [
+            121.486463,
+            31.231188
+          ],
+          [
+            121.486205,
+            31.231249
+          ],
+          [
+            121.485744,
+            31.231325
+          ],
+          [
+            121.485251,
+            31.231383
+          ],
+          [
+            121.484743,
+            31.231404
+          ],
+          [
+            121.484364,
+            31.231375
+          ],
+          [
+            121.483778,
+            31.231251
+          ],
+          [
+            121.482887,
+            31.231095
+          ],
+          [
+            121.482533,
+            31.230996
+          ],
+          [
+            121.482146,
+            31.230842
+          ],
+          [
+            121.48156,
+            31.230525
+          ],
+          [
+            121.480239,
+            31.229845
+          ],
+          [
+            121.480139,
+            31.229687
+          ],
+          [
+            121.478318,
+            31.228719
+          ],
+          [
+            121.47769,
+            31.228388
+          ],
+          [
+            121.47705,
+            31.228001
+          ],
+          [
+            121.475949,
+            31.227256
+          ],
+          [
+            121.474949,
+            31.22682
+          ],
+          [
+            121.474383,
+            31.226563
+          ],
+          [
+            121.473702,
+            31.226315
+          ],
+          [
+            121.472989,
+            31.226113
+          ],
+          [
+            121.472651,
+            31.226744
+          ],
+          [
+            121.472303,
+            31.227311
+          ],
+          [
+            121.472155,
+            31.227471
+          ],
+          [
+            121.471804,
+            31.227724
+          ],
+          [
+            121.471576,
+            31.228039
+          ],
+          [
+            121.471473,
+            31.228142
+          ],
+          [
+            121.471147,
+            31.228708
+          ],
+          [
+            121.470828,
+            31.229426
+          ],
+          [
+            121.470649,
+            31.229796
+          ],
+          [
+            121.470055,
+            31.231012
+          ],
+          [
+            121.470146,
+            31.231394
+          ]
+        ]
+      }
+    ],
+    "labelIds": [
+      400,
+      423,
+      446,
+      1379,
+      1378,
+      422,
+      445,
+      468
+    ],
+    "age": {
+      "under20": 3.65,
+      "age20to30": 16.71,
+      "age30to40": 22.92,
+      "age40to50": 24.38,
+      "over50": 32.34
+    },
+    "gender": {
+      "female": 48.03,
+      "male": 51.97
+    },
+    "consumption": {
+      "high": 5.62,
+      "highMid": 35.25,
+      "mid": 20.02,
+      "lowMid": 21.43,
+      "low": 17.67
+    },
+    "house": {
+      "none": 0.21,
+      "one": 0.66,
+      "two": 0.09,
+      "more": 0.04
+    },
+    "poi": [
+      {
+        "type": "0",
+        "name": "其他",
+        "count": 1
+      },
+      {
+        "type": "4",
+        "name": "景点",
+        "count": 1
+      },
+      {
+        "type": "5",
+        "name": "餐饮",
+        "count": 97
+      }
+    ],
+    "businessDistrict": {
+      "name": "人民广场南京东路商圈",
+      "polygon": [
+        [
+          121.470146,
+          31.231394
+        ],
+        [
+          121.470163,
+          31.231781
+        ],
+        [
+          121.470117,
+          31.231915
+        ],
+        [
+          121.469971,
+          31.232078
+        ],
+        [
+          121.469728,
+          31.232306
+        ],
+        [
+          121.46944,
+          31.232536
+        ],
+        [
+          121.469173,
+          31.232854
+        ],
+        [
+          121.468868,
+          31.233378
+        ],
+        [
+          121.469097,
+          31.233457
+        ],
+        [
+          121.468638,
+          31.234198
+        ],
+        [
+          121.468501,
+          31.23459
+        ],
+        [
+          121.468001,
+          31.235421
+        ],
+        [
+          121.469452,
+          31.235973
+        ],
+        [
+          121.469995,
+          31.236181
+        ],
+        [
+          121.470522,
+          31.236429
+        ],
+        [
+          121.471249,
+          31.236751
+        ],
+        [
+          121.472131,
+          31.237168
+        ],
+        [
+          121.473515,
+          31.237828
+        ],
+        [
+          121.474268,
+          31.238004
+        ],
+        [
+          121.474989,
+          31.238153
+        ],
+        [
+          121.476705,
+          31.238551
+        ],
+        [
+          121.478944,
+          31.239136
+        ],
+        [
+          121.480073,
+          31.239478
+        ],
+        [
+          121.481051,
+          31.239824
+        ],
+        [
+          121.481796,
+          31.240113
+        ],
+        [
+          121.48224,
+          31.240229
+        ],
+        [
+          121.482717,
+          31.240336
+        ],
+        [
+          121.483911,
+          31.240544
+        ],
+        [
+          121.48414,
+          31.239876
+        ],
+        [
+          121.484336,
+          31.239273
+        ],
+        [
+          121.48456,
+          31.238669
+        ],
+        [
+          121.484848,
+          31.238038
+        ],
+        [
+          121.485124,
+          31.237211
+        ],
+        [
+          121.485358,
+          31.236425
+        ],
+        [
+          121.485836,
+          31.234799
+        ],
+        [
+          121.486019,
+          31.234095
+        ],
+        [
+          121.48618,
+          31.233456
+        ],
+        [
+          121.486473,
+          31.232205
+        ],
+        [
+          121.486733,
+          31.231192
+        ],
+        [
+          121.486463,
+          31.231188
+        ],
+        [
+          121.486205,
+          31.231249
+        ],
+        [
+          121.485744,
+          31.231325
+        ],
+        [
+          121.485251,
+          31.231383
+        ],
+        [
+          121.484743,
+          31.231404
+        ],
+        [
+          121.484364,
+          31.231375
+        ],
+        [
+          121.483778,
+          31.231251
+        ],
+        [
+          121.482887,
+          31.231095
+        ],
+        [
+          121.482533,
+          31.230996
+        ],
+        [
+          121.482146,
+          31.230842
+        ],
+        [
+          121.48156,
+          31.230525
+        ],
+        [
+          121.480239,
+          31.229845
+        ],
+        [
+          121.480139,
+          31.229687
+        ],
+        [
+          121.478318,
+          31.228719
+        ],
+        [
+          121.47769,
+          31.228388
+        ],
+        [
+          121.47705,
+          31.228001
+        ],
+        [
+          121.475949,
+          31.227256
+        ],
+        [
+          121.474949,
+          31.22682
+        ],
+        [
+          121.474383,
+          31.226563
+        ],
+        [
+          121.473702,
+          31.226315
+        ],
+        [
+          121.472989,
+          31.226113
+        ],
+        [
+          121.472651,
+          31.226744
+        ],
+        [
+          121.472303,
+          31.227311
+        ],
+        [
+          121.472155,
+          31.227471
+        ],
+        [
+          121.471804,
+          31.227724
+        ],
+        [
+          121.471576,
+          31.228039
+        ],
+        [
+          121.471473,
+          31.228142
+        ],
+        [
+          121.471147,
+          31.228708
+        ],
+        [
+          121.470828,
+          31.229426
+        ],
+        [
+          121.470649,
+          31.229796
+        ],
+        [
+          121.470055,
+          31.231012
+        ],
+        [
+          121.470146,
+          31.231394
+        ]
+      ]
+    }
+  }
+}

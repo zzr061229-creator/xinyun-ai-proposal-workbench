@@ -1,0 +1,796 @@
+{
+  "generatedAt": "2026-11-21 19:27:58",
+  "checks": [
+    {
+      "id": "inventory_counts",
+      "status": "pass",
+      "detail": "公交 431 行 / 可售 1376（期望 431/1376）；地铁 861 行 / 可售 824（期望 861/824）"
+    },
+    {
+      "id": "inventory_range",
+      "status": "pass",
+      "detail": "档期 2027-04-01 ～ 2027-05-15"
+    },
+    {
+      "id": "inventory_fetched_at",
+      "status": "pass",
+      "detail": "fetchedAt = 2026-11-21 11:31:36"
+    },
+    {
+      "id": "inventory_bus_unique_key",
+      "status": "pass",
+      "detail": "(resourceId, mediaName) 唯一：431/431"
+    },
+    {
+      "id": "inventory_metro_unique_key",
+      "status": "pass",
+      "detail": "metroNumber 唯一：861/861"
+    },
+    {
+      "id": "inventory_grade_breakdown",
+      "status": "pass",
+      "detail": "公交 S48 A++200 A+181 AA2 (空)0；地铁 A++502 A+354 (空)5"
+    },
+    {
+      "id": "inventory_zero_free_and_gaps",
+      "status": "pass",
+      "detail": "空位为0：公交 103 条 / 地铁 37 口；地铁空grade 5 口；商业区域='0' 54 口；保养影响：公交 344 辆 / 地铁 0 口；与体检报告一致"
+    },
+    {
+      "id": "inventory_raw_total",
+      "status": "pass",
+      "detail": "bus.total=552（原始请求条数，去重后可售 431 行）；metro.total=861（出入口行数 861）"
+    },
+    {
+      "id": "inventory_bus_arithmetic",
+      "status": "warn",
+      "detail": "54/431 行不满足 totalCount−contract−reservation−maintenance=freeCount（示例：1018/车身三侧、1019/车身三侧、1021/车身三侧）；方案一律以 freeCount 为准，保养数可能与合同/预定重叠"
+    },
+    {
+      "id": "coverage_files",
+      "status": "pass",
+      "detail": "15 个 CSV / 472 行（公交 391 / 地铁 81）；旧版汇总行 0 个，已跳过"
+    },
+    {
+      "id": "coverage_required_fields",
+      "status": "pass",
+      "detail": "全部 472 行均含 mediaType / 媒体名称 / 最近站点 / 最近距离"
+    },
+    {
+      "id": "coverage_media_type",
+      "status": "pass",
+      "detail": "mediaType：bus 391 / metro 81"
+    },
+    {
+      "id": "coverage_bus_join",
+      "status": "pass",
+      "detail": "候选 156 条唯一线路 = 可售 132 + 空位不足 20 + 不在库 4；别名可匹配 152（可售+空位不足）；空位不足线路：1019路、1020路、1036路、1105、1119路、1159路、119路、583路、779路、798路、970路、980路、985路、986路区间、浦东100路、浦东101路、浦东106路、浦东52路、浦东89路、隧道一线；不在库：911路双层、旅游10线、旅游1线、旅游2线"
+    },
+    {
+      "id": "coverage_bus_join_rows",
+      "status": "pass",
+      "detail": "行级 391 = 可售 332 + 空位不足 38 + 不在库 21（同名线路在 1km/3km 文件重复出现，故与唯一线路数不同）"
+    },
+    {
+      "id": "coverage_metro_join",
+      "status": "pass",
+      "detail": "候选 31 站 = 库存内 24 + 不在库 7；按覆盖行 81 行 = 库存内 64 + 不在库 17；不在库：世纪大道、北新泾、宝山路、真北路、虹桥路、虹漕路、迪士尼"
+    },
+    {
+      "id": "coverage_metro_exits",
+      "status": "pass",
+      "detail": "展开去重 93 口 = 可选 82（free>0 且 grade 非空） + 空位不足 6（free=0，grade 非空） + grade为空 5；按覆盖行重复展开 293 次（可选 244/不足 31/grade空 18）"
+    },
+    {
+      "id": "coverage_metro_station_availability",
+      "status": "pass",
+      "detail": "24 个在库站点均至少有 1 个可选口"
+    },
+    {
+      "id": "coverage_manifest_extra",
+      "status": "pass",
+      "detail": "所有 coverage CSV 均已登记在 manifest"
+    },
+    {
+      "id": "coverage_manifest",
+      "status": "pass",
+      "detail": "manifest 15 条与 CSV 行数/公交/地铁计数一致"
+    },
+    {
+      "id": "coverage_manifest_inventory",
+      "status": "pass",
+      "detail": "manifest 库存计数一致：bus 431/1376，metro 861/824"
+    },
+    {
+      "id": "pricing_source",
+      "status": "pass",
+      "detail": "使用 data/config/pricing.json"
+    },
+    {
+      "id": "pricing_target_100_4w_list",
+      "status": "pass",
+      "detail": "100万/4周 1.0 档：8辆A++公交 + 2个A++地铁口；媒体 90.8万 + 制作 4.4万 = 净价 95.2万；预算 100万，余4.8万"
+    },
+    {
+      "id": "pricing_target_100_4w_92",
+      "status": "pass",
+      "detail": "100万/4周 0.92 档：10辆A++公交 + 2个A++地铁口；媒体 99.7万 + 制作 5.4万 = 刊例 105.1万 × 0.92 = 净价 96.7万；预算 100万，余3.3万"
+    },
+    {
+      "id": "pricing_target_200_6w_list",
+      "status": "pass",
+      "detail": "200万/6周 1.0 档：10辆A++公交 + 3个A++地铁口；媒体 191.1万 + 制作 5.6万 = 净价 196.7万；预算 200万，余3.3万"
+    },
+    {
+      "id": "pricing_target_200_6w_92",
+      "status": "pass",
+      "detail": "200万/6周 0.92 档：12辆A++公交 + 3个A++地铁口；媒体 204.4万 + 制作 6.6万 = 刊例 211.0万 × 0.92 = 净价 194.1万；预算 200万，余5.9万"
+    },
+    {
+      "id": "pricing_target_500_6w_list",
+      "status": "pass",
+      "detail": "500万/6周 1.0 档：34辆A++公交 + 6个A++地铁口；媒体 475.2万 + 制作 18.2万 = 净价 493.4万；预算 500万，余6.6万"
+    },
+    {
+      "id": "pricing_target_500_6w_92",
+      "status": "pass",
+      "detail": "500万/6周 0.92 档：39辆A++公交 + 6个A++地铁口；媒体 508.4万 + 制作 20.7万 = 刊例 529.1万 × 0.92 = 净价 486.8万；预算 500万，余13.2万"
+    },
+    {
+      "id": "pricing_target_500_12w_list",
+      "status": "pass",
+      "detail": "500万/12周 1.0 档：18辆A++公交 + 3个A++地铁口；媒体 488.5万 + 制作 9.6万 = 净价 498.1万；预算 500万，余1.9万"
+    },
+    {
+      "id": "pricing_target_500_12w_92",
+      "status": "pass",
+      "detail": "500万/12周 0.92 档：21辆A++公交 + 3个A++地铁口；媒体 528.4万 + 制作 11.1万 = 刊例 539.5万 × 0.92 = 净价 496.3万；预算 500万，余3.7万"
+    },
+    {
+      "id": "pricing_budget_summary",
+      "status": "pass",
+      "detail": "8 个目标组合（4 个预算/周期场景 × 1.0/0.92）均 ≤ 预算；1.0 档不再超预算，无需依赖折扣"
+    },
+    {
+      "id": "pricing_tax_monitoring",
+      "status": "pass",
+      "detail": "tax=excluded（净价不并入税额）；monitoring=0.0%（按媒体费计入 gross）"
+    },
+    {
+      "id": "coverage_evidence_required",
+      "status": "pass",
+      "detail": "全部 472 行具备 queryDate=2026-11-21、nearestDistance、nearestStation"
+    },
+    {
+      "id": "coverage_evidence_matched",
+      "status": "pass",
+      "detail": "434/472 行可完整反查 freeCount + grade（在库行全部具备）"
+    },
+    {
+      "id": "coverage_evidence_expected_missing",
+      "status": "warn",
+      "detail": "38/472 行指向不在红豆可售库的媒体（公交 4 个线路名 / 地铁 7 个站），无法反查 freeCount/grade；这是“覆盖候选 → 可售校验”的正常差异，前端应显示“不在可售库”而不是静默丢弃"
+    },
+    {
+      "id": "coverage_query_date",
+      "status": "pass",
+      "detail": "证据查询日期统一取库存快照 2026-11-21（fetchedAt=2026-11-21 11:31:36）"
+    }
+  ],
+  "summary": {
+    "pass": 33,
+    "warn": 2,
+    "fail": 0
+  },
+  "stats": {
+    "inventory": {
+      "file": "inventory_live.json",
+      "fetchedAt": "2026-11-21 11:31:36",
+      "range": {
+        "start": "2027-04-01",
+        "end": "2027-05-15"
+      },
+      "bus": {
+        "rows": 431,
+        "uniqueLines": 430,
+        "total": 2525,
+        "contract": 571,
+        "reservation": 371,
+        "free": 1376,
+        "maintenance": 344,
+        "zeroFreeRows": 103,
+        "grades": {
+          "A++": 200,
+          "A+": 181,
+          "S": 48,
+          "AA": 2
+        },
+        "rawTotalField": 552
+      },
+      "metro": {
+        "rows": 861,
+        "total": 861,
+        "contract": 35,
+        "reservation": 2,
+        "free": 824,
+        "maintenance": 0,
+        "zeroFreeRows": 37,
+        "emptyGrade": 5,
+        "businessAreaZero": 54,
+        "grades": {
+          "A++": 502,
+          "(空)": 5,
+          "A+": 354
+        },
+        "rawTotalField": 861
+      }
+    },
+    "coverage": {
+      "files": 15,
+      "rows": 472,
+      "busRows": 391,
+      "metroRows": 81,
+      "uniqueBusNames": 156,
+      "uniqueMetroStations": 31,
+      "bus": {
+        "candidates": 156,
+        "matched": 132,
+        "usable": 132,
+        "insufficient": 20,
+        "notInInventory": 4,
+        "aliasMatched": 152,
+        "insufficientNames": [
+          "1019路",
+          "1020路",
+          "1036路",
+          "1105",
+          "1119路",
+          "1159路",
+          "119路",
+          "583路",
+          "779路",
+          "798路",
+          "970路",
+          "980路",
+          "985路",
+          "986路区间",
+          "浦东100路",
+          "浦东101路",
+          "浦东106路",
+          "浦东52路",
+          "浦东89路",
+          "隧道一线"
+        ],
+        "notInInventoryNames": [
+          "911路双层",
+          "旅游10线",
+          "旅游1线",
+          "旅游2线"
+        ],
+        "rows": {
+          "total": 391,
+          "matched": 332,
+          "usable": 332,
+          "insufficient": 38,
+          "notInInventory": 21
+        }
+      },
+      "metro": {
+        "candidates": 31,
+        "inInventory": 24,
+        "notInInventory": 7,
+        "notInInventoryNames": [
+          "世纪大道",
+          "北新泾",
+          "宝山路",
+          "真北路",
+          "虹桥路",
+          "虹漕路",
+          "迪士尼"
+        ],
+        "rows": {
+          "total": 81,
+          "stationInInventory": 64,
+          "stationNotInInventory": 17
+        },
+        "stations": [
+          {
+            "station": "一大会址·黄陂南路",
+            "exitCount": 3,
+            "free": 2
+          },
+          {
+            "station": "上海体育馆",
+            "exitCount": 6,
+            "free": 6
+          },
+          {
+            "station": "人民广场",
+            "exitCount": 10,
+            "free": 9
+          },
+          {
+            "station": "南京西路",
+            "exitCount": 2,
+            "free": 2
+          },
+          {
+            "station": "吴中路",
+            "exitCount": 4,
+            "free": 4
+          },
+          {
+            "station": "商城路",
+            "exitCount": 2,
+            "free": 2
+          },
+          {
+            "station": "国际客运中心",
+            "exitCount": 1,
+            "free": 1
+          },
+          {
+            "station": "大世界",
+            "exitCount": 3,
+            "free": 2
+          },
+          {
+            "station": "娄山关路",
+            "exitCount": 1,
+            "free": 1
+          },
+          {
+            "station": "宋园路",
+            "exitCount": 1,
+            "free": 1
+          },
+          {
+            "station": "宜山路",
+            "exitCount": 5,
+            "free": 4
+          },
+          {
+            "station": "徐家汇",
+            "exitCount": 4,
+            "free": 3
+          },
+          {
+            "station": "桂林公园",
+            "exitCount": 2,
+            "free": 2
+          },
+          {
+            "station": "桂林路",
+            "exitCount": 7,
+            "free": 7
+          },
+          {
+            "station": "浦东南路",
+            "exitCount": 2,
+            "free": 2
+          },
+          {
+            "station": "浦东大道",
+            "exitCount": 5,
+            "free": 5
+          },
+          {
+            "station": "漕河泾开发区",
+            "exitCount": 4,
+            "free": 4
+          },
+          {
+            "station": "肇嘉浜路",
+            "exitCount": 3,
+            "free": 3
+          },
+          {
+            "station": "豫园",
+            "exitCount": 6,
+            "free": 6
+          },
+          {
+            "station": "陆家嘴",
+            "exitCount": 9,
+            "free": 6
+          },
+          {
+            "station": "静安寺",
+            "exitCount": 5,
+            "free": 5
+          },
+          {
+            "station": "马当路",
+            "exitCount": 1,
+            "free": 1
+          },
+          {
+            "station": "龙华中路",
+            "exitCount": 3,
+            "free": 3
+          },
+          {
+            "station": "龙溪路",
+            "exitCount": 4,
+            "free": 4
+          }
+        ],
+        "exits": {
+          "total": 93,
+          "selectable": 82,
+          "insufficient": 6,
+          "gradeEmpty": 5,
+          "rowExpandedTotal": 293,
+          "rowExpandedSelectable": 244,
+          "rowExpandedInsufficient": 31,
+          "rowExpandedGradeEmpty": 18
+        }
+      },
+      "perFile": [
+        {
+          "file": "覆盖分析_上海和睦家医院_1000米.csv",
+          "path": "coverage/覆盖分析_上海和睦家医院_1000米.csv",
+          "rows": 5,
+          "bus": 4,
+          "metro": 1,
+          "busUsableRows": 4,
+          "busInsufficientRows": 0,
+          "busNotInInventoryRows": 0,
+          "metroStations": 1,
+          "metroStationsInInventory": 0,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海和睦家医院_3000米.csv",
+          "path": "coverage/覆盖分析_上海和睦家医院_3000米.csv",
+          "rows": 22,
+          "bus": 17,
+          "metro": 5,
+          "busUsableRows": 16,
+          "busInsufficientRows": 0,
+          "busNotInInventoryRows": 1,
+          "metroStations": 4,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海嘉会国际医院_1000米.csv",
+          "path": "coverage/覆盖分析_上海嘉会国际医院_1000米.csv",
+          "rows": 7,
+          "bus": 6,
+          "metro": 1,
+          "busUsableRows": 6,
+          "busInsufficientRows": 0,
+          "busNotInInventoryRows": 0,
+          "metroStations": 1,
+          "metroStationsInInventory": 1,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海嘉会国际医院_3000米.csv",
+          "path": "coverage/覆盖分析_上海嘉会国际医院_3000米.csv",
+          "rows": 28,
+          "bus": 21,
+          "metro": 7,
+          "busUsableRows": 20,
+          "busInsufficientRows": 0,
+          "busNotInInventoryRows": 1,
+          "metroStations": 5,
+          "metroStationsInInventory": 4,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海美华妇儿医院_1000米.csv",
+          "path": "coverage/覆盖分析_上海美华妇儿医院_1000米.csv",
+          "rows": 9,
+          "bus": 6,
+          "metro": 3,
+          "busUsableRows": 5,
+          "busInsufficientRows": 0,
+          "busNotInInventoryRows": 1,
+          "metroStations": 2,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海美华妇儿医院_3000米.csv",
+          "path": "coverage/覆盖分析_上海美华妇儿医院_3000米.csv",
+          "rows": 41,
+          "bus": 30,
+          "metro": 11,
+          "busUsableRows": 28,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 1,
+          "metroStations": 8,
+          "metroStationsInInventory": 7,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海迪士尼度假区_1000米.csv",
+          "path": "coverage/覆盖分析_上海迪士尼度假区_1000米.csv",
+          "rows": 10,
+          "bus": 8,
+          "metro": 2,
+          "busUsableRows": 7,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 0,
+          "metroStations": 1,
+          "metroStationsInInventory": 0,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海迪士尼度假区_3000米.csv",
+          "path": "coverage/覆盖分析_上海迪士尼度假区_3000米.csv",
+          "rows": 15,
+          "bus": 13,
+          "metro": 2,
+          "busUsableRows": 11,
+          "busInsufficientRows": 2,
+          "busNotInInventoryRows": 0,
+          "metroStations": 1,
+          "metroStationsInInventory": 0,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_上海迪士尼度假区_5000米.csv",
+          "path": "coverage/覆盖分析_上海迪士尼度假区_5000米.csv",
+          "rows": 36,
+          "bus": 34,
+          "metro": 2,
+          "busUsableRows": 26,
+          "busInsufficientRows": 8,
+          "busNotInInventoryRows": 0,
+          "metroStations": 1,
+          "metroStationsInInventory": 0,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_人民广场_1000米.csv",
+          "path": "coverage/覆盖分析_人民广场_1000米.csv",
+          "rows": 29,
+          "bus": 25,
+          "metro": 4,
+          "busUsableRows": 21,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 3,
+          "metroStations": 2,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_人民广场_3000米.csv",
+          "path": "coverage/覆盖分析_人民广场_3000米.csv",
+          "rows": 83,
+          "bus": 71,
+          "metro": 12,
+          "busUsableRows": 59,
+          "busInsufficientRows": 8,
+          "busNotInInventoryRows": 4,
+          "metroStations": 7,
+          "metroStationsInInventory": 6,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_徐家汇_1000米.csv",
+          "path": "coverage/覆盖分析_徐家汇_1000米.csv",
+          "rows": 22,
+          "bus": 16,
+          "metro": 6,
+          "busUsableRows": 14,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 1,
+          "metroStations": 2,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_徐家汇_3000米.csv",
+          "path": "coverage/覆盖分析_徐家汇_3000米.csv",
+          "rows": 41,
+          "bus": 30,
+          "metro": 11,
+          "busUsableRows": 28,
+          "busInsufficientRows": 1,
+          "busNotInInventoryRows": 1,
+          "metroStations": 6,
+          "metroStationsInInventory": 5,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_陆家嘴_1000米.csv",
+          "path": "coverage/覆盖分析_陆家嘴_1000米.csv",
+          "rows": 37,
+          "bus": 34,
+          "metro": 3,
+          "busUsableRows": 25,
+          "busInsufficientRows": 5,
+          "busNotInInventoryRows": 4,
+          "metroStations": 2,
+          "metroStationsInInventory": 2,
+          "skippedSummary": false,
+          "formulaCells": 0
+        },
+        {
+          "file": "覆盖分析_陆家嘴_3000米.csv",
+          "path": "coverage/覆盖分析_陆家嘴_3000米.csv",
+          "rows": 87,
+          "bus": 76,
+          "metro": 11,
+          "busUsableRows": 62,
+          "busInsufficientRows": 10,
+          "busNotInInventoryRows": 4,
+          "metroStations": 9,
+          "metroStationsInInventory": 8,
+          "skippedSummary": false,
+          "formulaCells": 0
+        }
+      ]
+    },
+    "pricing": {
+      "source": "pricing.json",
+      "pricing": {
+        "currency": "CNY",
+        "bus": {
+          "S": 58000.0,
+          "A++": 48000.0,
+          "A+": 38000.0
+        },
+        "metro": {
+          "A++": 300000.0,
+          "A+": 200000.0
+        },
+        "production": {
+          "bus": 5000.0,
+          "metro": 2000.0
+        },
+        "discount": 1.0,
+        "tax": "excluded",
+        "monitoring": 0.0
+      },
+      "targets": [
+        {
+          "budget": 1000000,
+          "budgetWan": 100.0,
+          "weeks": 4,
+          "list": {
+            "bus": 8,
+            "metro": 2,
+            "discount": 1.0,
+            "media": 908308,
+            "production": 44000,
+            "monitoring": 0,
+            "gross": 952308,
+            "net": 952308,
+            "remaining": 47692,
+            "withinBudget": true
+          },
+          "discount92": {
+            "bus": 10,
+            "metro": 2,
+            "discount": 0.92,
+            "media": 996923,
+            "production": 54000,
+            "monitoring": 0,
+            "gross": 1050923,
+            "net": 966849,
+            "remaining": 33151,
+            "withinBudget": true
+          },
+          "allWithinBudget": true
+        },
+        {
+          "budget": 2000000,
+          "budgetWan": 200.0,
+          "weeks": 6,
+          "list": {
+            "bus": 10,
+            "metro": 3,
+            "discount": 1.0,
+            "media": 1910769,
+            "production": 56000,
+            "monitoring": 0,
+            "gross": 1966769,
+            "net": 1966769,
+            "remaining": 33231,
+            "withinBudget": true
+          },
+          "discount92": {
+            "bus": 12,
+            "metro": 3,
+            "discount": 0.92,
+            "media": 2043692,
+            "production": 66000,
+            "monitoring": 0,
+            "gross": 2109692,
+            "net": 1940917,
+            "remaining": 59083,
+            "withinBudget": true
+          },
+          "allWithinBudget": true
+        },
+        {
+          "budget": 5000000,
+          "budgetWan": 500.0,
+          "weeks": 6,
+          "list": {
+            "bus": 34,
+            "metro": 6,
+            "discount": 1.0,
+            "media": 4752000,
+            "production": 182000,
+            "monitoring": 0,
+            "gross": 4934000,
+            "net": 4934000,
+            "remaining": 66000,
+            "withinBudget": true
+          },
+          "discount92": {
+            "bus": 39,
+            "metro": 6,
+            "discount": 0.92,
+            "media": 5084308,
+            "production": 207000,
+            "monitoring": 0,
+            "gross": 5291308,
+            "net": 4868003,
+            "remaining": 131997,
+            "withinBudget": true
+          },
+          "allWithinBudget": true
+        },
+        {
+          "budget": 5000000,
+          "budgetWan": 500.0,
+          "weeks": 12,
+          "list": {
+            "bus": 18,
+            "metro": 3,
+            "discount": 1.0,
+            "media": 4884923,
+            "production": 96000,
+            "monitoring": 0,
+            "gross": 4980923,
+            "net": 4980923,
+            "remaining": 19077,
+            "withinBudget": true
+          },
+          "discount92": {
+            "bus": 21,
+            "metro": 3,
+            "discount": 0.92,
+            "media": 5283692,
+            "production": 111000,
+            "monitoring": 0,
+            "gross": 5394692,
+            "net": 4963117,
+            "remaining": 36883,
+            "withinBudget": true
+          },
+          "allWithinBudget": true
+        }
+      ]
+    },
+    "evidence": {
+      "rows": 472,
+      "complete": 434,
+      "expectedMissing": 38,
+      "inInventoryIncomplete": 0,
+      "missingBase": 0,
+      "missingReasons": {},
+      "queryDate": "2026-11-21"
+    }
+  }
+}

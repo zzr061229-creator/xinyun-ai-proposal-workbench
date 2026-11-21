@@ -1,0 +1,468 @@
+{
+  "version": "1.0.0",
+  "effectiveDate": "2026-11-21",
+  "anchors": [
+    {
+      "anchorId": "meihua",
+      "name": "美华",
+      "fullName": "上海美华妇儿医院",
+      "type": "hospital",
+      "typeLabel": "医院院区",
+      "brandIds": [
+        "meihua"
+      ],
+      "industryIds": [
+        "private-hospital"
+      ],
+      "address": "上海市徐汇区宋园路155号",
+      "lng": 121.41971055172111,
+      "lat": 31.195369953240675,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "上海美华妇儿医院-1000",
+        "3000": "上海美华妇儿医院-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 9,
+          "bus": 6,
+          "metro": 3
+        },
+        "3000": {
+          "total": 41,
+          "bus": 30,
+          "metro": 11
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "医院唯一默认品牌与锚点；3km 为主半径，1km 为核心圈对照。",
+        "coverageIds 与 data/manifest.json 的 id 一致。",
+        "嘉会/和睦家锚点保留为数据样本，不进入五行业默认选项。"
+      ]
+    },
+    {
+      "anchorId": "jiahui",
+      "name": "嘉会",
+      "fullName": "上海嘉会国际医院",
+      "type": "hospital",
+      "typeLabel": "医院院区",
+      "brandIds": [],
+      "industryIds": [],
+      "address": "上海市徐汇区桂平路689号",
+      "lng": 121.40639532846892,
+      "lat": 31.180888493894543,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "上海嘉会国际医院-1000",
+        "3000": "上海嘉会国际医院-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 7,
+          "bus": 6,
+          "metro": 1
+        },
+        "3000": {
+          "total": 28,
+          "bus": 21,
+          "metro": 7
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "备选品牌嘉会的院区锚点；3km 为主半径，1km 为核心圈对照。",
+        "coverageIds 与 data/manifest.json 的 id 一致。",
+        "保留为数据样本，不进入五行业默认选项。"
+      ]
+    },
+    {
+      "anchorId": "hemujia",
+      "name": "和睦家",
+      "fullName": "上海和睦家医院",
+      "type": "hospital",
+      "typeLabel": "医院院区",
+      "brandIds": [],
+      "industryIds": [],
+      "address": "上海市长宁区仙霞路1139号",
+      "lng": 121.38357369732682,
+      "lat": 31.214057411487314,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "上海和睦家医院-1000",
+        "3000": "上海和睦家医院-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 5,
+          "bus": 4,
+          "metro": 1
+        },
+        "3000": {
+          "total": 22,
+          "bus": 17,
+          "metro": 5
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "备选品牌和睦家的院区锚点；3km 为主半径，1km 为核心圈对照。",
+        "coverageIds 与 data/manifest.json 的 id 一致。",
+        "保留为数据样本，不进入五行业默认选项。"
+      ]
+    },
+    {
+      "anchorId": "renmin-guangchang",
+      "name": "人民广场",
+      "fullName": "人民广场",
+      "type": "landmark",
+      "typeLabel": "城市地标",
+      "brandIds": [
+        "nongfu-spring"
+      ],
+      "industryIds": [
+        "food-beverage"
+      ],
+      "address": "上海市黄浦区人民大道",
+      "lng": 121.4805786551106,
+      "lat": 31.23574517233062,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "人民广场-1000",
+        "3000": "人民广场-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 29,
+          "bus": 25,
+          "metro": 4
+        },
+        "3000": {
+          "total": 83,
+          "bus": 71,
+          "metro": 12
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "食品饮料默认锚点（农夫山泉）；1/3km 覆盖已验证。",
+        "不再只是医院兜底；UI 不再标“演示锚点”。"
+      ]
+    },
+    {
+      "anchorId": "disney",
+      "name": "迪士尼",
+      "fullName": "上海迪士尼度假区",
+      "type": "resort",
+      "typeLabel": "乐园",
+      "brandIds": [
+        "shanghai-disney"
+      ],
+      "industryIds": [
+        "theme-park"
+      ],
+      "address": "上海迪士尼度假区",
+      "lng": 121.6711067385215,
+      "lat": 31.145914675834295,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000,
+        5000
+      ],
+      "coverageIds": {
+        "1000": "上海迪士尼度假区-1000",
+        "3000": "上海迪士尼度假区-3000",
+        "5000": "上海迪士尼度假区-5000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 10,
+          "bus": 8,
+          "metro": 2
+        },
+        "3000": {
+          "total": 15,
+          "bus": 13,
+          "metro": 2
+        },
+        "5000": {
+          "total": 36,
+          "bus": 34,
+          "metro": 2
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API）",
+      "verifiedAt": "2026-11-21 12:10:53",
+      "notes": [
+        "乐园默认锚点（上海迪士尼）；1/3/5km 覆盖已验证。",
+        "迪士尼站不在红豆 861 口地铁库存；3km 公交可售约 39 辆，500 万需 5km。",
+        "coverageIds 与 data/manifest.json 的 id 一致。"
+      ]
+    },
+    {
+      "anchorId": "lujiazui",
+      "name": "陆家嘴",
+      "fullName": "陆家嘴金融城",
+      "type": "business_district",
+      "typeLabel": "商务区",
+      "brandIds": [
+        "spdb"
+      ],
+      "industryIds": [
+        "bank-insurance"
+      ],
+      "address": "陆家嘴金融城",
+      "lng": 121.50981517573,
+      "lat": 31.239674136078964,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "陆家嘴-1000",
+        "3000": "陆家嘴-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 37,
+          "bus": 34,
+          "metro": 3
+        },
+        "3000": {
+          "total": 87,
+          "bus": 76,
+          "metro": 11
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API）",
+      "verifiedAt": "2026-11-21 15:20",
+      "notes": [
+        "2026-11-21 修正：geocode「陆家嘴」落在乡镇级街道办（121.532,31.243，confidence 25），偏离金融城核心；改用「陆家嘴金融城」（商务大厦级，confidence 75）重跑 1/3km 覆盖。",
+        "3km 覆盖含陆家嘴站（2/14 号线）、浦东南路、商城路、世纪大道等；跨江含豫园、人民广场。",
+        "浦发银行上海分行 geocode 点约在 121.5186,31.2408（浦东南路 588 号附近，confidence 70），在 3km 圈内。"
+      ]
+    },
+    {
+      "anchorId": "xujiahui",
+      "name": "徐家汇",
+      "fullName": "徐家汇商圈",
+      "type": "business_district",
+      "typeLabel": "商务区",
+      "brandIds": [
+        "by-health"
+      ],
+      "industryIds": [
+        "health-supplement"
+      ],
+      "address": "徐家汇商圈",
+      "lng": 121.43791426372805,
+      "lat": 31.198427541121177,
+      "weight": 1.0,
+      "radii": [
+        1000,
+        3000
+      ],
+      "coverageIds": {
+        "1000": "徐家汇-1000",
+        "3000": "徐家汇-3000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 22,
+          "bus": 16,
+          "metro": 6
+        },
+        "3000": {
+          "total": 41,
+          "bus": 30,
+          "metro": 11
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API）",
+      "verifiedAt": "2026-11-21 17:05",
+      "notes": [
+        "2026-11-21 修正：geocode「徐家汇」落在乡镇级街道办（121.452,31.198，confidence 25），偏东约 1.4km；改用「徐家汇商圈」（生活服务级，confidence 70）重跑 1/3km 覆盖。",
+        "1km 22 条（16 公交/6 地铁）、3km 41 条（30/11）；含徐家汇站 1/9/11 号线与宜山路站。",
+        "coverageIds 与 data/manifest.json 的 id 一致。"
+      ]
+    },
+    {
+      "anchorId": "spdb-shanghai-hq",
+      "name": "浦发上海分行",
+      "fullName": "浦发银行上海分行",
+      "type": "bank_branch",
+      "typeLabel": "支行网点",
+      "brandIds": [
+        "spdb"
+      ],
+      "industryIds": [
+        "bank-insurance"
+      ],
+      "address": "上海市浦东新区浦东南路588号",
+      "lng": 121.51860213073695,
+      "lat": 31.24078633476442,
+      "weight": 1.0,
+      "radii": [
+        1000
+      ],
+      "coverageIds": {
+        "1000": "浦发银行上海分行-1000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 41,
+          "bus": 36,
+          "metro": 5
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API，2026-11-21）",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "浦发银行上海分行（浦东南路588号）；1km 覆盖按本网点坐标重抓。",
+        "真实支行网点，不是商圈演示点；覆盖按网点坐标 1km 重抓。",
+        "覆盖 1km；人流按平台 2023-05 线路/出口级缓存复用。"
+      ]
+    },
+    {
+      "anchorId": "spdb-jiujiang",
+      "name": "浦发九江路支行",
+      "fullName": "浦发银行九江路支行",
+      "type": "bank_branch",
+      "typeLabel": "支行网点",
+      "brandIds": [
+        "spdb"
+      ],
+      "industryIds": [
+        "bank-insurance"
+      ],
+      "address": "上海市黄浦区湖北路258号",
+      "lng": 121.48663215628125,
+      "lat": 31.24057808314718,
+      "weight": 1.0,
+      "radii": [
+        1000
+      ],
+      "coverageIds": {
+        "1000": "浦发银行九江路支行-1000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 33,
+          "bus": 27,
+          "metro": 6
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API，2026-11-21）",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "浦发银行九江路支行（湖北路258号，人民广场旁）；1km 覆盖按本网点坐标重抓。",
+        "真实支行网点，不是商圈演示点；覆盖按网点坐标 1km 重抓。",
+        "覆盖 1km；人流按平台 2023-05 线路/出口级缓存复用。"
+      ]
+    },
+    {
+      "anchorId": "spdb-xujiahui",
+      "name": "浦发徐家汇支行",
+      "fullName": "浦发银行徐家汇支行",
+      "type": "bank_branch",
+      "typeLabel": "支行网点",
+      "brandIds": [
+        "spdb"
+      ],
+      "industryIds": [
+        "bank-insurance"
+      ],
+      "address": "上海市徐汇区虹桥路188号",
+      "lng": 121.43848756230452,
+      "lat": 31.1983808216449,
+      "weight": 1.0,
+      "radii": [
+        1000
+      ],
+      "coverageIds": {
+        "1000": "浦发银行徐家汇支行-1000"
+      },
+      "coverageSummary": {
+        "1000": {
+          "total": 23,
+          "bus": 17,
+          "metro": 6
+        }
+      },
+      "status": "verified",
+      "source": "大数据平台 geocode + 覆盖分析（IAB API，2026-11-21）",
+      "verifiedAt": "2026-11-21",
+      "notes": [
+        "浦发银行徐家汇支行（虹桥路188号）；1km 覆盖按本网点坐标重抓。",
+        "真实支行网点，不是商圈演示点；覆盖按网点坐标 1km 重抓。",
+        "覆盖 1km；人流按平台 2023-05 线路/出口级缓存复用。"
+      ]
+    }
+  ],
+  "bundles": [
+    {
+      "bundleId": "hospital-network",
+      "name": "高端医疗网络 / 院区扩展",
+      "anchorIds": [
+        "meihua",
+        "jiahui",
+        "hemujia"
+      ],
+      "anchorMode": "union",
+      "radius": 3000,
+      "triggerBudget": 5000000,
+      "label": "高端医疗网络 / 院区扩展",
+      "note": "500 万档使用美华+嘉会+和睦家 3km 并集；UI 标注“高端医疗网络/院区扩展”，不写“全城覆盖”。"
+    },
+    {
+      "bundleId": "demo-fallback",
+      "name": "演示兜底（人民广场）",
+      "anchorIds": [
+        "renmin-guangchang"
+      ],
+      "anchorMode": "single",
+      "radius": 1000,
+      "triggerBudget": null,
+      "label": "演示锚点",
+      "note": "无医院覆盖数据时的兜底；UI 必须标注“演示锚点：人民广场”。"
+    }
+  ],
+  "notes": [
+    "已有点坐标/地址来自 data/coverage/*.json 的 center；coverageIds 与 data/manifest.json 的 id 一致。",
+    "待补点 lng/lat 为 null，禁止猜测；使用前必须先跑大数据平台覆盖分析并回填。",
+    "weight 为策划权重，不是数据平台输出：已验证医院锚点默认 1.0，人民广场 0.5 仅作兜底。",
+    "500 万档使用 hospital-network 三院区 3km 并集；预算不足时按单院区收缩，具体由引擎决定。",
+    "anchor 的 coverageSummary 计数来自 manifest（total/bus/metro）。"
+  ]
+}

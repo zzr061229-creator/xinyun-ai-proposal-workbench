@@ -1,0 +1,412 @@
+{
+  "version": "1.0.0",
+  "anchorId": "spdb-xujiahui",
+  "anchorName": "浦发银行徐家汇支行",
+  "month": "2023-05",
+  "dataMonth": "202305",
+  "fetchedAt": "2026-11-21 20:13:48",
+  "source": "新云大数据平台 2023-05 触达人群-日均人次（线路/出口级缓存）",
+  "method": "新覆盖按线路/出口名复用同标签已抓值；无标签保持 null，不估算。",
+  "notes": [
+    "覆盖为 2026-11-21 按真实网点坐标重抓的 1km。",
+    "人流为平台 2023-05 线路/出口级值，不是按网点重新生成。",
+    "无平台标签的口/站保持 null，页面显示“无数据”。"
+  ],
+  "summary": {
+    "busLines": 16,
+    "busLinesTotal": 17,
+    "metroStations": 2,
+    "metroExits": 5,
+    "metroExitsTotal": 9,
+    "metroMissingStations": []
+  },
+  "bus": {
+    "lines": [
+      {
+        "name": "171路",
+        "labelId": 6352,
+        "grade": "A++",
+        "dailyTrips": 984203,
+        "dailyPeople": 534582,
+        "dailyReach": 118228,
+        "flowByPeriod": [
+          12734,
+          19514,
+          15235,
+          9982
+        ]
+      },
+      {
+        "name": "824路",
+        "labelId": 6365,
+        "grade": "A++",
+        "dailyTrips": 1434983,
+        "dailyPeople": 806901,
+        "dailyReach": 106763,
+        "flowByPeriod": [
+          18659,
+          28580,
+          22321,
+          14587
+        ]
+      },
+      {
+        "name": "548路",
+        "labelId": 6661,
+        "grade": "其他",
+        "dailyTrips": 970251,
+        "dailyPeople": 532529,
+        "dailyReach": 71882,
+        "flowByPeriod": [
+          14854,
+          22137,
+          17493,
+          11764
+        ]
+      },
+      {
+        "name": "836路",
+        "labelId": 6788,
+        "grade": "A+",
+        "dailyTrips": 1155935,
+        "dailyPeople": 626382,
+        "dailyReach": 129927,
+        "flowByPeriod": [
+          19962,
+          29758,
+          23492,
+          15721
+        ]
+      },
+      {
+        "name": "大桥六线",
+        "labelId": 6193,
+        "grade": "A++",
+        "dailyTrips": 1158783,
+        "dailyPeople": 655660,
+        "dailyReach": 52612,
+        "flowByPeriod": [
+          16662,
+          25435,
+          19886,
+          13124
+        ]
+      },
+      {
+        "name": "572路",
+        "labelId": 6113,
+        "grade": "A++",
+        "dailyTrips": 452046,
+        "dailyPeople": 264799,
+        "dailyReach": 46651,
+        "flowByPeriod": [
+          3113,
+          4627,
+          3658,
+          2478
+        ]
+      },
+      {
+        "name": "732路",
+        "labelId": 6359,
+        "grade": "A++",
+        "dailyTrips": 1195494,
+        "dailyPeople": 674486,
+        "dailyReach": 145372,
+        "flowByPeriod": [
+          17359,
+          26328,
+          20596,
+          13659
+        ]
+      },
+      {
+        "name": "167路",
+        "labelId": 6100,
+        "grade": "A++",
+        "dailyTrips": 1743301,
+        "dailyPeople": 952345,
+        "dailyReach": 104821,
+        "flowByPeriod": [
+          27667,
+          41683,
+          32793,
+          21827
+        ]
+      },
+      {
+        "name": "43路",
+        "labelId": 6339,
+        "grade": "A++",
+        "dailyTrips": 1077981,
+        "dailyPeople": 608449,
+        "dailyReach": 116422,
+        "flowByPeriod": [
+          18978,
+          27778,
+          22205,
+          15357
+        ]
+      },
+      {
+        "name": "927路",
+        "labelId": 6372,
+        "grade": "A++",
+        "dailyTrips": 1167785,
+        "dailyPeople": 644499,
+        "dailyReach": 93599,
+        "flowByPeriod": [
+          20030,
+          30214,
+          23755,
+          15877
+        ]
+      },
+      {
+        "name": "770路",
+        "labelId": 6362,
+        "grade": "A++",
+        "dailyTrips": 545005,
+        "dailyPeople": 299095,
+        "dailyReach": 73903,
+        "flowByPeriod": [
+          5160,
+          7892,
+          6203,
+          4033
+        ]
+      },
+      {
+        "name": "926路",
+        "labelId": 6164,
+        "grade": "S",
+        "dailyTrips": 893151,
+        "dailyPeople": 501720,
+        "dailyReach": 111402,
+        "flowByPeriod": [
+          9844,
+          15410,
+          11845,
+          7618
+        ]
+      },
+      {
+        "name": "985路",
+        "labelId": 6176,
+        "grade": "A++",
+        "dailyTrips": 1581731,
+        "dailyPeople": 846872,
+        "dailyReach": 114148,
+        "flowByPeriod": [
+          24047,
+          35605,
+          28238,
+          19251
+        ]
+      },
+      {
+        "name": "958路",
+        "labelId": 6848,
+        "grade": "A+",
+        "dailyTrips": 755949,
+        "dailyPeople": 414410,
+        "dailyReach": 19957,
+        "flowByPeriod": [
+          5862,
+          8989,
+          7027,
+          4577
+        ]
+      },
+      {
+        "name": "隧道二线",
+        "labelId": 7474,
+        "grade": "其他",
+        "dailyTrips": 923857,
+        "dailyPeople": 535588,
+        "dailyReach": 102905,
+        "flowByPeriod": [
+          14376,
+          21703,
+          17129,
+          11371
+        ]
+      },
+      {
+        "name": "218路",
+        "labelId": 6354,
+        "grade": "A++",
+        "dailyTrips": 1334041,
+        "dailyPeople": 753082,
+        "dailyReach": 86446,
+        "flowByPeriod": [
+          19836,
+          29517,
+          23376,
+          15863
+        ]
+      }
+    ]
+  },
+  "metro": {
+    "stations": [
+      {
+        "station": "徐家汇",
+        "exitCount": 4,
+        "dailyTrips": 25480,
+        "dailyPeople": 14245,
+        "aggregateReach": 22550,
+        "exits": [
+          {
+            "station": "徐家汇",
+            "exit": "1号口",
+            "labelId": null,
+            "grade": "A++",
+            "dailyTrips": null,
+            "dailyPeople": null,
+            "dailyReach": null,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "station": "徐家汇",
+            "exit": "2号口",
+            "labelId": null,
+            "grade": "A++",
+            "dailyTrips": null,
+            "dailyPeople": null,
+            "dailyReach": null,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "station": "徐家汇",
+            "exit": "9号口",
+            "labelId": 398,
+            "grade": "A++",
+            "dailyTrips": 25480,
+            "dailyPeople": 14245,
+            "dailyReach": 22550,
+            "flowByPeriod": [
+              125,
+              195,
+              150,
+              96
+            ]
+          },
+          {
+            "station": "徐家汇",
+            "exit": "16号口",
+            "labelId": null,
+            "grade": "A++",
+            "dailyTrips": null,
+            "dailyPeople": null,
+            "dailyReach": null,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "station": "宜山路",
+        "exitCount": 5,
+        "dailyTrips": 412431,
+        "dailyPeople": 200655,
+        "aggregateReach": 40666,
+        "exits": [
+          {
+            "station": "宜山路",
+            "exit": "6号口(4号线)(原1号口)",
+            "labelId": 432,
+            "grade": "A++",
+            "dailyTrips": 42735,
+            "dailyPeople": 23487,
+            "dailyReach": 7316,
+            "flowByPeriod": [
+              549,
+              845,
+              659,
+              426
+            ]
+          },
+          {
+            "station": "宜山路",
+            "exit": "3号口(4号线)",
+            "labelId": 455,
+            "grade": "A++",
+            "dailyTrips": 352419,
+            "dailyPeople": 193508,
+            "dailyReach": 15471,
+            "flowByPeriod": [
+              6912,
+              11006,
+              8421,
+              5281
+            ]
+          },
+          {
+            "station": "宜山路",
+            "exit": "4号口(4号线)",
+            "labelId": 478,
+            "grade": "A++",
+            "dailyTrips": 412431,
+            "dailyPeople": 200655,
+            "dailyReach": 8249,
+            "flowByPeriod": [
+              8451,
+              12953,
+              10115,
+              6559
+            ]
+          },
+          {
+            "station": "宜山路",
+            "exit": "5号口(4号线)",
+            "labelId": 410,
+            "grade": "A++",
+            "dailyTrips": 412431,
+            "dailyPeople": 200655,
+            "dailyReach": 27509,
+            "flowByPeriod": [
+              8451,
+              12953,
+              10115,
+              6559
+            ]
+          },
+          {
+            "station": "宜山路",
+            "exit": "11号口(9号线)",
+            "labelId": null,
+            "grade": "A++",
+            "dailyTrips": null,
+            "dailyPeople": null,
+            "dailyReach": null,
+            "flowByPeriod": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "areaProfile": null,
+  "missingBusLines": [
+    "911路双层"
+  ]
+}

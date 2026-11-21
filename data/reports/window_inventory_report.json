@@ -1,0 +1,364 @@
+{
+  "generatedAt": "2026-11-21 17:05:56",
+  "windows": {
+    "q2": {
+      "fetchedAt": "2026-11-21 11:31:36",
+      "range": {
+        "start": "2027-04-01",
+        "end": "2027-05-15"
+      },
+      "bus": {
+        "rows": 431,
+        "free": 1376,
+        "byGrade": {
+          "A+": 310,
+          "A++": 757,
+          "AA": 23,
+          "S": 286
+        }
+      },
+      "metro": {
+        "rows": 861,
+        "free": 824,
+        "byGrade": {
+          "A+": 352,
+          "A++": 469,
+          "空": 3
+        }
+      },
+      "id": "q2",
+      "name": "春季 Q2",
+      "start": "2027-04-01",
+      "end": "2027-05-15",
+      "file": "inventory_live.json",
+      "anchors": {
+        "lujiazui": {
+          "busFree": 370,
+          "busLinesFree": 61,
+          "busCoverageNames": 75,
+          "busMatchedNames": 71,
+          "metroFree": 33,
+          "metroExitsFree": 33,
+          "metroAvailableExits": 32,
+          "metroGradeUnknownFree": 1,
+          "metroStations": 9
+        },
+        "meihua": {
+          "busFree": 167,
+          "busLinesFree": 28,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 21,
+          "metroExitsFree": 21,
+          "metroAvailableExits": 21,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 8
+        },
+        "renmin-guangchang": {
+          "busFree": 368,
+          "busLinesFree": 58,
+          "busCoverageNames": 70,
+          "busMatchedNames": 66,
+          "metroFree": 25,
+          "metroExitsFree": 25,
+          "metroAvailableExits": 22,
+          "metroGradeUnknownFree": 3,
+          "metroStations": 7
+        },
+        "xujiahui": {
+          "busFree": 165,
+          "busLinesFree": 28,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 17,
+          "metroExitsFree": 17,
+          "metroAvailableExits": 17,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 6
+        },
+        "disney": {
+          "busFree": 108,
+          "busLinesFree": 26,
+          "busCoverageNames": 34,
+          "busMatchedNames": 34,
+          "metroFree": 0,
+          "metroExitsFree": 0,
+          "metroAvailableExits": 0,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 1
+        }
+      }
+    },
+    "kaimenhong": {
+      "fetchedAt": "2026-11-21 17:04:54",
+      "range": {
+        "start": "2027-01-04",
+        "end": "2027-02-14"
+      },
+      "bus": {
+        "rows": 431,
+        "free": 1242,
+        "byGrade": {
+          "A+": 314,
+          "A++": 642,
+          "AA": 23,
+          "S": 263
+        }
+      },
+      "metro": {
+        "rows": 861,
+        "free": 743,
+        "byGrade": {
+          "A+": 333,
+          "A++": 407,
+          "空": 3
+        }
+      },
+      "id": "kaimenhong",
+      "name": "开门红",
+      "start": "2027-01-04",
+      "end": "2027-02-14",
+      "file": "inventory_kaimenhong.json",
+      "anchors": {
+        "lujiazui": {
+          "busFree": 333,
+          "busLinesFree": 67,
+          "busCoverageNames": 75,
+          "busMatchedNames": 71,
+          "metroFree": 29,
+          "metroExitsFree": 29,
+          "metroAvailableExits": 28,
+          "metroGradeUnknownFree": 1,
+          "metroStations": 9
+        },
+        "meihua": {
+          "busFree": 149,
+          "busLinesFree": 29,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 16,
+          "metroExitsFree": 16,
+          "metroAvailableExits": 16,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 8
+        },
+        "renmin-guangchang": {
+          "busFree": 320,
+          "busLinesFree": 61,
+          "busCoverageNames": 70,
+          "busMatchedNames": 66,
+          "metroFree": 19,
+          "metroExitsFree": 19,
+          "metroAvailableExits": 16,
+          "metroGradeUnknownFree": 3,
+          "metroStations": 7
+        },
+        "xujiahui": {
+          "busFree": 151,
+          "busLinesFree": 29,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 13,
+          "metroExitsFree": 13,
+          "metroAvailableExits": 13,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 6
+        },
+        "disney": {
+          "busFree": 103,
+          "busLinesFree": 29,
+          "busCoverageNames": 34,
+          "busMatchedNames": 34,
+          "metroFree": 0,
+          "metroExitsFree": 0,
+          "metroAvailableExits": 0,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 1
+        }
+      }
+    },
+    "summer": {
+      "fetchedAt": "2026-11-21 17:05:21",
+      "range": {
+        "start": "2027-07-01",
+        "end": "2027-08-11"
+      },
+      "bus": {
+        "rows": 431,
+        "free": 1442,
+        "byGrade": {
+          "A+": 306,
+          "A++": 811,
+          "AA": 24,
+          "S": 301
+        }
+      },
+      "metro": {
+        "rows": 861,
+        "free": 845,
+        "byGrade": {
+          "A+": 352,
+          "A++": 490,
+          "空": 3
+        }
+      },
+      "id": "summer",
+      "name": "暑期",
+      "start": "2027-07-01",
+      "end": "2027-08-11",
+      "file": "inventory_summer.json",
+      "anchors": {
+        "lujiazui": {
+          "busFree": 416,
+          "busLinesFree": 64,
+          "busCoverageNames": 75,
+          "busMatchedNames": 71,
+          "metroFree": 33,
+          "metroExitsFree": 33,
+          "metroAvailableExits": 32,
+          "metroGradeUnknownFree": 1,
+          "metroStations": 9
+        },
+        "meihua": {
+          "busFree": 181,
+          "busLinesFree": 27,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 22,
+          "metroExitsFree": 22,
+          "metroAvailableExits": 22,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 8
+        },
+        "renmin-guangchang": {
+          "busFree": 420,
+          "busLinesFree": 62,
+          "busCoverageNames": 70,
+          "busMatchedNames": 66,
+          "metroFree": 25,
+          "metroExitsFree": 25,
+          "metroAvailableExits": 22,
+          "metroGradeUnknownFree": 3,
+          "metroStations": 7
+        },
+        "xujiahui": {
+          "busFree": 179,
+          "busLinesFree": 27,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 18,
+          "metroExitsFree": 18,
+          "metroAvailableExits": 18,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 6
+        },
+        "disney": {
+          "busFree": 75,
+          "busLinesFree": 20,
+          "busCoverageNames": 34,
+          "busMatchedNames": 34,
+          "metroFree": 0,
+          "metroExitsFree": 0,
+          "metroAvailableExits": 0,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 1
+        }
+      }
+    },
+    "midautumn": {
+      "fetchedAt": "2026-11-21 17:05:42",
+      "range": {
+        "start": "2027-08-30",
+        "end": "2027-10-10"
+      },
+      "bus": {
+        "rows": 431,
+        "free": 1580,
+        "byGrade": {
+          "A+": 392,
+          "A++": 861,
+          "AA": 25,
+          "S": 302
+        }
+      },
+      "metro": {
+        "rows": 861,
+        "free": 823,
+        "byGrade": {
+          "A+": 352,
+          "A++": 468,
+          "空": 3
+        }
+      },
+      "id": "midautumn",
+      "name": "中秋国庆",
+      "start": "2027-08-30",
+      "end": "2027-10-10",
+      "file": "inventory_midautumn.json",
+      "anchors": {
+        "lujiazui": {
+          "busFree": 436,
+          "busLinesFree": 65,
+          "busCoverageNames": 75,
+          "busMatchedNames": 71,
+          "metroFree": 30,
+          "metroExitsFree": 30,
+          "metroAvailableExits": 29,
+          "metroGradeUnknownFree": 1,
+          "metroStations": 9
+        },
+        "meihua": {
+          "busFree": 175,
+          "busLinesFree": 27,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 19,
+          "metroExitsFree": 19,
+          "metroAvailableExits": 19,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 8
+        },
+        "renmin-guangchang": {
+          "busFree": 437,
+          "busLinesFree": 62,
+          "busCoverageNames": 70,
+          "busMatchedNames": 66,
+          "metroFree": 23,
+          "metroExitsFree": 23,
+          "metroAvailableExits": 20,
+          "metroGradeUnknownFree": 3,
+          "metroStations": 7
+        },
+        "xujiahui": {
+          "busFree": 173,
+          "busLinesFree": 27,
+          "busCoverageNames": 30,
+          "busMatchedNames": 29,
+          "metroFree": 16,
+          "metroExitsFree": 16,
+          "metroAvailableExits": 16,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 6
+        },
+        "disney": {
+          "busFree": 88,
+          "busLinesFree": 20,
+          "busCoverageNames": 34,
+          "busMatchedNames": 34,
+          "metroFree": 0,
+          "metroExitsFree": 0,
+          "metroAvailableExits": 0,
+          "metroGradeUnknownFree": 0,
+          "metroStations": 1
+        }
+      }
+    }
+  },
+  "anchors": [
+    "lujiazui",
+    "meihua",
+    "renmin-guangchang",
+    "xujiahui",
+    "disney"
+  ]
+}

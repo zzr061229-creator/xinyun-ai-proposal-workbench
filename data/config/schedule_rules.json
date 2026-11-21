@@ -1,0 +1,125 @@
+{
+  "version": "1.0.0",
+  "effectiveDate": "2026-11-21",
+  "leadDaysProduction": 14,
+  "leadTimeNote": "T-14 为计划前置期：设计→定稿→内容审批→制作，共 14 天；不是合同承诺，资料包未给逐段天数。",
+  "approvalDays": 5,
+  "approvalNote": "5 天为审批排期假设，含在 T-14 内，不额外叠加；资料包只说明审批在制作前，未给具体天数。",
+  "nightWork": true,
+  "nightWorkNote": "公交、双层巴士、铛铛车、地铁口、户外大牌均需夜间窗口期施工。",
+  "maxUnitsPerNight": null,
+  "maxUnitsPerNightNote": "02 流程只说明“单晚施工存在作业上限”，未给具体车辆/点位数；待运营确认，不编造。",
+  "rainBufferDays": 2,
+  "rainBufferNote": "资料只说明雨天无法施工；2 天为项目排期假设，不是合同承诺，需在甘特图单独标出。",
+  "installBatchNote": "几十辆/数十口需分批多日，全部在发布日前完成",
+  "installBatchDetail": "若同步几十台车辆或数十个地铁口发布，需拆分多日分批作业；单晚有作业上限，雨天无法施工。",
+  "monitoring": {
+    "onAirProofT1": {
+      "due": "T+1",
+      "description": "上刊证明：照片带报头日期",
+      "contract": "4a",
+      "source": "03 4A 框架 P7（十、(1)）；直客仅约定施工照/上画报告作为付款支持"
+    },
+    "onAirMonitorT5": {
+      "due": "T+5",
+      "unit": "工作日",
+      "description": "上刊监测：近景/远景/多角度",
+      "contract": "4a",
+      "source": "03 4A 框架 P7（十、(2)）"
+    },
+    "offAirT5": {
+      "due": "T+5",
+      "unit": "工作日",
+      "description": "下刊监测",
+      "contract": "4a",
+      "source": "03 4A 框架 P7（十、(3)）"
+    },
+    "monthly": {
+      "due": "monthly",
+      "description": "月监测：发布期超过 1 个月",
+      "contract": "4a",
+      "source": "03 4A 框架 P7（十、(5)）"
+    },
+    "replaceT1": {
+      "due": "T+1",
+      "description": "换画证明：带报头日期",
+      "contract": "4a",
+      "source": "03 4A 框架 P7（十、(4)）"
+    }
+  },
+  "monitoringOperationalNote": "监拍由外包执行，完工后需隔天才能提供照片（02）；排期按 T+1 预估，不承诺当天出报告。",
+  "contractTypes": {
+    "direct": {
+      "label": "直客合同",
+      "config": "data/config/contract_terms.json#direct"
+    },
+    "4a": {
+      "label": "4A 框架合同",
+      "config": "data/config/contract_terms.json#4a"
+    }
+  },
+  "defaultWindow": {
+    "start": "2027-04-01",
+    "end": "2027-05-12",
+    "weeks": 6,
+    "label": "2027-04-01～05-12 · 6 周",
+    "inventoryVerifiedThrough": "2027-05-15",
+    "note": "6 周落在红豆已验证窗口 2027-04-01～05-15 内；提案写精确起止日，不写“Q2”。"
+  },
+  "allowedWeeks": [
+    4,
+    6
+  ],
+  "unverifiedWeeks": [
+    {
+      "weeks": 8,
+      "status": "unverified",
+      "reason": "超出库存验证窗口 2027-04-01～05-15，无法用当前快照核对可售"
+    },
+    {
+      "weeks": 12,
+      "status": "unverified",
+      "reason": "超出库存验证窗口 2027-04-01～05-15，只能作为待核方案，不得承诺可售"
+    }
+  ],
+  "source": [
+    {
+      "field": "leadDaysProduction / nightWork / installBatchNote",
+      "doc": "02 上下刊流程卡点",
+      "locator": "一、排期逻辑",
+      "note": "设计→定稿→内容审批→制作→夜间安装；单晚有作业上限；雨天停工"
+    },
+    {
+      "field": "approvalDays / rainBufferDays",
+      "doc": "项目排期假设",
+      "locator": "docs/00_项目分析.md 12.5",
+      "note": "资料未给具体天数，按 5 天审批、2 天雨天缓冲做计划假设"
+    },
+    {
+      "field": "monitoring",
+      "doc": "03 4A 框架",
+      "locator": "P7 十、广告监测",
+      "note": "T+1/T+5/月监测/换画 T+1"
+    },
+    {
+      "field": "defaultWindow",
+      "doc": "data/inventory_live.json + docs/02_项目体检报告.md 2.6",
+      "locator": "range 2027-04-01～2027-05-15",
+      "note": "6 周方案结束于 2027-05-12，仍在验证窗口内"
+    }
+  ],
+  "notes": [
+    "档期默认 2027-04-01～05-12（6 周）；4 周也允许（结束更早）。",
+    "8/12 周超出库存验证窗口，UI 必须标“超出库存验证窗口/待核”，不得显示为可售承诺。",
+    "排期不含客户定稿延迟；客户端延迟按合同顺延，不计入乙方责任。",
+    "安装必须全部在约定发布日前完成；不能承诺“今天签约明天上刊”。",
+    "四个已验证档期（开门红/春季Q2/暑期/中秋国庆）见 data/config/windows.json；各窗口库存快照独立。"
+  ],
+  "windowsFile": "data/config/windows.json",
+  "windowIds": [
+    "kaimenhong",
+    "q2",
+    "summer",
+    "midautumn"
+  ]
+}

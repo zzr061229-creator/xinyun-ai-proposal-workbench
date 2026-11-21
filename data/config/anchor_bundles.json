@@ -1,0 +1,73 @@
+{
+  "version": "1.0.0",
+  "effectiveDate": "2026-11-21",
+  "note": "多锚点/网点组合。members 的 anchorId 必须与 anchors.json 一致；radius 必须已有该锚点的覆盖文件。status=sample 表示网点组合为演示假设，上刊前要用客户名录替换。",
+  "bundles": [
+    {
+      "bundleId": "spdb-shanghai-branches",
+      "industryId": "bank-insurance",
+      "brandId": "spdb",
+      "status": "verified",
+      "mode": "network",
+      "label": "浦发上海支行网络",
+      "shortLabel": "浦发 3 支行",
+      "mapAssetKey": "network-central",
+      "note": "三个真实网点：上海分行（浦东南路588号）、九江路支行（湖北路258号，人民广场旁）、徐家汇支行（虹桥路188号）。覆盖按各网点坐标重抓 1km；人流复用平台 2023-05 线路/出口级数据。",
+      "members": [
+        {
+          "anchorId": "spdb-shanghai-hq",
+          "label": "上海分行（陆家嘴）",
+          "radius": 1000,
+          "weight": 0.4
+        },
+        {
+          "anchorId": "spdb-jiujiang",
+          "label": "九江路支行（人民广场）",
+          "radius": 1000,
+          "weight": 0.3
+        },
+        {
+          "anchorId": "spdb-xujiahui",
+          "label": "徐家汇支行",
+          "radius": 1000,
+          "weight": 0.3
+        }
+      ],
+      "unitLabel": "网点"
+    },
+    {
+      "bundleId": "nongfu-retail-stores",
+      "industryId": "food-beverage",
+      "brandId": "nongfu-spring",
+      "status": "sample",
+      "mode": "network",
+      "label": "农夫山泉重点商圈网络（按人流选点）",
+      "shortLabel": "食品 3 商圈",
+      "mapAssetKey": "network-central",
+      "note": "按 2023-05 区域人流从高到低选三个商圈：陆家嘴 40% / 人民广场 38% / 徐家汇 22%。农夫山泉没有自营零售终端，这里是重点商圈选点演示，具体渠道以客户名单为准。",
+      "members": [
+        {
+          "anchorId": "renmin-guangchang",
+          "label": "人民广场商圈",
+          "radius": 1000,
+          "weight": 0.38
+        },
+        {
+          "anchorId": "xujiahui",
+          "label": "徐家汇商圈",
+          "radius": 1000,
+          "weight": 0.22
+        },
+        {
+          "anchorId": "lujiazui",
+          "label": "陆家嘴商圈",
+          "radius": 1000,
+          "weight": 0.4
+        }
+      ],
+      "weightLabel": "人流权重（公交名额）：陆家嘴 40% / 人民广场 38% / 徐家汇 22%（2023-05 区域触达）",
+      "allocateBusByWeight": true,
+      "unitLabel": "商圈"
+    }
+  ]
+}

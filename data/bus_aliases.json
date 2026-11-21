@@ -1,0 +1,1001 @@
+{
+  "generatedAt": "2026-11-21 16:56:31",
+  "updatedAt": "2026-11-21 16:56:34",
+  "inventorySnapshot": {
+    "file": "data/inventory_live.json",
+    "fetchedAt": "2026-11-21 11:31:36",
+    "range": {
+      "start": "2027-04-01",
+      "end": "2027-05-15"
+    },
+    "busRows": 431,
+    "metroRows": 861
+  },
+  "summary": {
+    "coverageNames": 156,
+    "aliasEntries": 156,
+    "matched": 152,
+    "unmatched": 4,
+    "unmatchedNames": [
+      "911路双层",
+      "旅游10线",
+      "旅游1线",
+      "旅游2线"
+    ],
+    "matchedButZeroFree": [
+      "1019路",
+      "1020路",
+      "1036路",
+      "1105",
+      "1119路",
+      "1159路",
+      "119路",
+      "583路",
+      "779路",
+      "798路",
+      "970路",
+      "980路",
+      "985路",
+      "986路区间",
+      "浦东100路",
+      "浦东101路",
+      "浦东106路",
+      "浦东52路",
+      "浦东89路",
+      "隧道一线"
+    ],
+    "dataQuality": [],
+    "methodCounts": {
+      "strip_路": 112,
+      "exact": 36,
+      "manual": 2,
+      "alias_866-高峰线": 1,
+      "not_in_inventory": 4,
+      "alias_986(区间)": 1
+    }
+  },
+  "notes": [
+    "覆盖名 → 库存线路名的唯一连接表；matched=false 表示覆盖有、431 条公交库存没有。",
+    "866路→866-高峰线、986路区间→986(区间) 已按任务核实；后者空位为 0，匹配但不可售。",
+    "911路双层、旅游1/2/10线为观光/双层产品，不在 431 条库存，保留 matched:false。",
+    "629路不在库存，保留 matched:false；南龙专线按同线简称映射到南龙线，待运营确认。"
+  ],
+  "aliases": {
+    "100路": {
+      "inventoryName": "100",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 100（A++，空位 2，总车 8）"
+    },
+    "1019路": {
+      "inventoryName": "1019",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1019（A++，空位 0，总车 3）；匹配但当前无空位，不可下单。"
+    },
+    "1020路": {
+      "inventoryName": "1020",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1020（A+，空位 0，总车 1）；匹配但当前无空位，不可下单。"
+    },
+    "1036路": {
+      "inventoryName": "1036",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1036（A+，空位 0，总车 1）；匹配但当前无空位，不可下单。"
+    },
+    "1047路": {
+      "inventoryName": "1047",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1047（A+，空位 1，总车 1）"
+    },
+    "1055路": {
+      "inventoryName": "1055",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1055（A+，空位 1，总车 1）"
+    },
+    "1056路": {
+      "inventoryName": "1056",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1056（A+，空位 2，总车 2）"
+    },
+    "106路": {
+      "inventoryName": "106",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 106（A++，空位 5，总车 5）"
+    },
+    "1105": {
+      "inventoryName": "1105",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 1105（A+，空位 0，总车 1）；匹配但当前无空位，不可下单。"
+    },
+    "1119路": {
+      "inventoryName": "1119",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1119（A+，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "1159路": {
+      "inventoryName": "1159",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1159（A+，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "1161路": {
+      "inventoryName": "1161",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1161（A+，空位 2，总车 2）"
+    },
+    "119路": {
+      "inventoryName": "119",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 119（A++，空位 0，总车 8）；匹配但当前无空位，不可下单。"
+    },
+    "1206路": {
+      "inventoryName": "1206",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 1206（A++，空位 1，总车 2）"
+    },
+    "121路": {
+      "inventoryName": "121",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 121（A++，空位 9，总车 10）"
+    },
+    "130路": {
+      "inventoryName": "130",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 130（A++，空位 3，总车 7）"
+    },
+    "136路": {
+      "inventoryName": "136",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 136（S，空位 4，总车 10）"
+    },
+    "141路": {
+      "inventoryName": "141",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 141（S，空位 9，总车 12）"
+    },
+    "155路": {
+      "inventoryName": "155",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 155（S，空位 8，总车 8）"
+    },
+    "157路": {
+      "inventoryName": "157",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 157（S，空位 2，总车 6）"
+    },
+    "162路": {
+      "inventoryName": "162",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 162（A++，空位 5，总车 6）"
+    },
+    "167路": {
+      "inventoryName": "167",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 167（S，空位 3，总车 11）"
+    },
+    "171路": {
+      "inventoryName": "171",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 171（S，空位 4，总车 8）"
+    },
+    "17路": {
+      "inventoryName": "17",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 17（S，空位 5，总车 11）"
+    },
+    "181路": {
+      "inventoryName": "181",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 181（A++，空位 1，总车 10）"
+    },
+    "185路": {
+      "inventoryName": "185",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 185（A++，空位 3，总车 10）"
+    },
+    "188路": {
+      "inventoryName": "188",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 188（A++，空位 9，总车 14）"
+    },
+    "18路": {
+      "inventoryName": "18",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 18（S，空位 8，总车 13）"
+    },
+    "190路": {
+      "inventoryName": "190",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 190（S，空位 3，总车 10）"
+    },
+    "198路": {
+      "inventoryName": "198",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 198（S，空位 3，总车 7）"
+    },
+    "218路": {
+      "inventoryName": "218",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 218（S，空位 13，总车 17）"
+    },
+    "224路": {
+      "inventoryName": "224",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 224（S，空位 12，总车 15）"
+    },
+    "28路": {
+      "inventoryName": "28",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 28（A++，空位 9，总车 10）"
+    },
+    "33路": {
+      "inventoryName": "33",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 33（S，空位 5，总车 8）"
+    },
+    "43路": {
+      "inventoryName": "43",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 43（S，空位 9，总车 15）"
+    },
+    "451路": {
+      "inventoryName": "451",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 451（S，空位 9，总车 18）"
+    },
+    "454路": {
+      "inventoryName": "454",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 454（S，空位 8，总车 8）"
+    },
+    "455路": {
+      "inventoryName": "455",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 455（S，空位 6，总车 15）"
+    },
+    "537路": {
+      "inventoryName": "537",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 537（S，空位 8，总车 13）"
+    },
+    "548路": {
+      "inventoryName": "548",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 548（S，空位 6，总车 7）"
+    },
+    "551路": {
+      "inventoryName": "551",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 551（A++，空位 8，总车 9）"
+    },
+    "55路": {
+      "inventoryName": "55",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 55（S，空位 6，总车 10）"
+    },
+    "572路": {
+      "inventoryName": "572",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 572（S，空位 6，总车 12）"
+    },
+    "576路": {
+      "inventoryName": "576",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 576（S，空位 15，总车 23）"
+    },
+    "583路": {
+      "inventoryName": "583",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 583（S，空位 0，总车 10）；匹配但当前无空位，不可下单。"
+    },
+    "58路": {
+      "inventoryName": "58",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 58（A++，空位 7，总车 11）"
+    },
+    "610路": {
+      "inventoryName": "610",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 610（A++，空位 8，总车 11）"
+    },
+    "62路": {
+      "inventoryName": "62",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 62（A++，空位 4，总车 13）"
+    },
+    "639路": {
+      "inventoryName": "639",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 639（A++，空位 5，总车 12）"
+    },
+    "63路": {
+      "inventoryName": "63",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 63（A++，空位 12，总车 15）"
+    },
+    "66路": {
+      "inventoryName": "66",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 66（S，空位 9，总车 13）"
+    },
+    "69路": {
+      "inventoryName": "69",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 69（S，空位 7，总车 12）"
+    },
+    "732路": {
+      "inventoryName": "732",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 732（S，空位 4，总车 11）"
+    },
+    "736路": {
+      "inventoryName": "736",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 736（S，空位 5，总车 6）"
+    },
+    "739路": {
+      "inventoryName": "739",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 739（A++，空位 5，总车 10）"
+    },
+    "740路": {
+      "inventoryName": "740",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 740（A++，空位 8，总车 15）"
+    },
+    "741路": {
+      "inventoryName": "741",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 741（A++，空位 7，总车 12）"
+    },
+    "74路": {
+      "inventoryName": "74",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 74（A++，空位 9，总车 10）"
+    },
+    "757路": {
+      "inventoryName": "757",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 757（A++，空位 8，总车 8）"
+    },
+    "763路": {
+      "inventoryName": "763",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 763（A++，空位 6，总车 9）"
+    },
+    "770路": {
+      "inventoryName": "770",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 770（A++，空位 7，总车 13）"
+    },
+    "774路": {
+      "inventoryName": "774",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 774（A++，空位 6，总车 14）"
+    },
+    "775路": {
+      "inventoryName": "775",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 775（S，空位 5，总车 6）"
+    },
+    "779路": {
+      "inventoryName": "779",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 779（A++，空位 0，总车 10）；匹配但当前无空位，不可下单。"
+    },
+    "780路": {
+      "inventoryName": "780",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 780（S，空位 7，总车 11）"
+    },
+    "782路": {
+      "inventoryName": "782",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 782（S，空位 6，总车 8）"
+    },
+    "783路": {
+      "inventoryName": "783",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 783（S，空位 5，总车 9）"
+    },
+    "785路": {
+      "inventoryName": "785",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 785（S，空位 5，总车 10）"
+    },
+    "786路": {
+      "inventoryName": "786",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 786（A++，空位 1，总车 9）"
+    },
+    "787路": {
+      "inventoryName": "787",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 787（S，空位 6，总车 10）"
+    },
+    "789路": {
+      "inventoryName": "789",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 789（S，空位 1，总车 10）"
+    },
+    "790路": {
+      "inventoryName": "790",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 790（A++，空位 12，总车 16）"
+    },
+    "791路": {
+      "inventoryName": "791",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 791（A++，空位 5，总车 9）"
+    },
+    "792路": {
+      "inventoryName": "792",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 792（A++，空位 3，总车 11）"
+    },
+    "795路": {
+      "inventoryName": "795",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 795（A++，空位 8，总车 11）"
+    },
+    "798路": {
+      "inventoryName": "798",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 798（A++，空位 0，总车 11）；匹配但当前无空位，不可下单。"
+    },
+    "803路": {
+      "inventoryName": "803",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 803（A++，空位 6，总车 9）"
+    },
+    "804路": {
+      "inventoryName": "804",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 804（A++，空位 2，总车 6）"
+    },
+    "81路": {
+      "inventoryName": "81",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 81（A++，空位 7，总车 15）"
+    },
+    "824路": {
+      "inventoryName": "824",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 824（S，空位 5，总车 13）"
+    },
+    "82路": {
+      "inventoryName": "82",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 82（A++，空位 2，总车 13）"
+    },
+    "836路": {
+      "inventoryName": "836",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 836（A++，空位 5，总车 12）"
+    },
+    "838路": {
+      "inventoryName": "838",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 838（A++，空位 7，总车 14）"
+    },
+    "840路": {
+      "inventoryName": "840",
+      "matched": true,
+      "method": "manual",
+      "note": "库存匹配：库存 840（S，空位 6，总车 6）"
+    },
+    "845路": {
+      "inventoryName": "845",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 845（A++，空位 10，总车 11）"
+    },
+    "856路": {
+      "inventoryName": "856",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 856（A++，空位 9，总车 9）"
+    },
+    "858路": {
+      "inventoryName": "858",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 858（A++，空位 4，总车 8）"
+    },
+    "85路": {
+      "inventoryName": "85",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 85（A++，空位 6，总车 9）"
+    },
+    "866路": {
+      "inventoryName": "866-高峰线",
+      "matched": true,
+      "method": "alias_866-高峰线",
+      "note": "覆盖名 866路 → 库存 866-高峰线（A++，空位 1）；已核实库存存在。"
+    },
+    "871路": {
+      "inventoryName": "871",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 871（A++，空位 6，总车 14）"
+    },
+    "875路": {
+      "inventoryName": "875",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 875（A++，空位 3，总车 8）"
+    },
+    "89路": {
+      "inventoryName": "89",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 89（S，空位 7，总车 13）"
+    },
+    "911路双层": {
+      "inventoryName": null,
+      "matched": false,
+      "method": "not_in_inventory",
+      "note": "观光/双层产品不在 431 条公交库存；保留 matched:false，不伪造库存。"
+    },
+    "912路": {
+      "inventoryName": "912",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 912（A++，空位 7，总车 9）"
+    },
+    "926路": {
+      "inventoryName": "926",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 926（S，空位 5，总车 10）"
+    },
+    "927路": {
+      "inventoryName": "927",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 927（S，空位 7，总车 8）"
+    },
+    "932路": {
+      "inventoryName": "932",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 932（S，空位 8，总车 10）"
+    },
+    "941路": {
+      "inventoryName": "941",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 941（A++，空位 6，总车 11）"
+    },
+    "94路": {
+      "inventoryName": "94",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 94（A++，空位 9，总车 11）"
+    },
+    "955路": {
+      "inventoryName": "955",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 955（S，空位 14，总车 18）"
+    },
+    "958路": {
+      "inventoryName": "958",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 958（A++，空位 3，总车 9）"
+    },
+    "95路": {
+      "inventoryName": "95",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 95（A++，空位 10，总车 18）"
+    },
+    "960路": {
+      "inventoryName": "960",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 960（A++，空位 7，总车 8）"
+    },
+    "961路": {
+      "inventoryName": "961",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 961（A++，空位 7，总车 11）"
+    },
+    "963路": {
+      "inventoryName": "963",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 963（A++，空位 6，总车 18）"
+    },
+    "969路": {
+      "inventoryName": "969",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 969（A++，空位 3，总车 9）"
+    },
+    "96路": {
+      "inventoryName": "96",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 96（A++，空位 4，总车 10）"
+    },
+    "970路": {
+      "inventoryName": "970",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 970（A++，空位 0，总车 13）；匹配但当前无空位，不可下单。"
+    },
+    "980路": {
+      "inventoryName": "980",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 980（S，空位 0，总车 11）；匹配但当前无空位，不可下单。"
+    },
+    "981路": {
+      "inventoryName": "981",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 981（A++，空位 7，总车 9）"
+    },
+    "985路": {
+      "inventoryName": "985",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 985（S，空位 0，总车 10）；匹配但当前无空位，不可下单。"
+    },
+    "986路": {
+      "inventoryName": "986",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 986（A++，空位 4，总车 8）"
+    },
+    "986路区间": {
+      "inventoryName": "986(区间)",
+      "matched": true,
+      "method": "alias_986(区间)",
+      "note": "覆盖名 986路区间 → 库存 986(区间)（A++，空位 0）；可匹配但当前无空位。"
+    },
+    "987路": {
+      "inventoryName": "987",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 987（A++，空位 2，总车 7）"
+    },
+    "990路": {
+      "inventoryName": "990",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 990（A++，空位 5，总车 6）"
+    },
+    "991路": {
+      "inventoryName": "991",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 991（A++，空位 7，总车 15）"
+    },
+    "992路": {
+      "inventoryName": "992",
+      "matched": true,
+      "method": "strip_路",
+      "note": "库存匹配：库存 992（A++，空位 2，总车 13）"
+    },
+    "南南线": {
+      "inventoryName": "南南线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 南南线（A++，空位 4，总车 7）"
+    },
+    "南龙专线": {
+      "inventoryName": "南龙线",
+      "matched": true,
+      "method": "manual",
+      "note": "库存匹配：库存 南龙线（A++，空位 5，总车 11）"
+    },
+    "周康4路": {
+      "inventoryName": "周康4路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 周康4路（A+，空位 2，总车 2）"
+    },
+    "周康5路": {
+      "inventoryName": "周康5路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 周康5路（A+，空位 2，总车 2）"
+    },
+    "大桥六线": {
+      "inventoryName": "大桥六线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 大桥六线（S，空位 6，总车 11）"
+    },
+    "川沙2路": {
+      "inventoryName": "川沙2路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 川沙2路（A+，空位 3，总车 3）"
+    },
+    "川沙5路": {
+      "inventoryName": "川沙5路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 川沙5路（A+，空位 1，总车 1）"
+    },
+    "旅游10线": {
+      "inventoryName": null,
+      "matched": false,
+      "method": "not_in_inventory",
+      "note": "观光线路不在 431 条公交库存；保留 matched:false，不伪造库存。"
+    },
+    "旅游1线": {
+      "inventoryName": null,
+      "matched": false,
+      "method": "not_in_inventory",
+      "note": "观光线路不在 431 条公交库存；保留 matched:false，不伪造库存。"
+    },
+    "旅游2线": {
+      "inventoryName": null,
+      "matched": false,
+      "method": "not_in_inventory",
+      "note": "观光线路不在 431 条公交库存；保留 matched:false，不伪造库存。"
+    },
+    "沪南线": {
+      "inventoryName": "沪南线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 沪南线（A++，空位 7，总车 25）"
+    },
+    "浦东100路": {
+      "inventoryName": "浦东100路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东100路（A++，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "浦东101路": {
+      "inventoryName": "浦东101路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东101路（A++，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "浦东106路": {
+      "inventoryName": "浦东106路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东106路（A++，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "浦东110路": {
+      "inventoryName": "浦东110路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东110路（A++，空位 6，总车 6）"
+    },
+    "浦东12路": {
+      "inventoryName": "浦东12路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东12路（A++，空位 8，总车 12）"
+    },
+    "浦东15路": {
+      "inventoryName": "浦东15路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东15路（A++，空位 1，总车 9）"
+    },
+    "浦东16路": {
+      "inventoryName": "浦东16路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东16路（A+，空位 2，总车 2）"
+    },
+    "浦东25路": {
+      "inventoryName": "浦东25路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东25路（A++，空位 5，总车 7）"
+    },
+    "浦东4路": {
+      "inventoryName": "浦东4路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东4路（A++，空位 5，总车 7）"
+    },
+    "浦东50路": {
+      "inventoryName": "浦东50路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东50路（A+，空位 4，总车 4）"
+    },
+    "浦东51路": {
+      "inventoryName": "浦东51路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东51路（A+，空位 1，总车 7）"
+    },
+    "浦东52路": {
+      "inventoryName": "浦东52路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东52路（A+，空位 0，总车 2）；匹配但当前无空位，不可下单。"
+    },
+    "浦东55路": {
+      "inventoryName": "浦东55路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东55路（A+，空位 8，总车 9）"
+    },
+    "浦东62路": {
+      "inventoryName": "浦东62路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东62路（A++，空位 5，总车 7）"
+    },
+    "浦东63路": {
+      "inventoryName": "浦东63路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东63路（A+，空位 8，总车 8）"
+    },
+    "浦东70路": {
+      "inventoryName": "浦东70路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东70路（A++，空位 7，总车 7）"
+    },
+    "浦东71路": {
+      "inventoryName": "浦东71路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东71路（A+，空位 3，总车 3）"
+    },
+    "浦东73路": {
+      "inventoryName": "浦东73路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东73路（A++，空位 3，总车 10）"
+    },
+    "浦东89路": {
+      "inventoryName": "浦东89路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东89路（A++，空位 0，总车 3）；匹配但当前无空位，不可下单。"
+    },
+    "浦东92路": {
+      "inventoryName": "浦东92路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东92路（A++，空位 6，总车 7）"
+    },
+    "浦东93路": {
+      "inventoryName": "浦东93路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东93路（A+，空位 2，总车 6）"
+    },
+    "浦东99路": {
+      "inventoryName": "浦东99路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 浦东99路（A+，空位 5，总车 6）"
+    },
+    "虹桥枢纽1路": {
+      "inventoryName": "虹桥枢纽1路",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 虹桥枢纽1路（A++，空位 1，总车 5）"
+    },
+    "闵行33路B线": {
+      "inventoryName": "闵行33路B线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 闵行33路B线（A++，空位 2，总车 3）"
+    },
+    "隧道一线": {
+      "inventoryName": "隧道一线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 隧道一线（A++，空位 0，总车 9）；匹配但当前无空位，不可下单。"
+    },
+    "隧道三线": {
+      "inventoryName": "隧道三线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 隧道三线（S，空位 8，总车 13）"
+    },
+    "隧道二线": {
+      "inventoryName": "隧道二线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 隧道二线（A++，空位 6，总车 6）"
+    },
+    "隧道六线": {
+      "inventoryName": "隧道六线",
+      "matched": true,
+      "method": "exact",
+      "note": "库存匹配：库存 隧道六线（S，空位 4，总车 7）"
+    }
+  }
+}

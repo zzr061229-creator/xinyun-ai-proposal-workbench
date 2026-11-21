@@ -1,0 +1,626 @@
+{
+  "version": "1.3.0",
+  "effectiveDate": "2026-11-21",
+  "defaultIndustryId": "bank-insurance",
+  "industryOrder": [
+    "private-hospital",
+    "theme-park",
+    "bank-insurance",
+    "food-beverage",
+    "health-supplement"
+  ],
+  "industries": {
+    "private-hospital": {
+      "industryId": "private-hospital",
+      "name": "私立医院",
+      "status": "ready",
+      "brands": [
+        {
+          "brandId": "meihua",
+          "name": "美华",
+          "fullName": "上海美华妇儿医院",
+          "isDefault": true,
+          "anchorIds": [
+            "meihua"
+          ],
+          "status": "verified",
+          "note": "医院默认且唯一品牌；上海美华妇儿医院（徐汇区宋园路155号）。"
+        }
+      ],
+      "defaultBrandId": "meihua",
+      "defaultAnchorIds": [
+        "meihua"
+      ],
+      "anchorBundleIds": [],
+      "mediaMix": {
+        "metro": 0.55,
+        "bus": 0.45
+      },
+      "radiusDefault": 3000,
+      "weeksPresets": [
+        4,
+        6
+      ],
+      "budgetPresets": [
+        {
+          "budget": 1000000,
+          "label": "单院区核心圈（美华）",
+          "anchorIds": [
+            "meihua"
+          ],
+          "anchorMode": "single",
+          "note": "100 万档默认单院区；引擎可在预算内调整媒体组合。"
+        },
+        {
+          "budget": 2000000,
+          "label": "单院区 3km 主推（美华）",
+          "anchorIds": [
+            "meihua"
+          ],
+          "anchorMode": "single",
+          "note": "200 万档默认单院区；如预算允许可扩展到第二院区。"
+        },
+        {
+          "budget": 5000000,
+          "label": "单院区饱和（美华）",
+          "anchorIds": [
+            "meihua"
+          ],
+          "anchorMode": "single",
+          "note": "500 万仍用美华单点；不再默认切三院区并集（嘉会/和睦家保留为数据样本）。"
+        }
+      ],
+      "compliance": [
+        {
+          "id": "medical-ad-review",
+          "requirement": "投放前须取得《医疗广告审查证明》，并按批准内容发布，不得篡改批准内容。",
+          "source": "《广告法》《医疗广告管理办法》通用要求；资料包未附具体证明文件"
+        },
+        {
+          "id": "no-efficacy-guarantee",
+          "requirement": "不得含有表示功效、安全性的断言或保证；不得保证治愈或疗效。",
+          "source": "《广告法》《医疗广告管理办法》通用要求"
+        },
+        {
+          "id": "no-patient-endorsement",
+          "requirement": "不得利用患者、卫生技术人员、医学教育科研机构及人员等形象或名义作证明。",
+          "source": "《广告法》医疗广告条款"
+        },
+        {
+          "id": "institution-qualification",
+          "requirement": "须标注医疗机构名称、地址、诊疗科目、执业许可证号等资质信息。",
+          "source": "《医疗广告管理办法》通用要求"
+        }
+      ],
+      "complianceNotice": "合规条目为行业通用法律清单，未逐条经法务复核；正式投放前须按最新法规和审查证明核对。",
+      "narrative": {
+        "positioning": "高端妇儿 / 家庭健康",
+        "audience": "院区 3km 内新中产家庭（孕产、儿科、家庭健康管理）",
+        "coreMessage": "近 / 专 / 安心",
+        "supportPoints": [
+          "院区 3km 生活圈高频触达",
+          "地铁到达 + 公交覆盖组合",
+          "高端医疗服务与院区网络"
+        ]
+      },
+      "scoringWeights": {
+        "distance": 0.45,
+        "grade": 0.2,
+        "availability": 0.15,
+        "efficiency": 0.15,
+        "reach": 0.05,
+        "metroMultiplier": 1.2
+      },
+      "weightsStatus": "industry_lightweight_v1",
+      "notes": [
+        "五行业各一：医院固定美华（meihua），嘉会/和睦家不再作为默认品牌。",
+        "美华 1km 9 条（6 公交/3 地铁）、3km 41 条（30/11）；100/200/500 万单点容量可行。",
+        "500 万按美华单点出方案，不默认切 hospital-network 并集。",
+        "默认档期：春季 Q2（2027-04-01～05-12）；医院对季节不敏感。"
+      ],
+      "defaultWindowId": "q2",
+      "seasonalWindows": [
+        {
+          "windowId": "q2",
+          "label": "春季 Q2（2027-04-01～05-12）",
+          "status": "verified",
+          "reason": "医院不太看季节；Q2 库存已验证，作为默认窗口。"
+        }
+      ],
+      "logic": "就近优先：距离 45% · 级别 20% · 空位 15% · 性价比 15% · 触达 5%；地铁 ×1.2"
+    },
+    "theme-park": {
+      "industryId": "theme-park",
+      "name": "乐园",
+      "status": "ready",
+      "brands": [
+        {
+          "brandId": "shanghai-disney",
+          "name": "上海迪士尼",
+          "fullName": "上海迪士尼度假区",
+          "isDefault": true,
+          "anchorIds": [
+            "disney"
+          ],
+          "status": "verified",
+          "note": "品牌与乐园锚点为公开信息；具体活动/IP/票价以官方公告为准。"
+        }
+      ],
+      "defaultBrandId": "shanghai-disney",
+      "defaultAnchorIds": [
+        "disney"
+      ],
+      "anchorBundleIds": [],
+      "mediaMix": {
+        "metro": 0.2,
+        "bus": 0.8
+      },
+      "radiusDefault": 5000,
+      "weeksPresets": [
+        4,
+        6
+      ],
+      "seasonalWindows": [
+        {
+          "windowId": "summer",
+          "label": "暑期（2027-07-01～08-11）",
+          "status": "verified",
+          "reason": "亲子客流高峰；暑期库存已验证（迪士尼 5km 公交 75 辆，地铁 0 口）。"
+        },
+        {
+          "windowId": "midautumn",
+          "label": "中秋国庆（2027-08-30～10-10）",
+          "status": "verified",
+          "reason": "国庆亲子出游；库存已验证。"
+        }
+      ],
+      "compliance": [
+        {
+          "id": "safety-notice",
+          "requirement": "涉及游乐设施/演出的广告须标注安全须知、身高年龄限制等提示，不得诱导危险行为。",
+          "source": "行业通用合规要求，待法务复核"
+        },
+        {
+          "id": "no-false-promotion",
+          "requirement": "不得虚假宣传活动内容、票价、开放时间；具体活动以官方公告为准。",
+          "source": "《广告法》通用要求"
+        },
+        {
+          "id": "minor-protection",
+          "requirement": "涉及未成年人形象或内容的，须符合未成年人保护相关规定。",
+          "source": "行业通用合规要求"
+        }
+      ],
+      "complianceNotice": "占位模板：合规条目为通用清单，未逐条经法务复核。",
+      "narrative": {
+        "positioning": "上海迪士尼度假区 / 亲子家庭 / 暑期与节假日",
+        "audience": "长三角家庭客群 + 本地亲子与游客",
+        "coreMessage": "欢乐 / 安全 / 家庭",
+        "note": "不编具体活动、IP、票价、开园时间；活动以官方公告为准。"
+      },
+      "scoringWeights": {
+        "distance": 0.05,
+        "grade": 0.15,
+        "availability": 0.1,
+        "efficiency": 0.15,
+        "reach": 0.55,
+        "metroMultiplier": 1.0
+      },
+      "weightsStatus": "industry_lightweight_v1",
+      "notes": [
+        "五行业各一：乐园固定上海迪士尼 + 迪士尼锚点（3km/5km 已覆盖）。",
+        "迪士尼站不在红豆 861 口地铁库存；3km 公交可售约 39 辆，500 万需用 5km。",
+        "暑期/中秋国庆库存已抓取验证（inventory_summer / inventory_midautumn）；乐园默认暑期。",
+        "媒体配比 0.2/0.8 为策划预设，未校准。"
+      ],
+      "budgetPresets": [
+        {
+          "budget": 1000000,
+          "label": "迪士尼 3km（公交为主）",
+          "anchorIds": [
+            "disney"
+          ],
+          "anchorMode": "single",
+          "note": "3km 覆盖 10 条（8 公交/2 地铁线）；迪士尼站不在红豆地铁库存，方案以公交为主。"
+        },
+        {
+          "budget": 2000000,
+          "label": "迪士尼 3km 主推",
+          "anchorIds": [
+            "disney"
+          ],
+          "anchorMode": "single",
+          "note": "200 万单点；3km 公交可售约 39 辆，必要时切 5km。"
+        },
+        {
+          "budget": 5000000,
+          "label": "迪士尼 5km 饱和",
+          "anchorIds": [
+            "disney"
+          ],
+          "anchorMode": "single",
+          "note": "500 万用 5km 公交为主；地铁口为 0（迪士尼站不在红豆 861 口库存）。"
+        }
+      ],
+      "defaultWindowId": "summer",
+      "logic": "全城触达：触达 55% · 级别 15% · 性价比 15% · 空位 10% · 距离 5%"
+    },
+    "bank-insurance": {
+      "industryId": "bank-insurance",
+      "name": "银行保险",
+      "status": "ready",
+      "brands": [
+        {
+          "brandId": "spdb",
+          "name": "浦发银行",
+          "fullName": "上海浦东发展银行",
+          "isDefault": true,
+          "anchorIds": [
+            "spdb-shanghai-hq",
+            "spdb-jiujiang",
+            "spdb-xujiahui"
+          ],
+          "status": "verified",
+          "branchPoint": {
+            "name": "浦发银行上海分行",
+            "address": "上海市浦东新区浦东南路588号附近",
+            "lng": 121.51860213073695,
+            "lat": 31.24078633476442,
+            "level": "金融",
+            "confidence": 70,
+            "source": "大数据平台 geocode",
+            "note": "geocode 落点为平台 POI，未逐门牌核验；只作地图参考，不作合同地址。"
+          },
+          "note": "三个真实网点：上海分行（浦东南路588号）、九江路支行（湖北路258号）、徐家汇支行（虹桥路188号）。网点地址来自公开地图/平台 geocode；具体 campaign 由销售确认。"
+        }
+      ],
+      "defaultBrandId": "spdb",
+      "defaultAnchorIds": [
+        "spdb-shanghai-hq",
+        "spdb-jiujiang",
+        "spdb-xujiahui"
+      ],
+      "anchorBundleIds": [
+        "spdb-shanghai-branches"
+      ],
+      "mediaMix": {
+        "metro": 0.5,
+        "bus": 0.5
+      },
+      "radiusDefault": 1000,
+      "weeksPresets": [
+        4,
+        6
+      ],
+      "compliance": [
+        {
+          "id": "no-return-guarantee",
+          "requirement": "不得对未来收益作保证性承诺，不得使用“保本”“稳赚”“无风险”等表述。",
+          "source": "《广告法》及金融营销宣传相关规定"
+        },
+        {
+          "id": "risk-disclosure",
+          "requirement": "须进行风险提示，标明“投资有风险”等；理财产品应披露风险等级。",
+          "source": "金融营销宣传相关规定"
+        },
+        {
+          "id": "qualification",
+          "requirement": "须具备相应金融业务资质，不得夸大业绩或作误导性比较。",
+          "source": "行业通用合规要求"
+        }
+      ],
+      "complianceNotice": "合规条目为行业通用清单，未逐条经法务复核；客户版必须带“投资有风险”提示，不写具体收益/费率。",
+      "narrative": {
+        "positioning": "上海分行 / 浦发支行网络 / 财富管理",
+        "audience": "上海分行、九江路支行、徐家汇支行三个网点周边 1km 的商务通勤与高净值客群",
+        "coreMessage": "稳健 / 专业 / 可信",
+        "note": "不编具体产品、收益率、费率；三个网点为真实支行，campaign 由销售确认。"
+      },
+      "scoringWeights": {
+        "distance": 0.4,
+        "grade": 0.22,
+        "availability": 0.18,
+        "efficiency": 0.1,
+        "reach": 0.1,
+        "metroMultiplier": 1.0
+      },
+      "weightsStatus": "industry_lightweight_v1",
+      "notes": [
+        "银行改为“真实支行网络”：上海分行（浦东南路588号）+ 九江路支行（湖北路258号，人民广场旁）+ 徐家汇支行（虹桥路188号），每点 1km。",
+        "覆盖按三个网点坐标分别重抓：上海分行 41 条（36 公交/5 地铁）、九江路 33（27/6）、徐家汇 23（17/6），见 data/coverage/覆盖分析_浦发银行*_1000米.json。",
+        "人流复用平台 2023-05 线路/出口级缓存；无平台标签的口/站保持“无数据”，不估算。",
+        "brandIds 为 spdb；不写具体产品/收益/费率。",
+        "开门红 2027-01-04～02-14 库存已抓取验证（data/inventory_kaimenhong.json）；银行默认落开门红。"
+      ],
+      "budgetPresets": [
+        {
+          "budget": 1000000,
+          "label": "浦发支行网络核心圈（浦发）",
+          "anchorIds": [
+            "spdb-shanghai-hq",
+            "spdb-jiujiang",
+            "spdb-xujiahui"
+          ],
+          "anchorMode": "network",
+          "note": "上海分行 + 九江路支行 + 徐家汇支行，每点 1km；媒体在三点并集里按行业权重挑。"
+        },
+        {
+          "budget": 2000000,
+          "label": "浦发支行网络主推（浦发）",
+          "anchorIds": [
+            "spdb-shanghai-hq",
+            "spdb-jiujiang",
+            "spdb-xujiahui"
+          ],
+          "anchorMode": "network",
+          "note": "上海分行 + 九江路支行 + 徐家汇支行，每点 1km；媒体在三点并集里按行业权重挑。"
+        },
+        {
+          "budget": 5000000,
+          "label": "浦发支行网络饱和（浦发）",
+          "anchorIds": [
+            "spdb-shanghai-hq",
+            "spdb-jiujiang",
+            "spdb-xujiahui"
+          ],
+          "anchorMode": "network",
+          "note": "上海分行 + 九江路支行 + 徐家汇支行，每点 1km；媒体在三点并集里按行业权重挑。"
+        }
+      ],
+      "seasonalWindows": [
+        {
+          "windowId": "kaimenhong",
+          "label": "开门红（2027-01-04～02-14）",
+          "status": "verified",
+          "reason": "2027 春节 2/6；节前 5 周是网点/财富管理获客高峰，库存已抓取验证。"
+        },
+        {
+          "windowId": "q2",
+          "label": "春季 Q2（2027-04-01～05-12）",
+          "status": "verified",
+          "reason": "备选窗口；库存已验证，按“五一消费/财富管理季”讲。"
+        }
+      ],
+      "defaultWindowId": "kaimenhong",
+      "logic": "网点并集 + 人群质量：距离 40% · 级别 22% · 空位 18% · 触达 10% · 性价比 10%；地铁 ×1.0；每个候选按所在网点半径算距离",
+      "anchorMode": "network"
+    },
+    "food-beverage": {
+      "industryId": "food-beverage",
+      "name": "食品饮料",
+      "status": "ready",
+      "brands": [
+        {
+          "brandId": "nongfu-spring",
+          "name": "农夫山泉",
+          "fullName": "农夫山泉股份有限公司",
+          "isDefault": true,
+          "anchorIds": [
+            "renmin-guangchang"
+          ],
+          "status": "verified",
+          "note": "品牌为公开信息；具体产品、口味、销量宣称由销售确认。"
+        }
+      ],
+      "defaultBrandId": "nongfu-spring",
+      "defaultAnchorIds": [
+        "renmin-guangchang"
+      ],
+      "anchorBundleIds": [
+        "nongfu-retail-stores"
+      ],
+      "mediaMix": {
+        "metro": 0.35,
+        "bus": 0.65
+      },
+      "radiusDefault": 1000,
+      "weeksPresets": [
+        4,
+        6
+      ],
+      "compliance": [
+        {
+          "id": "no-medical-claim",
+          "requirement": "食品广告不得涉及疾病治疗功能，不得使用医疗用语或易与药品混淆的用语。",
+          "source": "《广告法》《食品安全法》通用要求"
+        },
+        {
+          "id": "substantiation",
+          "requirement": "成分、产地、工艺、销量等宣称须真实可验证，不得虚假或引人误解。",
+          "source": "《广告法》通用要求"
+        },
+        {
+          "id": "food-safety",
+          "requirement": "须符合食品安全法律法规；不得诱导过量饮酒或不健康饮食。",
+          "source": "行业通用合规要求"
+        }
+      ],
+      "complianceNotice": "占位模板：合规条目为通用清单，未逐条经法务复核。",
+      "narrative": {
+        "positioning": "国民饮用水 / 高频即饮 / 重点商圈",
+        "audience": "人民广场、徐家汇、陆家嘴三个重点商圈的到访与逛街人群",
+        "coreMessage": "天然 / 日常 / 可信",
+        "note": "不编具体水源、成分、销量；商圈选点为演示假设，具体产品由销售确认。"
+      },
+      "scoringWeights": {
+        "distance": 0.1,
+        "grade": 0.15,
+        "availability": 0.1,
+        "efficiency": 0.15,
+        "reach": 0.5,
+        "metroMultiplier": 0.9
+      },
+      "weightsStatus": "industry_lightweight_v1",
+      "notes": [
+        "食品改为“商圈网络”演示：按 2023-05 区域人流从高到低选陆家嘴（40%）、人民广场（38%）、徐家汇（22%）三个商圈，每点 1km，候选取三点并集（data/config/anchor_bundles.json）。",
+        "农夫山泉没有自营零售终端；这里是“重点商圈”选点演示，不宣称是品牌自营终端，具体渠道以客户名单为准。",
+        "三个锚点 1km 覆盖均已 verified：人民广场 29 条、徐家汇 22 条、陆家嘴 37 条。",
+        "不得出现疾病治疗、保健功效等表述。",
+        "默认档期：暑期（2027-07-01～08-11）；夏季即饮旺季，库存已验证。"
+      ],
+      "budgetPresets": [
+        {
+          "budget": 1000000,
+          "label": "商圈网络核心圈（农夫山泉）",
+          "anchorIds": [
+            "renmin-guangchang",
+            "xujiahui",
+            "lujiazui"
+          ],
+          "anchorMode": "network",
+          "note": "人民广场商圈 + 徐家汇商圈 + 陆家嘴商圈，每点 1km；候选在三点并集里按人流权重挑。"
+        },
+        {
+          "budget": 2000000,
+          "label": "商圈网络主推（农夫山泉）",
+          "anchorIds": [
+            "renmin-guangchang",
+            "xujiahui",
+            "lujiazui"
+          ],
+          "anchorMode": "network",
+          "note": "人民广场商圈 + 徐家汇商圈 + 陆家嘴商圈，每点 1km；候选在三点并集里按人流权重挑。"
+        },
+        {
+          "budget": 5000000,
+          "label": "商圈网络饱和（农夫山泉）",
+          "anchorIds": [
+            "renmin-guangchang",
+            "xujiahui",
+            "lujiazui"
+          ],
+          "anchorMode": "network",
+          "note": "人民广场商圈 + 徐家汇商圈 + 陆家嘴商圈，每点 1km；候选在三点并集里按人流权重挑。"
+        }
+      ],
+      "defaultWindowId": "summer",
+      "seasonalWindows": [
+        {
+          "windowId": "summer",
+          "label": "暑期（2027-07-01～08-11）",
+          "status": "verified",
+          "reason": "高温即饮消费旺季；暑期库存已验证。"
+        }
+      ],
+      "logic": "商圈并集 + 人流密度：触达 50% · 级别 15% · 性价比 15% · 距离 10% · 空位 10%；地铁 ×0.9；商圈权重按 2023-05 区域人流 40/38/22；每个候选按所在商圈半径算距离",
+      "anchorMode": "network"
+    },
+    "health-supplement": {
+      "industryId": "health-supplement",
+      "name": "保健品",
+      "status": "ready",
+      "brands": [
+        {
+          "brandId": "by-health",
+          "name": "汤臣倍健",
+          "fullName": "汤臣倍健股份有限公司",
+          "isDefault": true,
+          "anchorIds": [
+            "xujiahui"
+          ],
+          "status": "verified",
+          "note": "品牌为公开信息；具体功效、成分、适用人群不做宣称。"
+        }
+      ],
+      "defaultBrandId": "by-health",
+      "defaultAnchorIds": [
+        "xujiahui"
+      ],
+      "anchorBundleIds": [],
+      "mediaMix": {
+        "metro": 0.4,
+        "bus": 0.6
+      },
+      "radiusDefault": 3000,
+      "weeksPresets": [
+        4,
+        6
+      ],
+      "compliance": [
+        {
+          "id": "no-therapeutic-claim",
+          "requirement": "不得宣称疗效或治疗作用，不得代替药物；不得使用“治愈”“根治”等表述。",
+          "source": "《广告法》《食品安全法》通用要求"
+        },
+        {
+          "id": "blue-hat",
+          "requirement": "须标注保健食品标志（蓝帽子）及批准文号，并注明“保健食品不是药物，不能代替药物治疗疾病”。",
+          "source": "保健食品广告审查相关规定"
+        },
+        {
+          "id": "no-patient-endorsement",
+          "requirement": "不得利用患者、专家、医务人员形象或名义作证明。",
+          "source": "《广告法》保健食品广告条款"
+        }
+      ],
+      "complianceNotice": "占位模板：合规条目为通用清单，未逐条经法务复核。",
+      "narrative": {
+        "positioning": "家庭营养 / 日常保健",
+        "audience": "徐家汇商圈家庭客群与白领",
+        "coreMessage": "科学 / 安心 / 日常",
+        "note": "不编具体功效、成分、适用人群；必须标蓝帽子提示。"
+      },
+      "scoringWeights": {
+        "distance": 0.2,
+        "grade": 0.18,
+        "availability": 0.12,
+        "efficiency": 0.15,
+        "reach": 0.35,
+        "metroMultiplier": 1.0
+      },
+      "weightsStatus": "industry_lightweight_v1",
+      "notes": [
+        "五行业各一：保健品固定汤臣倍健 + 徐家汇锚点；不再挂美华。",
+        "徐家汇商圈 1km 22 条（16 公交/6 地铁）、3km 41 条（30/11）；100/200/500 万单点可行。",
+        "合规要求：不得宣称疗效，必须标蓝帽子，不得用患者/专家形象。",
+        "媒体配比 0.4/0.6 为策划预设，未校准。",
+        "默认档期：中秋国庆（2027-08-30～10-10）；双节送礼季，库存已验证。"
+      ],
+      "budgetPresets": [
+        {
+          "budget": 1000000,
+          "label": "徐家汇核心圈（汤臣倍健）",
+          "anchorIds": [
+            "xujiahui"
+          ],
+          "anchorMode": "single",
+          "note": "徐家汇 3km；100 万单点。"
+        },
+        {
+          "budget": 2000000,
+          "label": "徐家汇 3km 主推（汤臣倍健）",
+          "anchorIds": [
+            "xujiahui"
+          ],
+          "anchorMode": "single",
+          "note": "徐家汇 3km；200 万单点。"
+        },
+        {
+          "budget": 5000000,
+          "label": "徐家汇 3km 饱和（汤臣倍健）",
+          "anchorIds": [
+            "xujiahui"
+          ],
+          "anchorMode": "single",
+          "note": "徐家汇 3km；500 万单点容量可行。"
+        }
+      ],
+      "defaultWindowId": "midautumn",
+      "seasonalWindows": [
+        {
+          "windowId": "midautumn",
+          "label": "中秋国庆（2027-08-30～10-10）",
+          "status": "verified",
+          "reason": "双节送礼与家庭团聚场景；中秋 9/15、国庆 10/1，库存已验证。"
+        }
+      ],
+      "logic": "人群+社区：触达 35% · 距离 20% · 级别 18% · 性价比 15% · 空位 12%；地铁 ×1.0"
+    }
+  },
+  "notes": [
+    "私立医院为唯一 ready 行业；其余 4 个为 stub 占位，仅用于行业切换演示，不得当作完整行业模板。",
+    "stub 行业的品牌名、锚点、档期/覆盖均未验证；UI 必须标注“占位/待补”。",
+    "合规条目为通用法律清单，未逐条经法务复核；正式投放前按最新法规核对。",
+    "所有数值（媒体配比、半径、周数、权重）均为配置预设，不是数据平台输出。"
+  ]
+}

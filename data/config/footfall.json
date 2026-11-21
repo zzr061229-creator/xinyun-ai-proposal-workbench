@@ -1,0 +1,112 @@
+{
+  "version": "1.1.0",
+  "year": 2023,
+  "unit": "万人次/辆/天",
+  "busByGrade": {
+    "S": {
+      "dailyWan": 12.53,
+      "sampleLines": 7,
+      "dailyWanRange": [
+        10.22,
+        14.61
+      ]
+    },
+    "A++": {
+      "dailyWan": 9.69,
+      "sampleLines": 29,
+      "dailyWanRange": [
+        4.25,
+        15.95
+      ]
+    },
+    "A+": {
+      "dailyWan": 8.72,
+      "sampleLines": 14,
+      "dailyWanRange": [
+        3.32,
+        15.4
+      ]
+    },
+    "all": {
+      "dailyWan": 9.82,
+      "sampleLines": 50
+    }
+  },
+  "metro": {
+    "source": "大数据平台 2023-05 指标接口",
+    "file": "data/footfall/lujiazui_202305.json",
+    "coveredStations": 8,
+    "coveredExits": 49,
+    "missingStations": [
+      "世纪大道"
+    ],
+    "note": "5 个锚点共 120 个口有平台数据：陆家嘴 49、人民广场 31、徐家汇 14、美华 26、迪士尼 0。无标签站已列在各自文件的 metroMissingStations，UI 显示“无数据”，不得估算。"
+  },
+  "platformLujiazui": {
+    "anchorId": "lujiazui",
+    "month": "2023-05",
+    "file": "data/footfall/lujiazui_202305.json",
+    "busLines": 70,
+    "metroExits": 49,
+    "metrics": {
+      "dailyTrips": "区域覆盖人群-日均人次（coverPeoplesPV）",
+      "dailyPeople": "区域覆盖人群-日均人数（coverPeoplesUV）",
+      "dailyReach": "触达人群-日均人次（coverPeoplesPVAccurate），方案优先级最高",
+      "aggregateReach": "同一地铁站多口合并去重后的触达"
+    }
+  },
+  "source": "05 历史销售提案 50 条线路实测（按级别汇总）+ 大数据平台 2023-05 五个锚点人流/画像",
+  "disclaimer": "仅相对权重/预估，不代表 2027 绝对值；2023 数据不得包装成合同承诺。",
+  "notes": [
+    "05 样本 50 条线路中仅 25 条与当前红豆库存同名；级别均值用于预估，不作承诺。",
+    "公交触达公式：车辆数 × dailyWan × 10000 × 天数；有平台数据时优先用平台 dailyReach。",
+    "2023 人流不得包装为 2027 绝对值或合同承诺。",
+    "dailyWanRange 为样本内区间，供 UI 显示不确定性，不是置信区间。",
+    "陆家嘴平台数据为『区域』口径：公交 PV 偏大，方案用 dailyReach；地铁同站多口 PV/UV 相同，触达按口区分。",
+    "世纪大道站无平台标签；旅游 1/2/10 线、840 路无平台标签，均显示『无数据』。",
+    "五锚点平台数据已落盘：陆家嘴/人民广场/徐家汇/美华/迪士尼；迪士尼无地铁标签，画像为空。",
+    "911路双层有平台标签但不在红豆可售库：人流文件保留其数据，前端方案不选它，UI 标“不在可售库”。"
+  ],
+  "platformAnchors": [
+    {
+      "anchorId": "lujiazui",
+      "file": "data/footfall/lujiazui_202305.json",
+      "busLines": 70,
+      "metroStations": 8,
+      "metroExits": 49,
+      "profileStation": "陆家嘴"
+    },
+    {
+      "anchorId": "renmin-guangchang",
+      "file": "data/footfall/renmin-guangchang_202305.json",
+      "busLines": 66,
+      "metroStations": 5,
+      "metroExits": 31,
+      "profileStation": "人民广场"
+    },
+    {
+      "anchorId": "xujiahui",
+      "file": "data/footfall/xujiahui_202305.json",
+      "busLines": 30,
+      "metroStations": 5,
+      "metroExits": 14,
+      "profileStation": "徐家汇"
+    },
+    {
+      "anchorId": "meihua",
+      "file": "data/footfall/meihua_202305.json",
+      "busLines": 30,
+      "metroStations": 7,
+      "metroExits": 26,
+      "profileStation": "宋园路"
+    },
+    {
+      "anchorId": "disney",
+      "file": "data/footfall/disney_202305.json",
+      "busLines": 31,
+      "metroStations": 0,
+      "metroExits": 0,
+      "profileStation": "迪士尼 31 条公交合并区域（线路跨市区，含陆家嘴/迪士尼商圈，仅参考）"
+    }
+  ]
+}

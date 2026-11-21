@@ -1,0 +1,660 @@
+{
+  "version": "1.0.0",
+  "anchorId": "spdb-shanghai-hq",
+  "anchorName": "浦发银行上海分行",
+  "month": "2023-05",
+  "dataMonth": "202305",
+  "fetchedAt": "2026-11-21 20:13:48",
+  "source": "新云大数据平台 2023-05 触达人群-日均人次（线路/出口级缓存）",
+  "method": "新覆盖按线路/出口名复用同标签已抓值；无标签保持 null，不估算。",
+  "notes": [
+    "覆盖为 2026-11-21 按真实网点坐标重抓的 1km。",
+    "人流为平台 2023-05 线路/出口级值，不是按网点重新生成。",
+    "无平台标签的口/站保持 null，页面显示“无数据”。"
+  ],
+  "summary": {
+    "busLines": 33,
+    "busLinesTotal": 35,
+    "metroStations": 3,
+    "metroExits": 9,
+    "metroExitsTotal": 9,
+    "metroMissingStations": []
+  },
+  "bus": {
+    "lines": [
+      {
+        "name": "792路",
+        "labelId": 6144,
+        "grade": "A++",
+        "dailyTrips": 988403,
+        "dailyPeople": 519288,
+        "dailyReach": 87202,
+        "flowByPeriod": [
+          11527,
+          17719,
+          13632,
+          8922
+        ]
+      },
+      {
+        "name": "隧道六线",
+        "labelId": 6315,
+        "grade": "A++",
+        "dailyTrips": 1287452,
+        "dailyPeople": 666598,
+        "dailyReach": 102567,
+        "flowByPeriod": [
+          17158,
+          25873,
+          20179,
+          13485
+        ]
+      },
+      {
+        "name": "798路",
+        "labelId": 6148,
+        "grade": "A++",
+        "dailyTrips": 1048924,
+        "dailyPeople": 565832,
+        "dailyReach": 103431,
+        "flowByPeriod": [
+          12056,
+          18427,
+          14339,
+          9414
+        ]
+      },
+      {
+        "name": "992路",
+        "labelId": 6184,
+        "grade": "A+",
+        "dailyTrips": 1617745,
+        "dailyPeople": 852939,
+        "dailyReach": 79479,
+        "flowByPeriod": [
+          19657,
+          29629,
+          23134,
+          15460
+        ]
+      },
+      {
+        "name": "981路",
+        "labelId": 6174,
+        "grade": "A++",
+        "dailyTrips": 1548892,
+        "dailyPeople": 824236,
+        "dailyReach": 92775,
+        "flowByPeriod": [
+          20316,
+          30631,
+          23912,
+          15942
+        ]
+      },
+      {
+        "name": "82路",
+        "labelId": 6153,
+        "grade": "A++",
+        "dailyTrips": 1334784,
+        "dailyPeople": 697203,
+        "dailyReach": 136090,
+        "flowByPeriod": [
+          18799,
+          28301,
+          22271,
+          14868
+        ]
+      },
+      {
+        "name": "隧道三线",
+        "labelId": 6316,
+        "grade": "A++",
+        "dailyTrips": 1295938,
+        "dailyPeople": 668526,
+        "dailyReach": 116855,
+        "flowByPeriod": [
+          17647,
+          26910,
+          20991,
+          13907
+        ]
+      },
+      {
+        "name": "985路",
+        "labelId": 6176,
+        "grade": "A++",
+        "dailyTrips": 1581731,
+        "dailyPeople": 846872,
+        "dailyReach": 114148,
+        "flowByPeriod": [
+          24047,
+          35605,
+          28238,
+          19251
+        ]
+      },
+      {
+        "name": "沪南线",
+        "labelId": 6203,
+        "grade": "A+",
+        "dailyTrips": 1702474,
+        "dailyPeople": 917479,
+        "dailyReach": 49938,
+        "flowByPeriod": [
+          18296,
+          27265,
+          21496,
+          14459
+        ]
+      },
+      {
+        "name": "783路",
+        "labelId": 6135,
+        "grade": "A++",
+        "dailyTrips": 1327549,
+        "dailyPeople": 691162,
+        "dailyReach": 79802,
+        "flowByPeriod": [
+          16843,
+          25672,
+          19988,
+          13271
+        ]
+      },
+      {
+        "name": "583路",
+        "labelId": 6117,
+        "grade": "A++",
+        "dailyTrips": 1502982,
+        "dailyPeople": 823415,
+        "dailyReach": 80020,
+        "flowByPeriod": [
+          16750,
+          25281,
+          19836,
+          13156
+        ]
+      },
+      {
+        "name": "961路",
+        "labelId": 6167,
+        "grade": "A++",
+        "dailyTrips": 1334503,
+        "dailyPeople": 686259,
+        "dailyReach": 40457,
+        "flowByPeriod": [
+          13590,
+          20622,
+          16093,
+          10749
+        ]
+      },
+      {
+        "name": "455路",
+        "labelId": 6111,
+        "grade": "A++",
+        "dailyTrips": 1272182,
+        "dailyPeople": 681103,
+        "dailyReach": 86456,
+        "flowByPeriod": [
+          16766,
+          25152,
+          19532,
+          13159
+        ]
+      },
+      {
+        "name": "81路",
+        "labelId": 6151,
+        "grade": "A++",
+        "dailyTrips": 1192743,
+        "dailyPeople": 639299,
+        "dailyReach": 77574,
+        "flowByPeriod": [
+          11796,
+          17775,
+          13705,
+          9143
+        ]
+      },
+      {
+        "name": "774路",
+        "labelId": 6128,
+        "grade": "A++",
+        "dailyTrips": 1121604,
+        "dailyPeople": 605742,
+        "dailyReach": 74316,
+        "flowByPeriod": [
+          13342,
+          20275,
+          15621,
+          10371
+        ]
+      },
+      {
+        "name": "85路",
+        "labelId": 6157,
+        "grade": "A++",
+        "dailyTrips": 1006265,
+        "dailyPeople": 533081,
+        "dailyReach": 81711,
+        "flowByPeriod": [
+          11976,
+          17924,
+          13857,
+          9331
+        ]
+      },
+      {
+        "name": "779路",
+        "labelId": 6132,
+        "grade": "A++",
+        "dailyTrips": 1202125,
+        "dailyPeople": 636955,
+        "dailyReach": 88074,
+        "flowByPeriod": [
+          12808,
+          19402,
+          14908,
+          9873
+        ]
+      },
+      {
+        "name": "787路",
+        "labelId": 6139,
+        "grade": "A++",
+        "dailyTrips": 1525419,
+        "dailyPeople": 813080,
+        "dailyReach": 91175,
+        "flowByPeriod": [
+          20743,
+          31293,
+          24638,
+          16382
+        ]
+      },
+      {
+        "name": "浦东73路",
+        "labelId": 6283,
+        "grade": "A+",
+        "dailyTrips": 1168487,
+        "dailyPeople": 643740,
+        "dailyReach": 120588,
+        "flowByPeriod": [
+          12046,
+          18429,
+          14146,
+          9365
+        ]
+      },
+      {
+        "name": "119路",
+        "labelId": 6420,
+        "grade": "A++",
+        "dailyTrips": 686830,
+        "dailyPeople": 364756,
+        "dailyReach": 102791,
+        "flowByPeriod": [
+          8549,
+          13140,
+          10239,
+          6768
+        ]
+      },
+      {
+        "name": "795路",
+        "labelId": 6146,
+        "grade": "A+",
+        "dailyTrips": 1383023,
+        "dailyPeople": 728194,
+        "dailyReach": 66220,
+        "flowByPeriod": [
+          14756,
+          22482,
+          17517,
+          11579
+        ]
+      },
+      {
+        "name": "791路",
+        "labelId": 6143,
+        "grade": "A++",
+        "dailyTrips": 898265,
+        "dailyPeople": 460486,
+        "dailyReach": 82964,
+        "flowByPeriod": [
+          9883,
+          15052,
+          11791,
+          7818
+        ]
+      },
+      {
+        "name": "浦东15路",
+        "labelId": 7277,
+        "grade": "A+",
+        "dailyTrips": 1109670,
+        "dailyPeople": 610576,
+        "dailyReach": 33188,
+        "flowByPeriod": [
+          11384,
+          16928,
+          13154,
+          8934
+        ]
+      },
+      {
+        "name": "浦东62路",
+        "labelId": 6274,
+        "grade": "A++",
+        "dailyTrips": 826649,
+        "dailyPeople": 459599,
+        "dailyReach": 85310,
+        "flowByPeriod": [
+          10174,
+          15470,
+          11863,
+          7847
+        ]
+      },
+      {
+        "name": "浦东100路",
+        "labelId": 6223,
+        "grade": "A++",
+        "dailyTrips": 801646,
+        "dailyPeople": 420714,
+        "dailyReach": 82730,
+        "flowByPeriod": [
+          12276,
+          18670,
+          14571,
+          9647
+        ]
+      },
+      {
+        "name": "871路",
+        "labelId": 6159,
+        "grade": "A++",
+        "dailyTrips": 950925,
+        "dailyPeople": 528251,
+        "dailyReach": 61704,
+        "flowByPeriod": [
+          13174,
+          19776,
+          15493,
+          10391
+        ]
+      },
+      {
+        "name": "610路",
+        "labelId": 6119,
+        "grade": "A+",
+        "dailyTrips": 1023555,
+        "dailyPeople": 561607,
+        "dailyReach": 72809,
+        "flowByPeriod": [
+          16177,
+          24420,
+          19105,
+          12747
+        ]
+      },
+      {
+        "name": "130路",
+        "labelId": 6456,
+        "grade": "A++",
+        "dailyTrips": 1074860,
+        "dailyPeople": 551222,
+        "dailyReach": 63895,
+        "flowByPeriod": [
+          12719,
+          19167,
+          15009,
+          10058
+        ]
+      },
+      {
+        "name": "970路",
+        "labelId": 6169,
+        "grade": "A+",
+        "dailyTrips": 915573,
+        "dailyPeople": 487100,
+        "dailyReach": 51921,
+        "flowByPeriod": [
+          11656,
+          17755,
+          13879,
+          9145
+        ]
+      },
+      {
+        "name": "451路",
+        "labelId": 6108,
+        "grade": "A++",
+        "dailyTrips": 1555203,
+        "dailyPeople": 846759,
+        "dailyReach": 74162,
+        "flowByPeriod": [
+          18961,
+          28389,
+          22372,
+          15010
+        ]
+      },
+      {
+        "name": "980路",
+        "labelId": 6173,
+        "grade": "A++",
+        "dailyTrips": 1585062,
+        "dailyPeople": 858899,
+        "dailyReach": 80017,
+        "flowByPeriod": [
+          23665,
+          35660,
+          28089,
+          18778
+        ]
+      },
+      {
+        "name": "775路",
+        "labelId": 6129,
+        "grade": "A++",
+        "dailyTrips": 1006268,
+        "dailyPeople": 508522,
+        "dailyReach": 66429,
+        "flowByPeriod": [
+          12862,
+          19335,
+          15231,
+          10248
+        ]
+      },
+      {
+        "name": "789路",
+        "labelId": 6141,
+        "grade": "A++",
+        "dailyTrips": 1219823,
+        "dailyPeople": 675896,
+        "dailyReach": 69893,
+        "flowByPeriod": [
+          17694,
+          26566,
+          20921,
+          14049
+        ]
+      }
+    ]
+  },
+  "metro": {
+    "stations": [
+      {
+        "station": "浦东南路",
+        "exitCount": 2,
+        "dailyTrips": 88747,
+        "dailyPeople": 46301,
+        "aggregateReach": 83472,
+        "exits": [
+          {
+            "station": "浦东南路",
+            "exit": "3A号口",
+            "labelId": 9014,
+            "grade": "A++",
+            "dailyTrips": 83898,
+            "dailyPeople": 46301,
+            "dailyReach": 26201,
+            "flowByPeriod": [
+              386,
+              599,
+              459,
+              296
+            ]
+          },
+          {
+            "station": "浦东南路",
+            "exit": "3B号口",
+            "labelId": 9013,
+            "grade": "A++",
+            "dailyTrips": 83898,
+            "dailyPeople": 46301,
+            "dailyReach": 20647,
+            "flowByPeriod": [
+              386,
+              599,
+              459,
+              296
+            ]
+          }
+        ]
+      },
+      {
+        "station": "商城路",
+        "exitCount": 2,
+        "dailyTrips": 88659,
+        "dailyPeople": 47756,
+        "aggregateReach": 118448,
+        "exits": [
+          {
+            "station": "商城路",
+            "exit": "2号口",
+            "labelId": 554,
+            "grade": "A++",
+            "dailyTrips": 88659,
+            "dailyPeople": 47756,
+            "dailyReach": 49995,
+            "flowByPeriod": [
+              239,
+              384,
+              291,
+              181
+            ]
+          },
+          {
+            "station": "商城路",
+            "exit": "3号口",
+            "labelId": 577,
+            "grade": "A++",
+            "dailyTrips": 86924,
+            "dailyPeople": 46326,
+            "dailyReach": 68453,
+            "flowByPeriod": [
+              239,
+              384,
+              292,
+              182
+            ]
+          }
+        ]
+      },
+      {
+        "station": "浦东大道",
+        "exitCount": 5,
+        "dailyTrips": 25061,
+        "dailyPeople": 15073,
+        "aggregateReach": 16985,
+        "exits": [
+          {
+            "station": "浦东大道",
+            "exit": "1号口",
+            "labelId": 489,
+            "grade": "A++",
+            "dailyTrips": 25061,
+            "dailyPeople": 15073,
+            "dailyReach": 44567,
+            "flowByPeriod": [
+              136,
+              205,
+              142,
+              97
+            ]
+          },
+          {
+            "station": "浦东大道",
+            "exit": "5号口",
+            "labelId": 9250,
+            "grade": "A++",
+            "dailyTrips": 21220,
+            "dailyPeople": 14225,
+            "dailyReach": 603,
+            "flowByPeriod": [
+              155,
+              234,
+              149,
+              106
+            ]
+          },
+          {
+            "station": "浦东大道",
+            "exit": "6号口",
+            "labelId": 9251,
+            "grade": "A++",
+            "dailyTrips": 21220,
+            "dailyPeople": 14225,
+            "dailyReach": 3272,
+            "flowByPeriod": [
+              155,
+              234,
+              149,
+              106
+            ]
+          },
+          {
+            "station": "浦东大道",
+            "exit": "7A号口",
+            "labelId": 9255,
+            "grade": "A++",
+            "dailyTrips": 25061,
+            "dailyPeople": 15073,
+            "dailyReach": 251,
+            "flowByPeriod": [
+              136,
+              205,
+              142,
+              97
+            ]
+          },
+          {
+            "station": "浦东大道",
+            "exit": "7B号口",
+            "labelId": 9256,
+            "grade": "A++",
+            "dailyTrips": 25061,
+            "dailyPeople": 15073,
+            "dailyReach": 251,
+            "flowByPeriod": [
+              136,
+              205,
+              142,
+              97
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "areaProfile": null,
+  "missingBusLines": [
+    "旅游2线",
+    "旅游10线"
+  ]
+}

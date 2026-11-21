@@ -1,0 +1,1243 @@
+{
+  "generatedAt": "2026-11-21 16:56:31",
+  "updatedAt": "2026-11-21 16:56:34",
+  "schemaVersion": "1.1",
+  "notes": [
+    "2026-11-21 更新：每个 exit 增加 gradeUnknown；grade 为空的口不猜级别。",
+    "补入徐家汇/陆家嘴/迪士尼等新锚点覆盖到的站点，以及陆家嘴站（用于标记库存中全部 5 个 grade 空口）。",
+    "原有站点/出入口数据未删除；inInventory=false 的站点保持原样。"
+  ],
+  "summary": {
+    "stations": 31,
+    "inInventory": 24,
+    "notInInventory": 7,
+    "exits": 93,
+    "gradeUnknownExits": 5,
+    "gradeUnknownExitIds": [
+      "SHDT-0093",
+      "SHDT-0229",
+      "SHDT-0245",
+      "SHDT-0258",
+      "SHDT-1283"
+    ],
+    "baselineStations": 21,
+    "extensionStations": 10,
+    "extensionStationNames": [
+      "世纪大道",
+      "商城路",
+      "国际客运中心",
+      "大世界",
+      "浦东南路",
+      "浦东大道",
+      "肇嘉浜路",
+      "迪士尼",
+      "陆家嘴",
+      "龙华中路"
+    ],
+    "newlyAddedThisRun": []
+  },
+  "stations": {
+    "一大会址·黄陂南路": {
+      "inInventory": true,
+      "exitCount": 3,
+      "exits": [
+        {
+          "id": "SHDT-0079",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "淮海中路商圈、新天地",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1273",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "淮海中路商圈、新天地",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1274",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "淮海中路商圈、新天地",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "上海体育馆": {
+      "inInventory": true,
+      "exitCount": 6,
+      "exits": [
+        {
+          "id": "SHDT-0030",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0031",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0032",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0033",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0034",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0035",
+          "exit": "7号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海体育馆",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "世纪大道": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "人民广场": {
+      "inInventory": true,
+      "exitCount": 10,
+      "exits": [
+        {
+          "id": "SHDT-0082",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0086",
+          "exit": "8号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0087",
+          "exit": "9号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0088",
+          "exit": "10号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0089",
+          "exit": "11号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0090",
+          "exit": "12号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0091",
+          "exit": "14号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0093",
+          "exit": "16号口",
+          "grade": "",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": true
+        },
+        {
+          "id": "SHDT-0097",
+          "exit": "20号口",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "南京东路商圈、人民广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1205",
+          "exit": "1B号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "0",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "北新泾": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "南京西路": {
+      "inInventory": true,
+      "exitCount": 2,
+      "exits": [
+        {
+          "id": "SHDT-0240",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京西路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0245",
+          "exit": "9号口",
+          "grade": "",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "南京西路商圈",
+          "gradeUnknown": true
+        }
+      ]
+    },
+    "吴中路": {
+      "inInventory": true,
+      "exitCount": 4,
+      "exits": [
+        {
+          "id": "SHDT-1478",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "申通办公楼",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1479",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "申通办公楼",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1480",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "申通办公楼",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1481",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "申通办公楼",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "商城路": {
+      "inInventory": true,
+      "exitCount": 2,
+      "exits": [
+        {
+          "id": "SHDT-0743",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈、八佰伴、新上海商业城",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0744",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈、八佰伴、新上海商业城",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "国际客运中心": {
+      "inInventory": true,
+      "exitCount": 1,
+      "exits": [
+        {
+          "id": "SHDT-1046",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海白玉兰广场、金光新外滩、海员医院",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "大世界": {
+      "inInventory": true,
+      "exitCount": 3,
+      "exits": [
+        {
+          "id": "SHDT-0687",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "大世界、音乐广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0688",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "大世界、音乐广场",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1320",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 0,
+          "reserved": 1,
+          "area": "大世界、音乐广场",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "娄山关路": {
+      "inInventory": true,
+      "exitCount": 1,
+      "exits": [
+        {
+          "id": "SHDT-1295",
+          "exit": "7号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "虹桥艺术中心",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "宋园路": {
+      "inInventory": true,
+      "exitCount": 1,
+      "exits": [
+        {
+          "id": "SHDT-0869",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "上海儿童博物馆、上海爱尔眼科医院",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "宜山路": {
+      "inInventory": true,
+      "exitCount": 5,
+      "exits": [
+        {
+          "id": "SHDT-0323",
+          "exit": "6号口(4号线)(原1号口)",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐汇宜山路商业中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0324",
+          "exit": "3号口(4号线)",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "徐汇宜山路商业中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0325",
+          "exit": "4号口(4号线)",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐汇宜山路商业中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0326",
+          "exit": "5号口(4号线)",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐汇宜山路商业中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1669",
+          "exit": "11号口(9号线)",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐汇宜山路商业中心",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "宝山路": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "徐家汇": {
+      "inInventory": true,
+      "exitCount": 4,
+      "exits": [
+        {
+          "id": "SHDT-0037",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐家汇商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0038",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "徐家汇商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0044",
+          "exit": "9号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐家汇商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0051",
+          "exit": "16号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "徐家汇商圈",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "桂林公园": {
+      "inInventory": true,
+      "exitCount": 2,
+      "exits": [
+        {
+          "id": "SHDT-1351",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "桂林公园、上海应用技术学院",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1352",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "桂林公园、上海应用技术学院",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "桂林路": {
+      "inInventory": true,
+      "exitCount": 7,
+      "exits": [
+        {
+          "id": "SHDT-1330",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1332",
+          "exit": "8号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1333",
+          "exit": "9号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1334",
+          "exit": "10号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1335",
+          "exit": "11号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1336",
+          "exit": "12号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1337",
+          "exit": "13号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "普天信息产业园",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "浦东南路": {
+      "inInventory": true,
+      "exitCount": 2,
+      "exits": [
+        {
+          "id": "SHDT-1402",
+          "exit": "3A号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "东方医院",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1403",
+          "exit": "3B号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "东方医院",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "浦东大道": {
+      "inInventory": true,
+      "exitCount": 5,
+      "exits": [
+        {
+          "id": "SHDT-0439",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "东昌东校",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1306",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴滨江金融城",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1307",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴滨江金融城",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1308",
+          "exit": "7A号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴滨江金融城",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1309",
+          "exit": "7B号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴滨江金融城",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "漕河泾开发区": {
+      "inInventory": true,
+      "exitCount": 4,
+      "exits": [
+        {
+          "id": "SHDT-0763",
+          "exit": "1号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "漕河泾开发区企业园艺文化园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0765",
+          "exit": "3号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "漕河泾开发区企业园艺文化园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0766",
+          "exit": "4号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "漕河泾开发区企业园艺文化园",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0767",
+          "exit": "5号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "漕河泾开发区企业园艺文化园",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "真北路": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "肇嘉浜路": {
+      "inInventory": true,
+      "exitCount": 3,
+      "exits": [
+        {
+          "id": "SHDT-0591",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "复旦大学(枫林)、复旦大学附属医院",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0592",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "复旦大学(枫林)、复旦大学附属医院",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0593",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "复旦大学(枫林)、复旦大学附属医院",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "虹桥路": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "虹漕路": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "豫园": {
+      "inInventory": true,
+      "exitCount": 6,
+      "exits": [
+        {
+          "id": "SHDT-0850",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0851",
+          "exit": "3A号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0852",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1340",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1341",
+          "exit": "6号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1342",
+          "exit": "7号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "豫园商场商圈",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "迪士尼": {
+      "inInventory": false,
+      "exitCount": 0,
+      "exits": []
+    },
+    "陆家嘴": {
+      "inInventory": true,
+      "exitCount": 9,
+      "exits": [
+        {
+          "id": "SHDT-0224",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 0,
+          "total": 1,
+          "contract": 0,
+          "reserved": 1,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0225",
+          "exit": "2号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0226",
+          "exit": "3号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0227",
+          "exit": "4号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0228",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0229",
+          "exit": "6号口",
+          "grade": "",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": true
+        },
+        {
+          "id": "SHDT-1283",
+          "exit": "8号口",
+          "grade": "",
+          "free": 0,
+          "total": 1,
+          "contract": 1,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": true
+        },
+        {
+          "id": "SHDT-1284",
+          "exit": "9A号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1285",
+          "exit": "9B号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "陆家嘴张杨路商圈",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "静安寺": {
+      "inInventory": true,
+      "exitCount": 5,
+      "exits": [
+        {
+          "id": "SHDT-0258",
+          "exit": "8号口",
+          "grade": "",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "静安寺、上海展览中心",
+          "gradeUnknown": true
+        },
+        {
+          "id": "SHDT-1287",
+          "exit": "11号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "静安寺、上海静安嘉里中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1288",
+          "exit": "12号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "静安寺、上海静安嘉里中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1289",
+          "exit": "13A号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "静安寺、上海静安嘉里中心",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-1290",
+          "exit": "13B号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "静安寺、上海静安嘉里中心",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "马当路": {
+      "inInventory": true,
+      "exitCount": 1,
+      "exits": [
+        {
+          "id": "SHDT-0748",
+          "exit": "1号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "新天地",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "龙华中路": {
+      "inInventory": true,
+      "exitCount": 3,
+      "exits": [
+        {
+          "id": "SHDT-0584",
+          "exit": "5号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "龙华旅游商业办公区",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0586",
+          "exit": "7号口",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "龙华旅游商业办公区",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0590",
+          "exit": "11号口(原14号口)",
+          "grade": "A++",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "龙华旅游商业办公区",
+          "gradeUnknown": false
+        }
+      ]
+    },
+    "龙溪路": {
+      "inInventory": true,
+      "exitCount": 4,
+      "exits": [
+        {
+          "id": "SHDT-0877",
+          "exit": "1号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "新虹桥中学",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0878",
+          "exit": "2号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "新虹桥中学",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0879",
+          "exit": "3号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "新虹桥中学",
+          "gradeUnknown": false
+        },
+        {
+          "id": "SHDT-0880",
+          "exit": "4号口",
+          "grade": "A+",
+          "free": 1,
+          "total": 1,
+          "contract": 0,
+          "reserved": 0,
+          "area": "新虹桥中学",
+          "gradeUnknown": false
+        }
+      ]
+    }
+  }
+}

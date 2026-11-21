@@ -1,0 +1,183 @@
+{
+  "generatedAt": "2026-11-21 20:13:48",
+  "inventory": {
+    "file": "inventory_live.json",
+    "fetchedAt": "2026-11-21 11:31:36",
+    "range": {
+      "start": "2027-04-01",
+      "end": "2027-05-15"
+    },
+    "bus": {
+      "rows": 431,
+      "free": 1376.0
+    },
+    "metro": {
+      "rows": 861,
+      "free": 824.0
+    }
+  },
+  "coverage": [
+    {
+      "id": "上海和睦家医院-1000",
+      "anchor": "上海和睦家医院",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_上海和睦家医院_1000米.csv",
+      "count": 5,
+      "bus": 4,
+      "metro": 1
+    },
+    {
+      "id": "上海和睦家医院-3000",
+      "anchor": "上海和睦家医院",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_上海和睦家医院_3000米.csv",
+      "count": 22,
+      "bus": 17,
+      "metro": 5
+    },
+    {
+      "id": "上海嘉会国际医院-1000",
+      "anchor": "上海嘉会国际医院",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_上海嘉会国际医院_1000米.csv",
+      "count": 7,
+      "bus": 6,
+      "metro": 1
+    },
+    {
+      "id": "上海嘉会国际医院-3000",
+      "anchor": "上海嘉会国际医院",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_上海嘉会国际医院_3000米.csv",
+      "count": 28,
+      "bus": 21,
+      "metro": 7
+    },
+    {
+      "id": "上海美华妇儿医院-1000",
+      "anchor": "上海美华妇儿医院",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_上海美华妇儿医院_1000米.csv",
+      "count": 9,
+      "bus": 6,
+      "metro": 3
+    },
+    {
+      "id": "上海美华妇儿医院-3000",
+      "anchor": "上海美华妇儿医院",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_上海美华妇儿医院_3000米.csv",
+      "count": 41,
+      "bus": 30,
+      "metro": 11
+    },
+    {
+      "id": "上海迪士尼度假区-1000",
+      "anchor": "上海迪士尼度假区",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_上海迪士尼度假区_1000米.csv",
+      "count": 10,
+      "bus": 8,
+      "metro": 2
+    },
+    {
+      "id": "上海迪士尼度假区-3000",
+      "anchor": "上海迪士尼度假区",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_上海迪士尼度假区_3000米.csv",
+      "count": 15,
+      "bus": 13,
+      "metro": 2
+    },
+    {
+      "id": "上海迪士尼度假区-5000",
+      "anchor": "上海迪士尼度假区",
+      "radius": 5000,
+      "file": "coverage/覆盖分析_上海迪士尼度假区_5000米.csv",
+      "count": 36,
+      "bus": 34,
+      "metro": 2
+    },
+    {
+      "id": "人民广场-1000",
+      "anchor": "人民广场",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_人民广场_1000米.csv",
+      "count": 29,
+      "bus": 25,
+      "metro": 4
+    },
+    {
+      "id": "人民广场-3000",
+      "anchor": "人民广场",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_人民广场_3000米.csv",
+      "count": 83,
+      "bus": 71,
+      "metro": 12
+    },
+    {
+      "id": "徐家汇-1000",
+      "anchor": "徐家汇",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_徐家汇_1000米.csv",
+      "count": 22,
+      "bus": 16,
+      "metro": 6
+    },
+    {
+      "id": "徐家汇-3000",
+      "anchor": "徐家汇",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_徐家汇_3000米.csv",
+      "count": 41,
+      "bus": 30,
+      "metro": 11
+    },
+    {
+      "id": "陆家嘴-1000",
+      "anchor": "陆家嘴",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_陆家嘴_1000米.csv",
+      "count": 37,
+      "bus": 34,
+      "metro": 3
+    },
+    {
+      "id": "陆家嘴-3000",
+      "anchor": "陆家嘴",
+      "radius": 3000,
+      "file": "coverage/覆盖分析_陆家嘴_3000米.csv",
+      "count": 87,
+      "bus": 76,
+      "metro": 11
+    },
+    {
+      "id": "浦发银行上海分行-1000",
+      "anchor": "浦发银行上海分行",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_浦发银行上海分行_1000米.csv",
+      "count": 41,
+      "bus": 36,
+      "metro": 5
+    },
+    {
+      "id": "浦发银行九江路支行-1000",
+      "anchor": "浦发银行九江路支行",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_浦发银行九江路支行_1000米.csv",
+      "count": 33,
+      "bus": 27,
+      "metro": 6
+    },
+    {
+      "id": "浦发银行徐家汇支行-1000",
+      "anchor": "浦发银行徐家汇支行",
+      "radius": 1000,
+      "file": "coverage/覆盖分析_浦发银行徐家汇支行_1000米.csv",
+      "count": 23,
+      "bus": 17,
+      "metro": 6
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "version": "1.0.0",
+  "effectiveDate": "2026-11-21",
+  "sourceDocs": {
+    "direct": "materials/03-合同三份-脱敏版/M3-直客合同-脱敏版.pdf（4 页，扫描件）",
+    "agency4a": "materials/03-合同三份-脱敏版/M3-4A框架-脱敏版.pdf（16 页，扫描件；本次核读 P1–P8）",
+    "order": "materials/03-合同三份-脱敏版/M3-4A订单-脱敏版.pdf（1 页）"
+  },
+  "direct": {
+    "contractType": "direct",
+    "label": "直客合同",
+    "invoice": {
+      "type": "增值税专用发票",
+      "rate": 0.06,
+      "summary": "乙方开具增值税专用发票，税率 6%",
+      "source": "03 直客合同 P2（第二条 付款时间）"
+    },
+    "acceptance": {
+      "windowDays": 2,
+      "raw": "两天内",
+      "startFrom": "收到乙方验收通知",
+      "deemedAcceptanceIfOverdue": true,
+      "summary": "广告制作安装完毕后，甲方应在收到验收通知后 2 天内完成验收；逾期视为验收合格",
+      "source": "03 直客合同 P2–P3（第三条 5）"
+    },
+    "compensation": {
+      "rule": "损一补一",
+      "triggers": [
+        "车辆碰撞",
+        "车辆损坏导致广告画面受损",
+        "车辆调动导致广告无法正常发布"
+      ],
+      "summary": "因车辆碰撞/损坏/调动导致发布天数减少，乙方及时修复，并按损一补一补偿甲方",
+      "source": "03 直客合同 P3（第四条 4）"
+    },
+    "delay": {
+      "rain": "顺延",
+      "governmentControl": "顺延",
+      "summary": "因政府干预、节假日停运、地震/雨天/暴风雨等自然条件导致无法安装或发布，发布期限顺延",
+      "source": "03 直客合同 P3（第四条 5–6）"
+    },
+    "productionPayment": {
+      "mode": "先付款后制作",
+      "summary": "换画/制作按先付款后制作原则执行；甲方支付制作安装费后乙方安排制作，未付款则制作日期顺延",
+      "source": "03 直客合同 P1–P2（第一条末段）"
+    },
+    "omitted": {
+      "paymentRatio": true,
+      "paymentTermDays": true,
+      "penaltyNumbers": true,
+      "note": "付款比例、账期天数、违约金比例等具体数字按脱敏要求不写入配置，以合同原件为准。"
+    }
+  },
+  "4a": {
+    "contractType": "4a",
+    "label": "4A 框架合同",
+    "frameworkYear": 2026,
+    "validity": {
+      "start": null,
+      "end": "2026-12-31",
+      "status": "2027 待重签",
+      "summary": "现行框架为 2026 年版；2027 档期需按年度更新/重签后使用",
+      "source": "03 4A 框架 P6（六、2）",
+      "note": "扫描件起始月份不可辨（显示为“[月1日”），未强行填写；结束日 2026-12-31 可读。精确起止以合同原件为准。"
+    },
+    "invoice": {
+      "type": "增值税专用发票",
+      "rate": 0.06,
+      "summary": "乙方开具增值税专用发票，税率 6%",
+      "source": "03 4A 框架 P5（五、3）"
+    },
+    "acceptance": {
+      "windowDays": 7,
+      "raw": "一周内",
+      "unit": "自然日",
+      "mode": "书面确认或拒绝",
+      "summary": "甲方应在接到安装完成通知后 1 周内书面签字确认或拒绝发布日期",
+      "source": "03 4A 框架 P4（四、2.c）"
+    },
+    "compensation": {
+      "rule": "误一补二",
+      "triggers": [
+        "非甲方原因导致发布无法按期开始",
+        "制作不符合要求或未通过验收",
+        "维护不及时或画面品质问题"
+      ],
+      "summary": "非甲方原因延误、制作质量不合格、维护不及时，按延误天数及对应广告费用价值以误一补二方式补偿",
+      "source": [
+        "03 4A 框架 P2（三、2.d）",
+        "03 4A 框架 P3（四、1.b）",
+        "03 4A 框架 P7（九、1.b）",
+        "03 4A 框架 P8（十一、3）"
+      ]
+    },
+    "repairHours": 48,
+    "repairHoursSource": "03 4A 框架 P7（九、1.b 维护条款）",
+    "repairHoursNote": "03 4A 框架 P7（九、1.b）原文：维修结束时间不得超过发生故障后 48 小时，与项目口径一致。P9–P16 仍未核读，2027 重签时以合同原件为准。",
+    "monitoring": {
+      "onAirProofT1": {
+        "due": "T+1",
+        "description": "上刊证明报告：照片带报头，报头日期为上刊当天；上刊当天或第二天提交",
+        "source": "03 4A 框架 P7（十、(1)）"
+      },
+      "onAirMonitorT5": {
+        "due": "T+5",
+        "unit": "工作日",
+        "description": "上刊监测报告：上刊后 5 个工作日内提交，近景/远景/多角度照片",
+        "source": "03 4A 框架 P7（十、(2)）"
+      },
+      "offAirT5": {
+        "due": "T+5",
+        "unit": "工作日",
+        "description": "下刊监测报告：下刊后 5 个工作日内提交",
+        "source": "03 4A 框架 P7（十、(3)）"
+      },
+      "monthly": {
+        "due": "monthly",
+        "description": "月监测报告：适用于发布期超过 1 个月的项目，每月初提供当月照片",
+        "source": "03 4A 框架 P7（十、(5)）"
+      },
+      "replaceT1": {
+        "due": "T+1",
+        "description": "换画证明：换画当天或第二天提交，照片带报头日期",
+        "source": "03 4A 框架 P7（十、(4)）"
+      }
+    },
+    "omitted": {
+      "paymentRatio": true,
+      "paymentTermDays": true,
+      "penaltyNumbers": true,
+      "note": "付款比例、账期天数、违约金比例等具体数字按脱敏要求不写入配置，以合同原件为准。"
+    }
+  },
+  "notes": [
+    "直客与 4A 的补偿口径不同：直客“损一补一”，4A“误一补二”，不能混用。",
+    "4A 框架为 2026 年版，2027 档期需重签/更新后使用；页面引用时须标注版本。",
+    "所有页码为扫描件顺序页码（P1 起），不是 PDF 内置页码。",
+    "付款比例、账期、违约金等具体数字按脱敏要求未写入；需要时查合同原件。",
+    "监测时效为 4A 框架约定；直客合同只约定施工照/上画报告作为付款支持，未写 T+1/T+5。"
+  ]
+}
