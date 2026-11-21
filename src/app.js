@@ -863,6 +863,7 @@ function syncControls() {
   // real size is known (and on later resizes).
   function refitMapToSize() {
     if (!state.leaflet || !state.lastMapSample) return;
+    state.leaflet.invalidateSize();
     var size = state.leaflet.getSize();
     if (!size.x || !size.y) return;
     var last = state.lastFitSize;
