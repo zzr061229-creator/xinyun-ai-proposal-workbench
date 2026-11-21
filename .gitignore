@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+config.local.json
+
+# 大体积/原始资料，不进 Git；结构化数据 data/*.csv 会进
+materials/
+extracted/
+data/raw/
+
+# Python 缓存 / 手工备份目录
+__pycache__/
+*.pyc
+_backup_*/

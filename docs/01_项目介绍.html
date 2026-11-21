@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90 秒，把一座城市排成一份提案｜新云 AI 提案工作台</title>
+<style>
+  :root{
+    --paper:#F2EEE4;
+    --paper-2:#E9E3D5;
+    --ink:#151515;
+    --muted:#6E6A62;
+    --line:#D5CEBE;
+    --signal:#E4572E;
+    --signal-soft:#F3D3C6;
+    --teal:#1E5B4F;
+    --dark:#0F1418;
+    --dark-2:#151C22;
+    --dark-line:#2A343B;
+    --glow:#FFB27A;
+    --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    --serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;
+    --mono:"JetBrains Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--signal);color:#fff;}
+  a{color:inherit;}
+  .wrap{width:min(1180px,calc(100% - 48px));margin:0 auto;}
+  .mono{font-family:var(--mono);}
+  .kicker{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 18px;
+  }
+  .kicker::before{
+    content:"";
+    width:24px;height:1px;background:var(--signal);
+  }
+  .dark .kicker{color:#8FA0AA;}
+  h1,h2,h3,p{margin-top:0;}
+  h1{
+    font-size:clamp(3.2rem,6.6vw,5.8rem);
+    line-height:.97;
+    letter-spacing:-.035em;
+    font-weight:900;
+    margin-bottom:28px;
+  }
+  h2{
+    font-size:clamp(2rem,3.8vw,3.25rem);
+    line-height:1.08;
+    letter-spacing:-.03em;
+    font-weight:900;
+    margin-bottom:20px;
+  }
+  h3{font-size:1.05rem;line-height:1.4;font-weight:800;margin-bottom:8px;}
+  .lead{
+    font-size:clamp(1rem,1.4vw,1.18rem);
+    line-height:1.85;
+    color:#3E3A34;
+    max-width:640px;
+  }
+  .muted{color:var(--muted);}
+  .accent{color:var(--signal);}
+  .section{padding:92px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:760px;margin-bottom:44px;}
+  .section-head p{margin-bottom:0;color:#4A463F;}
+
+  /* top bar */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .topbar .wrap{
+    display:flex;justify-content:space-between;gap:20px;
+    padding:14px 0;
+  }
+  .topbar b{color:var(--ink);font-weight:600;}
+  .topbar .dot{color:var(--signal);}
+
+  /* hero */
+  .hero{padding:64px 0 0;}
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.02fr .98fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero-kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;
+    padding:7px 12px;margin-bottom:26px;color:#4A463F;
+    background:rgba(255,255,255,.35);
+  }
+  .hero-kicker i{width:6px;height:6px;border-radius:50%;background:var(--signal);display:inline-block;}
+  .hero h1 em{
+    font-style:normal;color:var(--signal);
+    position:relative;white-space:nowrap;
+  }
+  .hero h1 em::after{
+    content:"";position:absolute;left:0;right:0;bottom:.06em;height:.14em;
+    background:var(--signal-soft);z-index:-1;
+  }
+  .hero .lead{margin-bottom:28px;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .tag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+    border:1px solid var(--line);padding:5px 9px;color:#4A463F;
+    background:rgba(255,255,255,.35);
+  }
+  .hero-note{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;}
+
+  /* map + console */
+  .hero-visual{position:relative;min-width:0;}
+  .map-card{
+    position:relative;background:var(--dark);border:1px solid #263038;
+    overflow:hidden;box-shadow:0 30px 70px rgba(20,20,20,.22);
+  }
+  .map-card::after{
+    content:"";position:absolute;left:0;right:0;top:-30%;height:34%;
+    background:linear-gradient(180deg,transparent,rgba(228,87,46,.12),transparent);
+    animation:scan 7s linear infinite;pointer-events:none;
+  }
+  @keyframes scan{0%{transform:translateY(0);}100%{transform:translateY(330%);}}
+  .map-head{
+    position:absolute;top:0;left:0;right:0;z-index:2;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:14px 16px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+    color:#8FA0AA;text-transform:uppercase;
+    background:linear-gradient(180deg,rgba(15,20,24,.92),rgba(15,20,24,0));
+  }
+  .map-head b{color:#E9E3D5;font-weight:500;}
+  .map-head .live{display:inline-flex;align-items:center;gap:6px;color:#9FD3B8;}
+  .map-head .live i{width:5px;height:5px;border-radius:50%;background:#62C08D;box-shadow:0 0 10px #62C08D;}
+  .map-svg{display:block;width:100%;height:auto;}
+  .map-legend{
+    position:absolute;left:16px;bottom:14px;display:flex;gap:14px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:9px;color:#8FA0AA;letter-spacing:.06em;
+  }
+  .map-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .map-legend i{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .console{
+    position:relative;z-index:3;
+    margin:-58px 18px 0 18px;
+    background:#fff;border:1px solid var(--line);
+    box-shadow:0 20px 45px rgba(20,20,20,.14);
+    padding:16px 16px 14px;
+  }
+  .console-head{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:12px;
+  }
+  .console-head .live{display:inline-flex;align-items:center;gap:6px;color:#1E7A4F;}
+  .console-head .live i{width:5px;height:5px;border-radius:50%;background:#2FA36B;animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .console-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-bottom:12px;}
+  .field label{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+  .field div{font-size:13px;font-weight:700;line-height:1.3;}
+  .generate{
+    width:100%;border:0;background:var(--signal);color:#fff;
+    font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.02em;
+    padding:11px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+    transition:transform .15s ease,background .15s ease;
+  }
+  .generate:hover{background:#CF4824;transform:translateY(-1px);}
+  .generate span:last-child{font-family:var(--mono);font-size:10px;opacity:.85;}
+  .console-foot{
+    display:flex;justify-content:space-between;gap:10px;
+    font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:8px;letter-spacing:.04em;
+  }
+
+  /* stats */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin-top:56px;
+  }
+  .stat{padding:22px 20px 20px;border-left:1px solid var(--line);}
+  .stat:first-child{border-left:0;padding-left:0;}
+  .stat .num{
+    font-family:var(--serif);font-size:36px;line-height:1.05;letter-spacing:-.03em;
+    display:flex;align-items:baseline;gap:4px;
+  }
+  .stat .num small{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--muted);}
+  .stat .lab{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+  .stat .sub{font-size:11px;color:#7A756C;margin-top:2px;}
+
+  /* split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+  .pain-stamp{
+    display:inline-block;margin-top:8px;padding:10px 14px;
+    border:2px solid var(--signal);color:var(--signal);
+    font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    transform:rotate(-3deg);
+  }
+  .steps{position:relative;padding-left:28px;}
+  .steps::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;border-left:1px dashed #BDB5A5;}
+  .step{position:relative;padding:0 0 26px 0;}
+  .step:last-child{padding-bottom:0;}
+  .step::before{
+    content:"";position:absolute;left:-27px;top:7px;width:9px;height:9px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--signal);
+  }
+  .step .n{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--signal);margin-bottom:2px;}
+  .step h3{margin-bottom:4px;}
+  .step .time{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:5px;}
+  .step p{margin:0;font-size:13.5px;color:#4A463F;line-height:1.7;}
+
+  /* io */
+  .io{display:grid;grid-template-columns:1fr 76px 1fr;gap:24px;align-items:stretch;}
+  .io-card{background:rgba(255,255,255,.42);border:1px solid var(--line);padding:26px;}
+  .io-card h3{margin-bottom:18px;}
+  .io-row{display:grid;grid-template-columns:82px 1fr;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;}
+  .io-row:first-of-type{border-top:0;}
+  .io-row .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .io-row .v{font-weight:650;line-height:1.55;}
+  .io-row .v small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px;}
+  .io-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);}
+  .io-arrow .line{width:1px;flex:1;background:var(--line);}
+  .io-arrow .circle{
+    width:52px;height:52px;border-radius:50%;border:1px solid var(--signal);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:9px;color:var(--signal);letter-spacing:.04em;
+    background:var(--paper);
+  }
+  .io-arrow .line{min-height:30px;}
+  .io-out{background:var(--dark);color:#F2EEE4;border-color:var(--dark);}
+  .io-out h3{color:#fff;}
+  .io-out .k{color:#8FA0AA;}
+  .io-out .io-row{border-top-color:var(--dark-line);}
+  .checklist{list-style:none;padding:0;margin:0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px solid var(--dark-line);font-size:13.5px;}
+  .checklist li:first-child{border-top:0;}
+  .checklist li::before{content:"→";color:var(--glow);font-family:var(--mono);font-size:11px;line-height:1.9;}
+  .io-foot{font-family:var(--mono);font-size:9px;color:#8FA0AA;margin-top:16px;line-height:1.7;}
+
+  /* knobs */
+  .knobs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:34px;}
+  .knob{background:rgba(255,255,255,.42);border:1px solid var(--line);padding:20px 18px;}
+  .knob .n{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--signal);margin-bottom:14px;}
+  .knob h3{margin-bottom:6px;font-size:1rem;}
+  .knob p{margin:0;font-size:12.5px;color:#5A554D;line-height:1.65;}
+
+  /* workbench */
+  .workbench{background:var(--dark);color:#F2EEE4;padding:92px 0;border-top:0;}
+  .workbench .section-head p{color:#A8B2B8;}
+  .wb-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:stretch;margin-bottom:26px;}
+  .wb-map{
+    position:relative;background:var(--dark-2);border:1px solid var(--dark-line);
+    overflow:hidden;min-height:420px;
+  }
+  .wb-map .map-head{background:linear-gradient(180deg,rgba(21,28,34,.96),rgba(21,28,34,0));}
+  .wb-map svg{display:block;width:100%;height:100%;}
+  .wb-panel{background:var(--dark-2);border:1px solid var(--dark-line);padding:24px;display:flex;flex-direction:column;}
+  .budget-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px;}
+  .budget-top .lab{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0AA;}
+  .budget-top .val{font-family:var(--serif);font-size:34px;line-height:1;letter-spacing:-.02em;color:#fff;}
+  .budget-top .val small{font-family:var(--mono);font-size:10px;color:#8FA0AA;letter-spacing:.04em;}
+  input[type="range"]{
+    width:100%;accent-color:var(--signal);cursor:pointer;margin:4px 0 18px;
+  }
+  .range-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:#708089;margin-top:-12px;margin-bottom:20px;}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--dark-line);border:1px solid var(--dark-line);}
+  .metric{background:var(--dark-2);padding:14px 12px;}
+  .metric .num{font-family:var(--serif);font-size:26px;line-height:1;color:#fff;}
+  .metric .num small{font-family:var(--mono);font-size:9px;color:#8FA0AA;margin-left:3px;}
+  .metric .lab{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#8FA0AA;margin-top:6px;}
+  .tier{border-top:1px solid var(--dark-line);margin-top:18px;padding-top:14px;}
+  .tier .name{font-size:14px;font-weight:800;color:var(--glow);margin-bottom:2px;}
+  .tier .desc{font-size:12px;color:#A8B2B8;line-height:1.6;}
+  .wb-note{font-family:var(--mono);font-size:8.5px;color:#708089;margin-top:auto;padding-top:14px;line-height:1.6;}
+
+  /* views */
+  .views{border:1px solid var(--dark-line);background:#0C1115;}
+  .view-tabs{display:flex;border-bottom:1px solid var(--dark-line);}
+  .view-btn{
+    flex:1;background:transparent;border:0;border-right:1px solid var(--dark-line);
+    color:#8FA0AA;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    padding:13px 10px;cursor:pointer;
+  }
+  .view-btn:last-child{border-right:0;}
+  .view-btn.active{color:#fff;background:var(--dark-2);box-shadow:inset 0 -2px 0 var(--signal);}
+  .view-panel{display:none;padding:6px 22px 16px;}
+  .view-panel.active{display:block;}
+  .view-row{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:12px 0;border-top:1px solid var(--dark-line);font-size:13px;}
+  .view-row:first-child{border-top:0;}
+  .view-row .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#8FA0AA;padding-top:3px;}
+  .view-row .v{color:#DDE3E6;line-height:1.6;}
+  .view-row .v b{color:#fff;}
+
+  /* walkthrough */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+  .flow-step{background:rgba(255,255,255,.42);border:1px solid var(--line);padding:18px 16px;position:relative;}
+  .flow-step .n{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--signal);margin-bottom:18px;}
+  .flow-step h3{font-size:.95rem;margin-bottom:5px;}
+  .flow-step p{margin:0;font-size:12px;color:#5A554D;line-height:1.6;}
+  .flow-step::after{
+    content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);font-size:12px;color:#B3AB9B;z-index:2;background:var(--paper);padding:2px;
+  }
+  .flow-step:last-child::after{display:none;}
+  .result{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;
+    border:1px solid var(--line);background:var(--paper-2);padding:26px 28px;
+  }
+  .result .big{font-family:var(--serif);font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1.15;letter-spacing:-.02em;}
+  .result .big b{color:var(--signal);}
+  .result .small{font-size:13px;color:#5A554D;line-height:1.7;margin-top:8px;}
+  .result .cut{border-left:1px solid #CFC7B6;padding-left:26px;font-size:13px;color:#4A463F;line-height:1.75;}
+  .result .cut b{color:var(--signal);}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .pillar{border:1px solid var(--line);background:rgba(255,255,255,.42);padding:24px 22px;}
+  .pillar .n{font-family:var(--serif);font-size:34px;line-height:1;color:var(--signal);margin-bottom:18px;}
+  .pillar h3{font-size:1.05rem;}
+  .pillar p{margin:0;font-size:13px;color:#4A463F;line-height:1.7;}
+  .pillar .ev{display:block;margin-top:14px;font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.6;border-top:1px solid var(--line);padding-top:10px;}
+  .quote{
+    margin:34px 0 0;padding:26px 30px;border-left:3px solid var(--signal);
+    background:rgba(255,255,255,.42);font-size:clamp(1.15rem,2vw,1.5rem);
+    line-height:1.55;font-weight:700;letter-spacing:-.01em;
+  }
+  .quote span{color:var(--signal);}
+
+  /* analogy */
+  .analogy{border:1px solid var(--line);background:rgba(255,255,255,.42);}
+  .analogy-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);}
+  .analogy-row:first-child{border-top:0;}
+  .analogy-row div{padding:15px 20px;font-size:13.5px;}
+  .analogy-row div:first-child{border-right:1px solid var(--line);color:#5A554D;}
+  .analogy-row div:last-child{font-weight:650;}
+  .analogy-head{background:var(--ink);color:var(--paper);}
+  .analogy-head div{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600!important;}
+  .analogy-head div:first-child{color:var(--paper);}
+  .analogy-head div:last-child{color:var(--glow);}
+  .analogy-foot{font-size:13px;color:#5A554D;margin-top:18px;line-height:1.8;}
+
+  /* footer */
+  .footer{background:var(--dark);color:#F2EEE4;padding:74px 0 34px;}
+  .footer .big{
+    font-size:clamp(2.2rem,5vw,4.6rem);line-height:1.02;letter-spacing:-.045em;font-weight:900;
+    max-width:1000px;margin-bottom:40px;
+  }
+  .footer .big span{color:var(--glow);}
+  .footer-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;border-top:1px solid var(--dark-line);padding-top:24px;}
+  .footer .mono{font-size:9px;letter-spacing:.08em;color:#8FA0AA;line-height:1.9;}
+  .footer .mono b{color:#DDE3E6;font-weight:500;}
+  .footer .right{text-align:right;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .map-card::after{animation:none;}
+    .console-head .live i{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:36px;}
+    .hero{padding-top:44px;}
+    .hero-visual{max-width:640px;}
+    .split{grid-template-columns:1fr;gap:36px;}
+    .io{grid-template-columns:1fr;gap:14px;}
+    .io-arrow{flex-direction:row;gap:12px;}
+    .io-arrow .line{width:auto;height:1px;flex:1;min-height:1px;}
+    .knobs{grid-template-columns:1fr 1fr;}
+    .wb-grid{grid-template-columns:1fr;}
+    .wb-map{min-height:340px;}
+    .flow{grid-template-columns:1fr 1fr;}
+    .flow-step::after{display:none;}
+    .result{grid-template-columns:1fr;gap:18px;}
+    .result .cut{border-left:0;border-top:1px solid #CFC7B6;padding-left:0;padding-top:16px;}
+    .pillars{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:20px;}
+    .footer .right{text-align:left;}
+  }
+  @media (max-width:640px){
+    .wrap{width:calc(100% - 32px);}
+    .section{padding:64px 0;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .stat{padding:18px 14px;}
+    .stat:first-child{padding-left:14px;}
+    .stat:nth-child(3){border-left:0;}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line);}
+    .knobs{grid-template-columns:1fr;}
+    .flow{grid-template-columns:1fr;}
+    .console{margin:-42px 10px 0 10px;}
+    .console-grid{grid-template-columns:1fr 1fr;}
+    .view-row{grid-template-columns:92px 1fr;gap:12px;}
+    .analogy-row div{padding:12px 14px;font-size:12.5px;}
+    .topbar .wrap{flex-direction:column;gap:4px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div><b>INTERCITY HACK</b> · 湖州场 <span class="dot">/</span> AI＋办公 <span class="dot">/</span> 上海新云传媒命题</div>
+    <div>PROJECT INTRO <span class="dot">/</span> 2026.11.21–22</div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-kicker"><i></i> 户外媒体 · AI 提案工作台</div>
+        <h1>90 秒，<br>把一座城市<br>排成一份<em>提案</em>。</h1>
+        <p class="lead">给上海新云传媒造一个工作台：选行业、给预算、定档期，系统从真实库存里挑线路和点位，当场生成一份能直接给客户讲的投放方案。</p>
+        <div class="tags">
+          <span class="tag">真库存</span>
+          <span class="tag">真价格</span>
+          <span class="tag">真地理</span>
+          <span class="tag">现场可改预算</span>
+        </div>
+        <div class="hero-note">不是 AI 写 PPT，是 AI 把库存算成一份可下单的排期。</div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="map-card">
+          <div class="map-head">
+            <span><b>SHANGHAI</b> / MEDIA ATLAS</span>
+            <span class="live"><i></i> 2027 Q2</span>
+          </div>
+          <svg class="map-svg" viewBox="0 0 600 440" role="img" aria-label="上海媒体投放示意图">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#243038" stroke-width="1"/>
+              </pattern>
+              <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFB27A" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#FFB27A" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="600" height="440" fill="url(#grid)"/>
+            <path d="M 336 -20 C 300 80 368 140 330 220 C 296 292 352 360 318 470" fill="none" stroke="#2E6B5E" stroke-opacity=".35" stroke-width="20"/>
+            <path d="M 336 -20 C 300 80 368 140 330 220 C 296 292 352 360 318 470" fill="none" stroke="#3C8B78" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="4 7"/>
+
+            <g stroke-linecap="round" fill="none">
+              <path d="M 86 304 L 142 258 L 220 182 L 302 170 L 382 202 L 474 180" stroke="#E4572E" stroke-width="2.4" stroke-opacity=".92"/>
+              <path d="M 120 108 L 180 138 L 220 182 L 262 252 L 302 322" stroke="#7FB7A6" stroke-width="2" stroke-opacity=".72"/>
+              <path d="M 220 182 L 330 184 L 402 240 L 462 302" stroke="#D8D2C6" stroke-width="1.4" stroke-opacity=".32"/>
+              <path d="M 142 258 L 222 300 L 302 322 L 382 300" stroke="#E4572E" stroke-width="1.6" stroke-opacity=".45" stroke-dasharray="6 7"/>
+              <path d="M 180 138 L 142 258" stroke="#D8D2C6" stroke-width="1.2" stroke-opacity=".22"/>
+            </g>
+
+            <circle cx="220" cy="182" r="96" fill="none" stroke="#FFB27A" stroke-opacity=".5" stroke-width="1.2" stroke-dasharray="4 7"/>
+            <circle cx="220" cy="182" r="96" fill="url(#glow)" opacity=".55"/>
+
+            <g fill="#E4572E">
+              <circle cx="220" cy="182" r="7"/>
+              <circle cx="142" cy="258" r="5"/>
+              <circle cx="302" cy="322" r="5"/>
+              <circle cx="330" cy="184" r="5"/>
+              <circle cx="474" cy="180" r="5"/>
+            </g>
+            <g fill="#F2EEE4" fill-opacity=".78">
+              <circle cx="120" cy="108" r="3.2"/>
+              <circle cx="180" cy="138" r="3.2"/>
+              <circle cx="382" cy="202" r="3.2"/>
+              <circle cx="402" cy="240" r="3.2"/>
+              <circle cx="462" cy="302" r="3.2"/>
+            </g>
+            <g font-family="Consolas,monospace" font-size="9" fill="#93A0A8" letter-spacing=".06em">
+              <text x="126" y="98">静安寺</text>
+              <text x="232" y="172">人民广场 · 院区</text>
+              <text x="340" y="174">陆家嘴</text>
+              <text x="126" y="278">徐家汇</text>
+              <text x="292" y="342">前滩</text>
+              <text x="484" y="174">张江</text>
+              <text x="220" y="300" fill="#FFB27A">3km 覆盖圈</text>
+            </g>
+            <g font-family="Consolas,monospace" font-size="8" fill="#5F7079">
+              <text x="16" y="424">SCHEMATIC / NOT TO SCALE</text>
+              <text x="486" y="424">N ↑</text>
+            </g>
+          </svg>
+          <div class="map-legend">
+            <span><i style="background:#E4572E"></i> 已选点位</span>
+            <span><i style="background:#7FB7A6"></i> 候选线路</span>
+            <span><i style="background:#F2EEE4;opacity:.5"></i> 候选点位</span>
+          </div>
+        </div>
+
+        <div class="console" aria-label="提案生成器示意">
+          <div class="console-head">
+            <span>PROPOSAL CONSOLE</span>
+            <span class="live"><i></i> READY</span>
+          </div>
+          <div class="console-grid">
+            <div class="field"><label>行业</label><div>私立医院</div></div>
+            <div class="field"><label>预算</label><div>200 万</div></div>
+            <div class="field"><label>媒体</label><div>地铁 + 公交</div></div>
+            <div class="field"><label>档期</label><div>2027 Q2</div></div>
+          </div>
+          <button class="generate" id="generateBtn">
+            <span>生成提案</span><span>90s →</span>
+          </button>
+          <div class="console-foot">
+            <span>库存快照 2026-11-21 10:30</span>
+            <span>红豆 / 大数据平台</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">5,000<small>辆</small></div><div class="lab">公交车</div><div class="sub">上海保有量首位</div></div>
+      <div class="stat"><div class="num">1,000<small>个</small></div><div class="lab">地铁出入口</div><div class="sub">全线独家运营</div></div>
+      <div class="stat"><div class="num">10,000<small>㎡</small></div><div class="lab">商圈媒体</div><div class="sub">城市地标级点位</div></div>
+      <div class="stat"><div class="num">90<small>秒</small></div><div class="lab">从需求到提案</div><div class="sub">原来要 3 天</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="kicker">THE BOTTLENECK</div>
+      <h2>客户当天要，<br>销售要三天。</h2>
+      <p class="lead">客户说“我 200 万，想投上海，下个月要方案”。销售得翻刊例、去红豆查空车、凭经验拼线路，再做几十页提案。客户等不起，单子就被竞对拿走。</p>
+      <div class="pain-stamp">3 天 → 客户已经签了别家</div>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="n">STEP 01</div>
+        <h3>翻刊例</h3>
+        <div class="time">约 2 小时</div>
+        <p>这个预算能买多少辆车、几个地铁口？S / A++ / A+ 分别什么价？制作费怎么算？</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 02</div>
+        <h3>查空位</h3>
+        <div class="time">约 1 天</div>
+        <p>哪些线路、哪些点位在那个档期还空着？合同车、预定车、空车数要一条条点开看。</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 03</div>
+        <h3>拼方案</h3>
+        <div class="time">约 2 天</div>
+        <p>怎么组合才不超预算？地铁和公交什么比例？排期怎么排？最后还要做成能讲的 PPT。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">THE BRIEF</div>
+      <h2>四个输入，<br>一份能讲的提案。</h2>
+      <p>比赛要你把上面三天的活压成 90 秒。评委现场指定行业和预算，甚至临时改预算——必须当场出结果，预录视频不算。</p>
+    </div>
+    <div class="io reveal">
+      <div class="io-card">
+        <h3>输入</h3>
+        <div class="io-row"><div class="k">行业</div><div class="v">五选一<small>银行保险 / 食品饮料 / 保健品 / 私立医院 / 乐园</small></div></div>
+        <div class="io-row"><div class="k">预算</div><div class="v">100 / 200 / 500 万<small>现场可临时调整</small></div></div>
+        <div class="io-row"><div class="k">媒体</div><div class="v">公交车身 / 地铁出入口<small>可单选或组合</small></div></div>
+        <div class="io-row"><div class="k">档期</div><div class="v">2027 年内<small>以红豆实际可售档期为准</small></div></div>
+      </div>
+      <div class="io-arrow">
+        <div class="line"></div>
+        <div class="circle">90s</div>
+        <div class="line"></div>
+      </div>
+      <div class="io-card io-out">
+        <h3>输出：一份 HTML 提案</h3>
+        <ul class="checklist">
+          <li>品牌与人群理解</li>
+          <li>媒介组合与策略</li>
+          <li>线路 / 点位清单 + 选择理由</li>
+          <li>排期与上刊计划</li>
+          <li>刊例、折扣、净价与总价</li>
+          <li>库存证据、替补方案、监测承诺</li>
+        </ul>
+        <div class="io-foot">路演现场直接打开演示；<br>改预算 / 换行业 / 换媒体，当场重算。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">THE WORKBENCH</div>
+      <h2>四个旋钮，<br>一张地图，一份提案。</h2>
+      <p>左边选条件，中间看城市，右边出方案。预算滑块不是简单加减数量，而是改变媒体配比、波次和区域覆盖。</p>
+    </div>
+
+    <div class="knobs reveal">
+      <div class="knob"><div class="n">01 / 行业</div><h3>行业与品牌</h3><p>决定人群、门店锚点、创意角度和合规边界。</p></div>
+      <div class="knob"><div class="n">02 / 预算</div><h3>预算</h3><p>决定规模与结构，不是把方案简单乘 2.5。</p></div>
+      <div class="knob"><div class="n">03 / 媒体</div><h3>媒体</h3><p>公交打广度与频次，地铁打到达与导流。</p></div>
+      <div class="knob"><div class="n">04 / 档期</div><h3>档期</h3><p>决定旺季、波次、上刊窗口与雨天缓冲。</p></div>
+    </div>
+
+    <div class="workbench" id="workbench" style="margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:0;padding-right:0;">
+      <div class="wrap">
+        <div class="wb-grid reveal">
+          <div class="wb-map">
+            <div class="map-head">
+              <span><b>PLAN VIEW</b> / 私立医院 · <span id="planBudget">200 万</span></span>
+              <span class="live"><i></i> 6 周 / 2 波次</span>
+            </div>
+            <svg viewBox="0 0 640 460" role="img" aria-label="投放方案地图示意">
+              <defs>
+                <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#243038" stroke-width="1"/>
+                </pattern>
+                <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#FFB27A" stop-opacity=".4"/>
+                  <stop offset="100%" stop-color="#FFB27A" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <rect width="640" height="460" fill="url(#grid2)"/>
+              <path d="M 356 -20 C 320 90 388 150 350 232 C 316 304 372 372 338 480" fill="none" stroke="#2E6B5E" stroke-opacity=".35" stroke-width="22"/>
+              <path d="M 356 -20 C 320 90 388 150 350 232 C 316 304 372 372 338 480" fill="none" stroke="#3C8B78" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="4 7"/>
+              <g stroke-linecap="round" fill="none">
+                <path d="M 92 318 L 150 270 L 232 192 L 318 180 L 402 212 L 500 190" stroke="#E4572E" stroke-width="2.6" stroke-opacity=".95"/>
+                <path d="M 126 114 L 190 146 L 232 192 L 276 264 L 318 338" stroke="#7FB7A6" stroke-width="2.1" stroke-opacity=".75"/>
+                <path d="M 232 192 L 350 194 L 426 252 L 490 318" stroke="#D8D2C6" stroke-width="1.4" stroke-opacity=".32"/>
+                <path d="M 150 270 L 234 314 L 318 338 L 402 314" stroke="#E4572E" stroke-width="1.6" stroke-opacity=".45" stroke-dasharray="6 7"/>
+              </g>
+              <circle cx="232" cy="192" r="104" fill="none" stroke="#FFB27A" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="4 7"/>
+              <circle cx="232" cy="192" r="104" fill="url(#glow2)" opacity=".5"/>
+              <g fill="#E4572E">
+                <circle cx="232" cy="192" r="7"/><circle cx="150" cy="270" r="5"/><circle cx="318" cy="338" r="5"/><circle cx="350" cy="194" r="5"/><circle cx="500" cy="190" r="5"/>
+              </g>
+              <g fill="#F2EEE4" fill-opacity=".75">
+                <circle cx="126" cy="114" r="3"/><circle cx="190" cy="146" r="3"/><circle cx="402" cy="212" r="3"/><circle cx="426" cy="252" r="3"/><circle cx="490" cy="318" r="3"/>
+              </g>
+              <g font-family="Consolas,monospace" font-size="9" fill="#93A0A8" letter-spacing=".06em">
+                <text x="132" y="104">静安寺</text><text x="244" y="182">人民广场 · 院区</text><text x="360" y="184">陆家嘴</text>
+                <text x="134" y="290">徐家汇</text><text x="308" y="358">前滩</text><text x="510" y="184">张江</text>
+                <text x="232" y="316" fill="#FFB27A">3km 覆盖圈</text>
+              </g>
+              <g font-family="Consolas,monospace" font-size="8" fill="#5F7079">
+                <text x="16" y="440">SCHEMATIC / NOT TO SCALE</text><text x="526" y="440">N ↑</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="wb-panel">
+            <div class="budget-top">
+              <div><div class="lab">预算 / BUDGET</div><div class="val" id="budgetValue">200 <small>万</small></div></div>
+              <div class="lab">拖一下</div>
+            </div>
+            <input type="range" id="budgetRange" min="100" max="500" step="10" value="200" aria-label="预算滑块">
+            <div class="range-labels"><span>100 万</span><span>200</span><span>500 万</span></div>
+
+            <div class="metrics">
+              <div class="metric"><div class="num" id="busOut">10<small>辆</small></div><div class="lab">公交</div></div>
+              <div class="metric"><div class="num" id="metroOut">3<small>口</small></div><div class="lab">地铁</div></div>
+              <div class="metric"><div class="num" id="weeksOut">6<small>周</small></div><div class="lab">周期</div></div>
+              <div class="metric"><div class="num" id="distOut">3<small>个</small></div><div class="lab">商圈</div></div>
+            </div>
+
+            <div class="tier">
+              <div class="name" id="tierName">双线协同</div>
+              <div class="desc" id="tierDesc">地铁导流 + 公交覆盖，卡住预算上限。</div>
+            </div>
+            <div class="wb-note">示意：按刊例区间中值估算，不构成报价；实际以红豆可售库存与合同折扣为准。</div>
+          </div>
+        </div>
+
+        <div class="views reveal">
+          <div class="view-tabs" role="tablist" aria-label="视图切换">
+            <button class="view-btn active" data-view="client" role="tab" aria-selected="true">客户视图 / CLIENT</button>
+            <button class="view-btn" data-view="sales" role="tab" aria-selected="false">销售视图 / SALES</button>
+          </div>
+          <div class="view-panel active" data-panel="client">
+            <div class="view-row"><div class="k">品牌洞察</div><div class="v">高端妇儿与家庭健康，院区 3km 内的新中产家庭；核心信息围绕“近、专、安心”。</div></div>
+            <div class="view-row"><div class="k">媒介组合</div><div class="v"><b>3 个地铁口</b>负责到达与导流，<b>10 辆公交</b>覆盖社区与主干道。</div></div>
+            <div class="view-row"><div class="k">排期</div><div class="v">2027 Q2，6 周，2 波次；上刊前预留制作与夜间分批安装。</div></div>
+            <div class="view-row"><div class="k">报价</div><div class="v">刊例 196.7 万（默认 1.0）；92 折示例 194.1 万（3 口 + 12 辆）。</div></div>
+          </div>
+          <div class="view-panel" data-panel="sales">
+            <div class="view-row"><div class="k">空车数</div><div class="v">逐周核对；空车数 ≥ 需求才进方案，页面显示查询日期。</div></div>
+            <div class="view-row"><div class="k">合同 / 预定</div><div class="v">合同车不可动；预定车需 <b>24h 内确认释放</b>，否则换替补。</div></div>
+            <div class="view-row"><div class="k">折扣底线</div><div class="v">内部 88 折；低于底线触发主管审批，客户版不显示。</div></div>
+            <div class="view-row"><div class="k">替补池</div><div class="v">同走廊 <b>12 条线路</b> + 同级别 4 个点位，售罄即替换。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">WALKTHROUGH</div>
+      <h2>评委说：私立医院，<br>200 万，地铁＋公交，2027 Q2。</h2>
+      <p>这不是一句“生成一份方案”，而是一条可核对的计算链。每一步都能点开看证据。</p>
+    </div>
+
+    <div class="flow reveal">
+      <div class="flow-step"><div class="n">01</div><h3>圈院区</h3><p>地图落点，画 3km 覆盖圈，标出旗舰院区与社区网点。</p></div>
+      <div class="flow-step"><div class="n">02</div><h3>找媒体</h3><p>覆盖分析反查圈内的公交线路与地铁出入口。</p></div>
+      <div class="flow-step"><div class="n">03</div><h3>查空车</h3><p>回红豆逐周核对空车数、合同车、预定车。</p></div>
+      <div class="flow-step"><div class="n">04</div><h3>组组合</h3><p>地铁导流 + 公交覆盖，在 200 万里选最优组合。</p></div>
+      <div class="flow-step"><div class="n">05</div><h3>出提案</h3><p>HTML、Excel、4A 排期订单草稿，一份数据贯穿。</p></div>
+    </div>
+
+    <div class="result reveal">
+      <div>
+        <div class="big"><b>3 个地铁口</b> ＋ <b>10 辆公交</b><br>6 周 / 3 个院区 / 200 万</div>
+        <div class="small">每条线路都带：空车数、查询日期、贡献锚点、覆盖人流、选择理由。</div>
+      </div>
+      <div class="cut">
+        评委砍到 <b>100 万</b>：自动收成“1 个核心院区 + 2 个地铁口 + 8 辆公交”。<br>
+        不是砍半，是换结构——从“双线协同”切到“单点打透”。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">THE MOAT</div>
+      <h2>AI 可以写漂亮话，<br>但写不出<br>“这条线还有几辆空车”。</h2>
+      <p>所以真正值钱的不是文案，是三条底座。AI 只负责最后一步：把选好的方案讲成人话。</p>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="n">01</div>
+        <h3>真库存</h3>
+        <p>每条线路、每个点位都能回到红豆的查询日期、空车数、合同 / 预定占用。</p>
+        <span class="ev">证据：红豆导出 + 查询日期 + 占用明细</span>
+      </div>
+      <div class="pillar">
+        <div class="n">02</div>
+        <h3>真价格</h3>
+        <p>刊例 → 折扣 → 净价 → 制作 / 监测；直客与 4A 两套合同口径。</p>
+        <span class="ev">证据：07 刊例 / 03 合同 / 05 历史报价</span>
+      </div>
+      <div class="pillar">
+        <div class="n">03</div>
+        <h3>真地理</h3>
+        <p>门店 3km 圈 + 覆盖分析 + 2023 人流，不是拍脑袋选“感觉火的商圈”。</p>
+        <span class="ev">证据：大数据平台覆盖分析 / AI 线路</span>
+      </div>
+    </div>
+    <div class="quote reveal">“<span>AI 只负责把选好的方案讲成人话。</span> 选点、算价、查库存，必须确定性。”</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">THE ANALOGY</div>
+      <h2>把它想成<br>户外广告版的携程。</h2>
+      <p>选目的地、日期、预算，系统给你排一条行程；每个“景点”都标着有没有票、多少钱。</p>
+    </div>
+    <div class="analogy reveal">
+      <div class="analogy-row analogy-head"><div>携程</div><div>提案工作台</div></div>
+      <div class="analogy-row"><div>目的地</div><div>行业 / 品牌 / 门店院区</div></div>
+      <div class="analogy-row"><div>出发日期</div><div>投放档期</div></div>
+      <div class="analogy-row"><div>预算</div><div>100–500 万</div></div>
+      <div class="analogy-row"><div>行程</div><div>媒体组合：公交 / 地铁</div></div>
+      <div class="analogy-row"><div>票价</div><div>刊例 / 折扣 / 净价</div></div>
+      <div class="analogy-row"><div>出票</div><div>排期订单草稿</div></div>
+    </div>
+    <p class="analogy-foot reveal">区别是：携程卖的是座位，这里卖的是“某条线路、某个地铁口、某个档期”的广告位；库存每天在变，所以必须逐周核对。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="big">把 3 天变成 <span>90 秒</span>。<br>把 PPT 变成可下单的排期。</div>
+    <div class="footer-grid">
+      <div class="mono">
+        <b>数据底座</b><br>
+        红豆广告媒体管理系统 · 媒体库 / 空车数 / 档期<br>
+        新云大数据可视化平台 · 2023 人流 / 覆盖分析 / AI 线路<br>
+        赛题资料包 00–08 · 刊例 / 合同 / 台账 / 历史提案
+      </div>
+      <div class="mono right">
+        <b>INTERCITY HACK · 湖州场</b><br>
+        AI＋办公赛道 · 上海新云传媒命题<br>
+        2026.11.21–22 · 湖州南太湖 CBD<br>
+        项目介绍 v1.0
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Budget slider: structure changes, not just quantity.
+  const range = document.getElementById('budgetRange');
+  const budgetValue = document.getElementById('budgetValue');
+  const busOut = document.getElementById('busOut');
+  const metroOut = document.getElementById('metroOut');
+  const weeksOut = document.getElementById('weeksOut');
+  const distOut = document.getElementById('distOut');
+  const tierName = document.getElementById('tierName');
+  const tierDesc = document.getElementById('tierDesc');
+  const planBudget = document.getElementById('planBudget');
+
+  const tiers = [
+    { b: 100, bus: 8, metro: 2, weeks: 4, dist: 2, name: '单点打透', desc: '核心院区 / 商圈 + 最近地铁口，先把一个点打穿。' },
+    { b: 200, bus: 10, metro: 3, weeks: 6, dist: 3, name: '双线协同', desc: '地铁导流 + 公交覆盖，卡住预算上限。' },
+    { b: 500, bus: 34, metro: 6, weeks: 6, dist: 6, name: '多点饱和', desc: '多商圈 + 多波次 + 高价值点位，做核心网络饱和。' }
+  ];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function renderBudget() {
+    const b = Number(range.value);
+    let t;
+    if (b <= 200) {
+      t = (b - 100) / 100;
+      const A = tiers[0], B = tiers[1];
+      setMetrics(
+        Math.round(lerp(A.bus, B.bus, t)),
+        Math.round(lerp(A.metro, B.metro, t)),
+        Math.round(lerp(A.weeks, B.weeks, t)),
+        Math.round(lerp(A.dist, B.dist, t))
+      );
+    } else {
+      t = (b - 200) / 300;
+      const A = tiers[1], B = tiers[2];
+      setMetrics(
+        Math.round(lerp(A.bus, B.bus, t)),
+        Math.round(lerp(A.metro, B.metro, t)),
+        Math.round(lerp(A.weeks, B.weeks, t)),
+        Math.round(lerp(A.dist, B.dist, t))
+      );
+    }
+    budgetValue.innerHTML = b + ' <small>万</small>';
+    planBudget.textContent = b + ' 万';
+
+    let tier;
+    if (b < 150) tier = tiers[0];
+    else if (b < 300) tier = tiers[1];
+    else tier = tiers[2];
+    tierName.textContent = tier.name;
+    tierDesc.textContent = tier.desc;
+  }
+
+  function setMetrics(bus, metro, weeks, dist) {
+    busOut.innerHTML = bus + '<small>辆</small>';
+    metroOut.innerHTML = metro + '<small>口</small>';
+    weeksOut.innerHTML = weeks + '<small>周</small>';
+    distOut.innerHTML = dist + '<small>个</small>';
+  }
+
+  range.value = 200;
+  range.addEventListener('input', renderBudget);
+  renderBudget();
+
+  // Client / sales view toggle.
+  const viewButtons = document.querySelectorAll('.view-btn');
+  const viewPanels = document.querySelectorAll('.view-panel');
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.view;
+      viewButtons.forEach(b => {
+        const on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      viewPanels.forEach(p => p.classList.toggle('active', p.dataset.panel === v));
+    });
+  });
+
+  // Scroll reveal.
+  const revealEls = document.querySelectorAll('.reveal');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealEls.forEach(el => el.classList.add('in'));
+  } else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  // Hero button scrolls to the workbench.
+  document.getElementById('generateBtn').addEventListener('click', () => {
+    document.getElementById('workbench').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+</body>
+</html>

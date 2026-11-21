@@ -1,0 +1,199 @@
+# brief 解析怎么用、怎么接 AI
+
+> 入口：ATLAS 首屏「一句话」输入框。
+> 代码：`src/brief.js`（解析 + 应用）；可选代理 `tools/brief_proxy.py`（在线大模型）。
+
+---
+
+## 1. 现在能做什么
+
+在 ATLAS 首屏输入一句中文，例如：
+
+- `银行 200 万，2027 开门红，陆家嘴 3km，地铁为主`
+- `医院 200 万 Q1 地铁`
+- `乐园 500 万 暑期 公交+地铁`
+- `保健品 100 万 中秋 公交车身`
+- `食品 200 万 7月 公交+地铁`
+
+点「解析」后，会自动填上方的行业、预算、档期、媒体、半径、折扣，并立即重算方案。
+
+解析结果会显示一行，例如：
+
+> 规则解析（离线）：私立医院 · 200 万 · 开门红 · 地铁。数字由引擎重算，AI 不改数。
+
+**边界**：解析器只负责“把话翻译成参数”，不产生价格、库存、触达数字；这些仍由 `engine.js` 按规则算。所以即使 AI 解析错了，也不会改错钱。
+
+---
+
+## 2. 两种模式
+
+| 模式 | 触发条件 | 说明 |
+|---|---|---|
+| 规则解析（离线） | 默认 | 关键词 + 正则，永远可用；不依赖网络 |
+| AI 解析（在线） | `brief.js` 的 `data-ai` 指向代理 | 大模型把自由文本映射成同一组参数；失败/超时自动回退规则解析 |
+
+界面上会标明是「AI 解析」还是「规则解析（离线）」，不冒充。
+
+---
+
+## 3. 接在线大模型（可选）
+
+> 当前机器状态：`config.local.json` 的 `ai.apiKey` 为空，环境里也没有 `DEEPSEEK_API_KEY`；所以现在默认走规则/模板。填入 key 并重启代理后，同一套代码就会走 DeepSeek，不需要改页面。
+
+### 3.1 配置 key（不进 Git）
+
+`config.local.json` 已 gitignore。加一段：
+
+```json
+{
+  "ai": {
+    "baseUrl": "https://api.deepseek.com/v1",
+    "apiKey": "sk-你的key",
+    "model": "deepseek-chat"
+  }
+}
+```
+
+任何 OpenAI 兼容的 `/chat/completions` 都可以（DeepSeek、Kimi、GLM、OpenAI 等）。
+
+### 3.2 启动本地代理
+
+```bash
+python -I tools/brief_proxy.py --port 8791
+```
+
+健康检查：
+
+```bash
+curl http://127.0.0.1:8791/health
+# {"ok": true, "configured": true}
+```
+
+### 3.3 让页面走 AI
+
+把 `src/index-atlas.html` 里的：
+
+```html
+<script src="brief.js?v=20261121a" data-ai=""></script>
+```
+
+改成：
+
+```html
+<script src="brief.js?v=20261121a" data-ai="http://127.0.0.1:8791/api/parse-brief"></script>
+```
+
+刷新页面，输入框下方会提示「AI 模式已配置」。没启动代理或没配 key 时，会自动回退规则解析，演示不会断。
+
+也可以不改文件，直接打开 `index-atlas.html?ai=1`，默认连 `http://127.0.0.1:8791/api/parse-brief`。
+
+> 端口 8790 在本机可能被占用；示例用 8791。
+
+---
+
+## 4. 解析字段（只允许这些）
+
+| 字段 | 允许值 |
+|---|---|
+| `industryId` | `bank-insurance` / `private-hospital` / `food-beverage` / `health-supplement` / `theme-park` |
+| `budget` | 元，100 万–500 万（步长 10 万） |
+| `weeks` | `4` / `6` |
+| `windowId` | `kaimenhong` / `q2` / `summer` / `midautumn` |
+| `media` | `bus` / `metro` / `both` |
+| `radius` | `1000` / `3000` / `5000` |
+| `discount` | `1` / `0.92` |
+
+`brief.js` 的 `normalizeBrief()` 会丢弃越界/不认识的字段；`applyBrief()` 只应用产品支持的字段。所以模型返回多余字段不会把页面搞崩。
+
+---
+
+## 5. 本地规则怎么认
+
+| 参数 | 关键词/格式 |
+|---|---|
+| 行业 | 银行/保险/理财/开户；医院/妇产/儿科/体检；饮料/饮用水/食品；保健/营养/汤臣倍健；乐园/迪士尼/主题公园 |
+| 预算 | `200万`、`两百万`、`预算 200`（按万） |
+| 档期 | 开门红/春节/Q1；Q2/春季/4-5月；暑期/7-8月；中秋/国庆/9-10月 |
+| 媒体 | 公交/车身；地铁/出入口；同时出现 = 组合 |
+| 半径 | `1km` / `3km` / `5km`、`1公里` |
+| 折扣 | `92折` / `0.92` / `九二折`；`刊例` / `1.0` |
+
+规则解析是“宁缺勿错”：没识别到的字段不填，保持当前值。
+
+---
+
+## 6. 自测
+
+浏览器控制台：
+
+```js
+BriefParser.parseLocal("医院 200 万 Q1 地铁")
+// { industryId: "private-hospital", budget: 2000000, windowId: "kaimenhong", media: "metro" }
+```
+
+页面操作：
+
+1. 输入 `医院 200 万 Q1 地铁` → 私立医院 / 200 万 / 开门红 / 只地铁。
+2. 输入 `乐园 500 万 暑期 公交+地铁` → 乐园 / 500 万 / 暑期 / 公交+地铁（页面会提示地铁 0 口）。
+3. 输入 `保健品 100 万 中秋 公交车身` → 保健品 / 100 万 / 中秋国庆 / 只公交。
+4. 停掉代理再点解析 → 提示「AI 不可用，规则解析」，结果仍然正确。
+
+---
+
+## 7. 为什么不让 AI 直接算钱
+
+评分文件要求“AI 承担调研、组合决策、生成、校验”，但也要求“数字有依据、现场能复算”。我们的分工：
+
+- AI：把自然语言翻译成参数、生成解释、合规初筛（表达层）。
+- 规则引擎：选点、报价、库存校验、排期（数字层）。
+- 每个 AI 输出都要经过 `normalizeBrief()` 的允许值校验；数字由引擎重新算。
+
+这样既能讲“AI 在工作流里”，又不会出现“AI 编了一个触达数/价格”的硬伤。
+
+---
+
+## 8. AI 解释（WHY）
+
+ATLAS 答案下方有一块「AI 解释 / WHY」。点「生成解释」，会做两件事：
+
+1. 把当前方案压成一个小 JSON：行业、品牌、预算、档期、锚点、半径、地铁口/公交数量、覆盖/可售数、前 12 条选中媒体及引擎给的理由、警告。
+2. POST 到 `http://127.0.0.1:8791/api/explain`，让 DeepSeek 写 120–180 字解释：为什么这个锚点、为什么地铁/公交这个主次、为什么是这些线/口。
+
+边界：
+- 提示词明确要求“不写金额、触达人次或新数字”；页面上的数字仍以引擎为准。
+- 没配 AI / 代理挂了 → 用本地模板解释，按钮仍可用。
+- 解释只讲取舍，不改 `state.plan`，不会影响报价。
+
+代理新增路由：
+
+```text
+POST /api/parse-brief   {text}  → {brief:{...}}
+POST /api/explain       {plan}  → {explanation:"..."}
+```
+
+页面开关：
+
+- `?ai=1`：解析和解释都连 `127.0.0.1:8791`。
+- 或分别改 `brief.js` / `ai-explain.js` 的 `data-ai`。
+- 也可以只开其中一个：只配解析、不配解释，解释会走模板。
+
+### DeepSeek 配置
+
+`config.local.json` 已预留（apiKey 为空）：
+
+```json
+"ai": {
+  "baseUrl": "https://api.deepseek.com/v1",
+  "apiKey": "sk-你的key",
+  "model": "deepseek-chat"
+}
+```
+
+也支持环境变量（不用改文件）：
+
+```bash
+export DEEPSEEK_API_KEY=sk-...
+python -I tools/brief_proxy.py --port 8791
+```
+
+如果你本机已有 `~/.codex/deepseek-gateway` 的 LiteLLM 网关（`http://127.0.0.1:4111/v1`，模型 `deepseek-v4-flash`），设置 `CODEX_DEEPSEEK_GATEWAY_KEY` 后代理会自动用它；但该网关本身仍需要 `DEEPSEEK_API_KEY` 才能转发。
