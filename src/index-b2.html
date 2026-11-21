@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新云 · 作战手册 B2</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="styles-b2.css">
+</head>
+<body data-view="client">
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="error" hidden></div>
+
+<div class="sheet">
+  <header class="mast">
+    <div class="brandline"><b>新云传媒</b><span>投放作战手册 / FIELD DOSSIER</span></div>
+    <div class="issue">
+      <div><b>库存快照</b> <span id="snapshot">2026-11-21 11:31:36</span></div>
+      <div><b>档期</b> <span id="range">2027-04-01—05-15</span></div>
+    </div>
+    <div class="topacts">
+      <div class="viewtoggle" role="group" aria-label="视图">
+        <button id="viewClient" class="on" data-view="client">客户</button>
+        <button id="viewSales" data-view="sales">销售</button>
+      </div>
+      <button class="btn" id="exportCsv">CSV</button>
+      <button class="btn" id="exportHtml">HTML 提案</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="lead">
+      <div class="kicker" id="heroKicker">私立医院 / 上海美华妇儿医院 / 3KM</div>
+      <h1 id="heroTitle">200 万，<br>先打穿 <em>3 个口</em>。</h1>
+      <p class="deck" id="heroDeck">3 个能把人带到院区门口的地铁口，加 11 辆跑在主城区的车。每条都能回到红豆的空位、合同、预定与查询档期。<b>先赢下最近的 3 公里。</b></p>
+      <div class="meta" id="heroMeta">
+        <span>ACTIVE <b>美华 3km</b></span><span>WEEKS <b>6</b></span><span>ROWS <b>14</b></span><span>NET <b>195.2 万</b></span>
+      </div>
+    </section>
+
+    <aside class="brief">
+      <div class="brief-head">
+        <span class="kicker">BRIEF / 输入</span>
+        <span class="brief-budget">BUDGET <b id="heroBudget">200</b> 万</span>
+      </div>
+
+      <div class="field">
+        <label for="industry">行业</label>
+        <select class="select" id="industry"></select>
+      </div>
+      <div class="field">
+        <label for="brandInput">品牌 / 锚点</label>
+        <input id="brandInput" type="text" value="浦发银行" autocomplete="off" spellcheck="false" readonly>
+        <div class="chips" id="brandChips"></div>
+        <div class="chips" id="anchorTabs" hidden></div>
+        <div class="anchor-note" id="anchorNote"></div>
+      </div>
+      <div class="field">
+        <label>预算</label>
+        <div class="budget-line"><b id="budgetVal">200</b><span>万 / 100–500</span></div>
+        <input id="budget" type="range" min="100" max="500" step="10" value="200" aria-label="预算">
+        <div class="range-lab"><span>100</span><span>200</span><span>500</span></div>
+      </div>
+      <div class="field">
+        <label>媒体</label>
+        <div class="media">
+          <label><input type="checkbox" id="mediaBus" checked> 公交</label>
+          <label><input type="checkbox" id="mediaMetro" checked> 地铁</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="datePreset">档期</label>
+        <select class="select" id="datePreset"><option value=":6">加载档期…</option></select>
+      </div>
+      <div class="field">
+        <label for="discount">报价口径</label>
+        <select class="select" id="discount"><option value="1">刊例价（1.0）</option><option value="0.92">92 折示例</option></select>
+        <div class="anchor-note" id="discountNote"></div>
+      </div>
+      <div class="field">
+        <label>半径</label>
+        <div class="chips" id="radiusChips"></div>
+      </div>
+
+      <button class="btn primary generate" id="generateBtn">生成提案 / RUN</button>
+      <div class="brief-net" id="heroNet">净价 <b>195.2 万</b></div>
+
+      <details class="brief-copy">
+        <summary>品牌理解 / 合规</summary>
+        <div id="briefInsight"></div>
+        <div class="compliance" id="briefCompliance"></div>
+      </details>
+    </aside>
+
+    <section class="mapcard">
+      <div class="map-head">
+        <div><b>覆盖地图</b> <span id="mapTitle">美华 / 3KM</span></div>
+        <div class="map-tools"><span id="mapStats">COVERAGE — / STOCK —</span><button type="button" class="map-mode" id="mapModeBtn">在线地图</button></div>
+      </div>
+      <div class="map-box">
+        <div id="map" aria-label="可缩放的真实地图"></div>
+        <svg id="mapStatic" hidden role="img" aria-label="离线地图快照"></svg>
+        <div class="map-badge" id="mapBadge">覆盖候选 — / 可售 — / 选中 —</div>
+        <div class="map-legend"><span><i class="lg-metro"></i>已选地铁口</span><span><i class="lg-bus" style="width:16px;height:3px;border-radius:2px"></i>已选公交线路</span><span><i class="lg-cand"></i>候选</span><span><i class="lg-ring"></i>覆盖半径</span></div>
+        <div class="map-attr">© OpenStreetMap contributors</div>
+      </div>
+      <div class="pipeline" id="pipeline"></div>
+      <div class="warnings" id="warnings"></div>
+    </section>
+
+    <div class="right-stack">
+      <section class="data">
+        <div class="section-label">PLAN / 关键数字</div>
+        <div class="datagrid" id="dataGrid"></div>
+      </section>
+
+      <aside class="quote">
+        <div class="kicker">QUOTE / 报价收据</div>
+        <div class="quote-top">
+          <div class="net" id="quoteNet">195.2<small>万元</small></div>
+          <div class="status" id="quoteStatus">WITHIN</div>
+        </div>
+        <div class="usage">
+          <div class="bar"><i id="usageBar" style="width:0"></i></div>
+          <div class="txt"><span>已用 <b id="usagePct">—</b></span><span>余额 <b id="quoteBalance">—</b></span></div>
+        </div>
+        <div class="qrows" id="quoteRows"></div>
+        <div class="sales-only" id="salesPanel"></div>
+      </aside>
+    </div>
+
+    <section class="tablewrap">
+      <div class="tablehead">
+        <h2>清单 / MANIFEST</h2>
+        <span id="tableMeta">— 行 · 按净价排序</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>类型</th><th>媒体 / 名称</th><th>级别</th><th>数量</th><th>空位</th><th>周数</th>
+              <th>刊例</th><th>净价</th><th>日均触达(2023-05)</th><th>距离 / 站点</th><th>理由</th><th>证据</th>
+            </tr>
+          </thead>
+          <tbody id="planRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="left-stack">
+      <section class="schedule" id="schedule" aria-label="排期"></section>
+      <div class="source source-panel" id="sourceInfo"></div>
+    </div>
+
+    <div class="note">
+      <div><b>口径</b> 刊例中值 · <span id="discountFine">默认刊例价（1.0）</span> · 不含税（6% 专票另计） · 监测费 0 · 制作费公交 5,000/辆、地铁 2,000/口</div>
+      <div><b>数据</b> 红豆库存快照 + 大数据平台覆盖分析 · 签约前回红豆复核 · 触达：陆家嘴用平台 2023-05 触达，其余锚点公交按 05 样本估算 · 2023 数据仅作相对权重</div>
+    </div>
+
+    <div class="foot">
+      <span>新云传媒 · MEDIA FLIGHT DECK · <b id="footWindow">2027</b></span>
+      <span>BASEMAP © OpenStreetMap contributors (ODbL) · NOT TO SCALE</span>
+    </div>
+  </div>
+</div>
+
+<script src="data.js?v=20261121u"></script>
+<script src="tile-assets.js?v=20261121b"></script>
+<script src="map-assets.js"></script>
+<script src="map-network.js?v=20261121b"></script>
+<script src="engine.js"></script>
+<script src="map.js"></script>
+<script src="realmap.js"></script>
+<script src="vendor/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

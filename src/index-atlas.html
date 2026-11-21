@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新云 · 预算落图 ATLAS</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="styles-atlas.css?v=20261121j">
+<style>
+  .ai-explain{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:9px 16px;margin:10px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+  .ai-explain-head{display:contents}
+  .ai-explain-head .kicker{font:700 11px var(--num);letter-spacing:.1em;color:var(--metro);background:var(--metro-soft);padding:3px 8px;border-radius:6px}
+  .ai-explain-head .run{margin-left:0;height:32px;padding:0 14px;font-size:13px}
+  .ai-explain-head .hint{order:3;margin-left:auto;font-size:11px;opacity:.62}
+  .ai-explain-body{order:2;flex:1 1 320px;margin:0;font-size:13px;line-height:1.6;color:var(--ink2)}
+  @media (max-width:720px){.ai-explain-head .run{margin-left:0}.ai-explain-head .hint{flex-basis:100%;margin-left:0}}
+  /* 明细表：长列换行、首列吸附，避免横向滚动时吞字/遮挡 */
+  #manifest table{min-width:1080px}
+  #manifest th,#manifest td{padding-left:8px;padding-right:8px}
+  #manifest td{font-size:14px}
+  #manifest td.name{min-width:120px}
+  #manifest td.reason{min-width:200px;max-width:280px}
+  #manifest td.name,#manifest td.reason,#manifest td:nth-child(10){overflow-wrap:anywhere}
+  #manifest td:nth-child(10){white-space:normal;min-width:150px;max-width:210px;font:13px/1.5 var(--sans);color:var(--muted)}
+  #manifest td:nth-child(3),#manifest td:nth-child(4),#manifest td:nth-child(5),#manifest td:nth-child(6){min-width:38px}
+  #manifest td:first-child,#manifest th:first-child{position:sticky;left:0;background:var(--surface);z-index:2;box-shadow:1px 0 0 var(--line)}
+  #manifest tr.detail td:first-child{position:static;box-shadow:none;z-index:auto}
+  #manifest tr.plan-row:hover td:first-child{background:#FAFAF8}
+  #manifest tr.plan-row.hot td:first-child{background:#FFF3EC}
+  /* 方案条目的副标题不再省略号吞掉，改为换行 */
+  #roster .item .nm small{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.4}
+</style>
+</head>
+<body data-view="client">
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="error" hidden></div>
+
+<!-- app.js 需要但本皮肤不展示的节点：保留 ID，统一收在这里 -->
+<div class="vault" hidden aria-hidden="true">
+  <span id="heroKicker"></span><span id="heroBudget"></span>
+  <h1 id="heroTitle"></h1><p id="heroDeck"></p><div id="heroMeta"></div><div id="heroNet"></div>
+  <div id="dataGrid"></div><div id="pipeline"></div><div id="anchorTabs"></div>
+</div>
+
+<header class="topbar">
+  <div class="wordmark"><b>新云</b><span>预算落图</span><em>ATLAS</em></div>
+  <div class="stamp">
+    <span>库存快照 <b id="snapshot">—</b></span>
+    <span>可售档期 <b id="range">—</b></span>
+  </div>
+  <div class="top-actions">
+    <div class="viewseg" role="group" aria-label="视图">
+      <button id="viewClient" class="on" data-view="client">客户视图</button>
+      <button id="viewSales" data-view="sales">销售视图</button>
+    </div>
+    <button class="ghost" id="exportCsv">导出 CSV</button>
+    <button class="solid" id="exportHtml">导出提案</button>
+  </div>
+</header>
+
+<main class="page">
+  <!-- 1. Brief：读起来就是一句需求 -->
+  <section class="brief" aria-label="需求">
+    <div class="sentence ai-brief">
+      <span class="w">一句话</span>
+      <input id="aiBriefText" type="text" autocomplete="off" spellcheck="false" placeholder="例：银行 200 万，2027 开门红，陆家嘴 3km，地铁为主">
+      <div class="preset-pills" aria-label="典型场景快捷填入">
+        <button type="button" class="chip preset-chip" data-brief="银行 200 万，开门红，地铁和公交">银行开门红 200万</button>
+        <button type="button" class="chip preset-chip" data-brief="食品饮料 200 万，暑期，地铁和公交">食品暑期 200万</button>
+        <button type="button" class="chip preset-chip" data-brief="乐园 200 万，暑期，公交为主">乐园暑期 200万</button>
+      </div>
+      <button id="aiBriefBtn" class="run" type="button">解析</button>
+      <span class="hint" id="aiBriefNote">说出行业、预算、档期、媒体，自动填下面的表；数字仍由引擎算。</span>
+    </div>
+    <div class="sentence s1">
+      <span class="w">为</span>
+      <label class="inline select-wrap"><span class="sr">行业</span><select id="industry"></select></label>
+      <span class="w">品牌</span>
+      <label class="inline input-wrap"><span class="sr">品牌</span><input id="brandInput" type="text" value="浦发银行" autocomplete="off" spellcheck="false" readonly></label>
+      <div class="pills" id="brandChips"></div>
+      <span class="hint" id="anchorNote"></span>
+    </div>
+    <div class="sentence s2">
+      <span class="w">预算</span>
+      <div class="budget">
+        <output id="budgetVal">200</output><span class="unit">万</span>
+        <input id="budget" type="range" min="100" max="500" step="10" value="200" aria-label="预算（万元）">
+      </div>
+      <span class="w">档期</span>
+      <label class="inline select-wrap"><span class="sr">档期</span>
+        <select id="datePreset"><option value=":6">加载档期…</option></select>
+      </label>
+      <span class="w">媒体</span>
+      <div class="toggles">
+        <label class="tg metro"><input type="checkbox" id="mediaMetro" checked><span>地铁口</span></label>
+        <label class="tg bus"><input type="checkbox" id="mediaBus" checked><span>公交车身</span></label>
+      </div>
+      <span class="w">报价</span>
+      <label class="inline select-wrap"><span class="sr">报价口径</span>
+        <select id="discount"><option value="1">刊例价</option><option value="0.92">92 折示例</option></select>
+      </label>
+      <span class="disc-note" id="discountNote" hidden></span>
+      <span class="w">半径</span>
+      <div class="pills" id="radiusChips"></div>
+      <button class="run" id="generateBtn" type="button">重新计算</button>
+    </div>
+    <p class="brief-logic" id="logicNote"></p>
+  </section>
+
+  <!-- 2. 答案 + 预算条 -->
+  <section class="answer" id="answer" aria-live="polite">
+    <div class="verdict">
+      <div class="eyebrow" id="atlasEyebrow">方案</div>
+      <h1 id="atlasHeadline">—</h1>
+    </div>
+    <div class="money">
+      <div class="net-line">
+        <span class="lab">净价</span>
+        <div class="net" id="quoteNet">—</div>
+        <span class="status" id="quoteStatus">—</span>
+      </div>
+      <div class="usage-line">
+        <span>预算用掉 <b id="usagePct">—</b></span>
+        <span>余额 <b id="quoteBalance">—</b></span>
+        <span>重算 <b id="atlasMs">—</b></span>
+      </div>
+      <div class="usage-bar" hidden><i id="usageBar"></i></div>
+    </div>
+  </section>
+
+  <section class="ai-explain" id="aiExplainWrap" aria-label="AI 解释">
+    <div class="ai-explain-head">
+      <span class="kicker">AI 解释 / WHY</span>
+      <button class="run" id="aiExplainBtn" type="button">生成解释</button>
+      <span class="hint" id="aiExplainNote">AI 只解释取舍，不改数字。</span>
+    </div>
+    <p class="ai-explain-body" id="aiExplainBody">点“生成解释”，让 AI 用一段话说明为什么是这几条线、几块屏。</p>
+  </section>
+
+  <section class="strip-wrap" aria-label="预算分配">
+    <div class="strip-head">
+      <span>每一万块落在哪 · 按条目切分预算</span>
+      <span class="strip-legend"><i class="k-metro"></i>地铁口 <b id="mixMetro">—</b><i class="k-bus"></i>公交 <b id="mixBus">—</b><i class="k-left"></i>余额</span>
+    </div>
+    <div class="strip" id="strip"></div>
+    <div class="strip-axis" id="stripAxis"></div>
+  </section>
+
+  <!-- 3. 地图 + 条目 -->
+  <section class="stage">
+    <div class="mapcard">
+      <div class="map-box">
+        <div id="map" aria-label="可缩放的真实地图"></div>
+        <svg id="mapStatic" hidden role="img" aria-label="离线地图快照"></svg>
+        <div class="map-title">
+          <b id="mapTitle">—</b>
+          <span id="mapStats">—</span>
+        </div>
+        <button type="button" class="map-mode" id="mapModeBtn">在线地图</button>
+        <div class="map-badge" id="mapBadge"></div>
+        <div class="map-legend"><span><i class="k-line"></i>已选公交线路</span><span><i class="k-metro ring"></i>已选地铁口</span><span><i class="k-line cand"></i><i class="k-cand"></i>候选</span></div>
+        <div class="map-attr">© OpenStreetMap contributors</div>
+      </div>
+    </div>
+    <aside class="roster" aria-label="方案条目">
+      <div class="roster-head">
+        <b>方案条目</b><span id="rosterMeta">—</span>
+      </div>
+      <div class="roster-list" id="roster"></div>
+      <div class="warnings" id="warnings"></div>
+      <div class="sales-only" id="salesPanel"></div>
+    </aside>
+  </section>
+
+  <!-- 2.5 campaign 假设书：七要素，方案正文逐条回应 -->
+  <section class="block" id="assumptionBook" aria-label="campaign 假设书">
+    <div class="block-head"><span class="no">00</span><h2>campaign 假设书</h2><p id="assumptionOneLine">—</p></div>
+    <div id="assumptionBody"></div>
+  </section>
+
+  <!-- 4. 账怎么算 -->
+  <section class="block" id="math">
+    <div class="block-head"><span class="no">01</span><h2>这笔账怎么算</h2><p>刊例 × 周数 + 制作费，再乘折扣。不是把数量乘一个系数。</p></div>
+    <div class="math-grid">
+      <div class="waterfall" id="waterfall"></div>
+      <div class="receipt">
+        <div class="qrows" id="quoteRows"></div>
+        <p class="fine">刊例取区间中值 · <span id="discountFine">默认刊例价（1.0）</span> · 不含税（6% 专票另计）· 监测费 0 · 制作费公交 5,000/辆、地铁 2,000/口</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 怎么筛出来的 -->
+  <section class="block" id="sift">
+    <div class="block-head"><span class="no">02</span><h2>从覆盖到方案，筛了三层</h2><p>大数据平台给出覆盖范围，红豆库存决定能不能卖，引擎在预算内挑。</p></div>
+    <div class="sift" id="siftSteps"></div>
+    <div class="insight">
+      <div id="briefInsight"></div>
+      <div class="compliance" id="briefCompliance"></div>
+    </div>
+  </section>
+
+  <!-- 6. 明细 -->
+  <section class="block" id="manifest">
+    <div class="block-head"><span class="no">03</span><h2>明细清单</h2><p id="tableMeta">—</p></div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>类型</th><th>媒体 / 名称</th><th>级别</th><th>数量</th><th>空位</th><th>月数</th>
+            <th class="r">刊例</th><th class="r">净价</th><th class="r">日均触达(2023-05)</th><th>距离 / 站点</th><th>理由</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="planRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. 上刊节奏 -->
+  <section class="block" id="timeline">
+    <div class="block-head"><span class="no">04</span><h2>上刊节奏</h2><p>T-14 审批、分批夜间安装、上刊后 T+1 证明、T+5 监测。T+1/T+5/月监测来自 4A 框架 P7；T-18/T-14/T-10 为计划前置期假设，资料未给逐段天数。</p></div>
+    <div class="gantt" id="gantt"></div>
+    <div class="schedule" id="schedule" hidden></div>
+  </section>
+
+  <!-- 8. 口径 -->
+  <section class="block" id="sources">
+    <div class="block-head"><span class="no">05</span><h2>数据从哪来</h2><p>签约前回红豆复核；2023 人流只做相对权重。</p></div>
+    <div class="source" id="sourceInfo"></div>
+  </section>
+
+  <footer class="foot">
+    <span>新云传媒 · 预算落图 ATLAS · <b id="footWindow">2027</b></span>
+    <span>底图 © OpenStreetMap contributors (ODbL) · Leaflet (BSD-2)</span>
+  </footer>
+</main>
+
+<script src="data.js?v=20261121u"></script>
+<script src="tile-assets.js?v=20261121b"></script>
+<script src="map-assets.js"></script>
+<script src="map-network.js?v=20261121b"></script>
+<script src="engine.js?v=20261121g"></script>
+<script src="map.js"></script>
+<script src="realmap.js?v=20261121f"></script>
+<script src="vendor/leaflet.js"></script>
+<script src="app.js?v=20261121t"></script>
+<script src="atlas.js?v=20261121k"></script>
+<script src="brief.js?v=20261121a" data-ai=""></script>
+<script src="ai-explain.js?v=20261121c" data-ai=""></script>
+<script>
+document.addEventListener("click", function (e) {
+  var chip = e.target.closest(".preset-chip");
+  if (!chip) return;
+  var input = document.getElementById("aiBriefText");
+  var btn = document.getElementById("aiBriefBtn");
+  if (input && btn) { input.value = chip.getAttribute("data-brief") || ""; btn.click(); }
+});
+</script>
+</body>
+</html>
