@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>新云 · 预算落图 ATLAS — 封面</title>
+<style>
+  @page { size: 1600px 900px; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1600px; height: 900px; overflow: hidden; }
+  body {
+    background: #F2EEE3; color: #141414;
+    font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    display: grid; grid-template-columns: 880px 720px;
+  }
+  .left { position: relative; padding: 54px 58px 44px; display: flex; flex-direction: column; }
+  .left:before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(20,20,20,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(20,20,20,.055) 1px, transparent 1px); background-size: 48px 48px; pointer-events: none; }
+  .kicker { position: relative; font: 12px/1.4 Consolas, monospace; letter-spacing: .16em; color: #141414; display: flex; gap: 12px; align-items: center; }
+  .kicker b { background: #141414; color: #F2EEE3; padding: 4px 8px; letter-spacing: .1em; }
+  .brand { position: relative; margin-top: 34px; display: flex; align-items: baseline; gap: 14px; }
+  .brand .cn { font: 800 46px/1 "Microsoft YaHei", sans-serif; letter-spacing: -.04em; }
+  .brand .en { font: 700 15px/1 Consolas, monospace; letter-spacing: .22em; color: #0B63FF; }
+  h1 { position: relative; margin: 42px 0 0; font: 800 88px/1.02 "SimSun", "Songti SC", serif; letter-spacing: -.055em; }
+  h1 em { font-style: normal; color: #FF4D00; }
+  h1 .blue { color: #0B63FF; }
+  .sub { position: relative; margin-top: 26px; max-width: 650px; font-size: 21px; line-height: 1.55; color: #3A3833; }
+  .sub b { color: #141414; }
+  .stats { position: relative; margin-top: 34px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid #141414; border-left: 2px solid #141414; }
+  .stat { border-right: 2px solid #141414; border-bottom: 2px solid #141414; padding: 12px 14px 10px; background: rgba(242,238,227,.72); }
+  .stat b { display: block; font: 700 34px/1 Consolas, monospace; letter-spacing: -.03em; }
+  .stat span { display: block; margin-top: 4px; font-size: 11px; color: #5C5850; }
+  .stat.hot { background: #FF4D00; color: #fff; }
+  .stat.hot span { color: rgba(255,255,255,.82); }
+  .bottom { position: relative; margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; font-size: 13px; line-height: 1.55; color: #4A463F; }
+  .bottom b { color: #141414; }
+  .team { display: inline-block; margin-bottom: 7px; border: 1.5px solid #141414; padding: 4px 8px; font: 700 12px/1 Consolas, monospace; letter-spacing: .08em; background: #fff; }
+  .bottom .arrow { font: 700 22px Consolas, monospace; color: #0B63FF; }
+  .right { position: relative; overflow: hidden; background: #D9D4C7; }
+  .right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 46% 50%; filter: grayscale(1) contrast(1.06); transform: scale(1.04); }
+  .right:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #F2EEE3 0%, rgba(242,238,227,.55) 16%, rgba(242,238,227,0) 48%), linear-gradient(0deg, rgba(20,20,20,.22), rgba(20,20,20,0) 46%); }
+  .tag { position: absolute; z-index: 2; left: 34px; bottom: 34px; background: #141414; color: #F2EEE3; padding: 10px 14px; font: 12px/1.45 Consolas, monospace; letter-spacing: .04em; }
+  .tag b { color: #FF8A5C; }
+  .route { position: absolute; z-index: 2; top: 30px; right: 30px; display: flex; gap: 8px; flex-direction: column; align-items: flex-end; }
+  .pill { background: rgba(242,238,227,.94); border: 1px solid #141414; padding: 6px 10px; font: 11px/1 Consolas, monospace; }
+  .pill i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: #0B63FF; }
+  .pill.bus i { background: #FF4D00; }
+</style>
+</head>
+<body>
+  <section class="left">
+    <div class="kicker"><b>INTERCITY HACK</b> 湖州场 · AI＋办公 · 上海新云传媒命题</div>
+    <div class="brand"><span class="cn">新云</span><span class="en">BUDGET&nbsp;ATLAS</span></div>
+    <h1>把一座城的媒体，<br>压进<em> 90 秒</em>。</h1>
+    <p class="sub">从 <b>431 条公交 · 861 个地铁口</b>的真实库存出发，<br>把一句需求变成线路、点位、报价、排期俱全的<b>可交互 HTML 提案</b>。</p>
+    <div class="stats">
+      <div class="stat"><b>431</b><span>公交 / 条</span></div>
+      <div class="stat"><b>861</b><span>地铁口 / 个</span></div>
+      <div class="stat"><b>10</b><span>预计算锚点</span></div>
+      <div class="stat hot"><b>4</b><span>2027 档期</span></div>
+    </div>
+    <div class="bottom">
+      <div><span class="team">TEAM · 404 Not Found</span><br><b>选行业 · 给预算 · 定档期</b><br>→ 线路 / 点位 / 报价 / 排期 / 地图</div>
+      <div class="arrow">↗</div>
+    </div>
+  </section>
+  <aside class="right">
+    <img src="map-crop.png" alt="预算落图地图">
+    <div class="route"><span class="pill"><i></i>已选地铁口</span><span class="pill bus"><i></i>已选公交线路</span></div>
+    <div class="tag"><b>LIVE DEMO</b><br>真实库存 · 真实覆盖 · 确定性引擎</div>
+  </aside>
+</body>
+</html>

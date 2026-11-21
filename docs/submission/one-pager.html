@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>新云 · 预算落图 ATLAS — 作品说明</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; color: #141414; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+  .page { width: 210mm; height: 297mm; padding: 13mm 14mm 11mm; position: relative; overflow: hidden; page-break-after: always; background: #F7F4EC; }
+  .page:last-child { page-break-after: auto; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #141414; padding-bottom: 6mm; }
+  .kicker { font: 8.5px/1.5 Consolas, monospace; letter-spacing: .13em; color: #5C5850; }
+  .kicker b { background: #141414; color: #F7F4EC; padding: 2px 5px; }
+  .brand { text-align: right; }
+  .brand .cn { font: 800 22px/1 "Microsoft YaHei", sans-serif; letter-spacing: -.04em; }
+  .brand .en { display: block; margin-top: 3px; font: 700 8px/1 Consolas, monospace; letter-spacing: .2em; color: #0B63FF; }
+  h1 { margin: 8mm 0 0; font: 800 40px/1.05 "SimSun", "Songti SC", serif; letter-spacing: -.045em; }
+  h1 em { font-style: normal; color: #FF4D00; }
+  .lead { margin: 5mm 0 0; font-size: 12px; line-height: 1.7; color: #34312C; }
+  .lead b { color: #141414; }
+  .flow { margin-top: 6mm; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid #141414; border-left: 1.5px solid #141414; }
+  .step { border-right: 1.5px solid #141414; border-bottom: 1.5px solid #141414; padding: 4mm 3.5mm 3.5mm; }
+  .step .n { font: 700 9px Consolas, monospace; color: #0B63FF; letter-spacing: .08em; }
+  .step h3 { margin: 2mm 0 1.5mm; font-size: 14px; line-height: 1.25; }
+  .step p { margin: 0; font-size: 9.5px; line-height: 1.6; color: #5C5850; }
+  .shot { margin-top: 5.5mm; border: 1.5px solid #141414; background: #fff; padding: 1.5mm; }
+  .shot img { width: 100%; height: 62mm; object-fit: cover; object-position: 50% 0%; display: block; filter: saturate(.96); }
+  .shot .cap { display: flex; justify-content: space-between; padding: 1.5mm 1mm 0; font: 7.5px/1.4 Consolas, monospace; color: #6E6A62; }
+  .kpis { margin-top: 5mm; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1.5px solid #141414; border-left: 1.5px solid #141414; }
+  .kpi { border-right: 1.5px solid #141414; border-bottom: 1.5px solid #141414; padding: 3mm; }
+  .kpi b { display: block; font: 700 23px/1 Consolas, monospace; letter-spacing: -.03em; }
+  .kpi span { display: block; margin-top: 1.5mm; font-size: 8px; color: #5C5850; }
+  .kpi.hot { background: #FF4D00; color: #fff; }
+  .kpi.hot span { color: rgba(255,255,255,.85); }
+  .compare { margin-top: 5mm; display: grid; grid-template-columns: 1fr 12mm 1fr; align-items: stretch; }
+  .cmp { border: 1.5px solid #141414; padding: 3mm 3.5mm; background: #fff; }
+  .cmp .lab { font: 700 8px Consolas, monospace; letter-spacing: .1em; color: #6E6A62; }
+  .cmp b { display: block; margin-top: 1mm; font-size: 14px; }
+  .cmp p { margin: 1mm 0 0; font-size: 8.5px; line-height: 1.55; color: #6E6A62; }
+  .cmp.after { background: #141414; color: #F7F4EC; }
+  .cmp.after .lab { color: #FF8A5C; }
+  .cmp.after p { color: rgba(247,244,236,.7); }
+  .cmp-arrow { display: grid; place-items: center; font: 700 24px Consolas, monospace; color: #0B63FF; }
+  .three { margin-top: 2mm; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid #141414; border-left: 1.5px solid #141414; }
+  .three div { border-right: 1.5px solid #141414; border-bottom: 1.5px solid #141414; padding: 3mm; background: #fff; }
+  .three b { display: block; font-size: 10px; }
+  .three span { display: block; margin-top: 1.5mm; font-size: 8px; line-height: 1.55; color: #6E6A62; }
+  .pull { position: absolute; left: 14mm; right: 14mm; bottom: 19mm; border-top: 2px solid #141414; padding-top: 3.5mm; }
+  .pull b { display: block; font: 700 19px/1.4 "SimSun", "Songti SC", serif; letter-spacing: -.02em; }
+  .pull b em { font-style: normal; color: #FF4D00; }
+  .pull span { display: block; margin-top: 1.5mm; font: 7.5px/1.5 Consolas, monospace; color: #6E6A62; }
+  .foot { position: absolute; left: 14mm; right: 14mm; bottom: 7mm; display: flex; justify-content: space-between; font: 7.5px/1.5 Consolas, monospace; color: #6E6A62; border-top: 1px solid #CFC8B8; padding-top: 2.5mm; }
+
+  .h2 { margin: 7mm 0 3mm; font: 800 20px/1.2 "SimSun", "Songti SC", serif; letter-spacing: -.02em; border-bottom: 1.5px solid #141414; padding-bottom: 1.5mm; }
+  .h2 .no { font: 700 9px Consolas, monospace; color: #0B63FF; margin-right: 2mm; letter-spacing: .08em; }
+  .two { display: grid; grid-template-columns: 1.05fr .95fr; gap: 8mm; }
+  .list { margin: 0; padding: 0; list-style: none; }
+  .list li { padding: 2.4mm 0; border-bottom: 1px solid #D8D2C4; font-size: 9.5px; line-height: 1.65; color: #34312C; }
+  .list li:last-child { border-bottom: 0; }
+  .list b { color: #141414; }
+  .list .tag { display: inline-block; font: 700 7.5px Consolas, monospace; color: #0B63FF; letter-spacing: .05em; margin-right: 1.5mm; }
+  .cases { display: grid; gap: 3mm; }
+  .case { border: 1.5px solid #141414; padding: 3mm 3.5mm; background: #fff; }
+  .case .who { font: 700 8px Consolas, monospace; color: #0B63FF; letter-spacing: .06em; }
+  .case .main { margin-top: 1mm; font-size: 11.5px; line-height: 1.45; }
+  .case .main b { font-family: Consolas, monospace; font-size: 13px; }
+  .case .sub { margin-top: 1mm; font-size: 8.5px; line-height: 1.5; color: #6E6A62; }
+  .note { margin-top: 4mm; padding: 3mm 3.5mm; background: #EFEADD; border-left: 3px solid #FF4D00; font-size: 8.5px; line-height: 1.65; color: #4A463F; }
+  .links { margin-top: 4mm; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .link { border: 1.5px solid #141414; padding: 3mm; background: #fff; font: 8.5px/1.55 Consolas, monospace; }
+  .link b { display: block; font: 700 8px Consolas, monospace; color: #0B63FF; letter-spacing: .08em; margin-bottom: 1mm; }
+  .link span { word-break: break-all; }
+</style>
+</head>
+<body>
+  <section class="page">
+    <div class="top">
+      <div class="kicker"><b>INTERCITY HACK</b> 湖州场 · AI＋办公 · 上海新云传媒命题<br>作品说明 · 2026-11-22</div>
+      <div class="brand"><span class="cn">新云 · 预算落图</span><span class="en">BUDGET&nbsp;ATLAS</span></div>
+    </div>
+
+    <h1>从一句需求，<br>到一份<em>能下单</em>的媒体提案。</h1>
+    <p class="lead">户外媒体销售今天要花 <b>2 天</b>查红豆库存、翻刊例、在地图上圈线路、再做 PPT；客户一改预算，全部重来。ATLAS 把这套流程压成 <b>90 秒</b>：选行业、给预算、定档期，系统从真实库存里选线路和点位，现场生成可交互提案。</p>
+    <p class="lead" style="margin-top:2mm">五个行业已预置：银行 / 私立医院 / 食品饮料 / 保健品 / 乐园；现场切换，方案、地图、报价一起重算。</p>
+
+    <div class="flow">
+      <div class="step"><div class="n">01 / BRIEF</div><h3>读需求</h3><p>行业 · 预算 · 档期 · 媒体 · 半径。一句话也能解析，数字仍由引擎算。</p></div>
+      <div class="step"><div class="n">02 / MATCH</div><h3>对真实库存</h3><p>大数据平台给覆盖，红豆给空位/合同/预定；对不上就明说“不在库”。</p></div>
+      <div class="step"><div class="n">03 / PROPOSE</div><h3>生成提案</h3><p>线路、地铁口、报价、排期、地图、导出 HTML/CSV，全部可追溯。</p></div>
+    </div>
+
+    <div class="shot">
+      <img src="app-shot3.png" alt="ATLAS 工作台首屏">
+      <div class="cap"><span>银行 · 上海分行 / 九江路支行 / 徐家汇支行 · 200 万 / 开门红 6 周</span><span>净价 197.6 万 · 2 口 + 15 辆</span></div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><b>431</b><span>公交库存 / 条</span></div>
+      <div class="kpi"><b>861</b><span>地铁口 / 个</span></div>
+      <div class="kpi"><b>97</b><span>银行 3 支行覆盖 / 条</span></div>
+      <div class="kpi hot"><b>90s</b><span>从输入到提案</span></div>
+    </div>
+
+    <div class="compare">
+      <div class="cmp"><div class="lab">BEFORE</div><b>Excel + 地图 + PPT</b><p>2 天翻库存、圈线路、做报价；客户一改预算，全部重做。</p></div>
+      <div class="cmp-arrow">→</div>
+      <div class="cmp after"><div class="lab">AFTER</div><b>一句需求 + 90 秒</b><p>改预算、换行业、换档期，页面当场重算，提案直接导出。</p></div>
+    </div>
+
+    <div class="pull"><b>不是把 PPT 做快，是把「查库存 → 选点位 → 报价」这条链<em>跑通</em>。</b><span>ATLAS / ONE-LINE BRIEF → AUDITABLE PLAN</span></div>
+
+    <div class="foot"><span>新云传媒 · 预算落图 ATLAS</span><span>01 / 02</span></div>
+  </section>
+
+  <section class="page">
+    <div class="top">
+      <div class="kicker"><b>LIVE DEMO</b> 现场改，现场重算<br>不刷新 · 不重新做 PPT</div>
+      <div class="brand"><span class="cn">三个动作</span><span class="en">SEE&nbsp;IT&nbsp;WORK</span></div>
+    </div>
+
+    <div class="h2"><span class="no">01</span>评委现场能看到的三个动作</div>
+    <div class="cases">
+      <div class="case"><div class="who">BANK / 3 REAL BRANCHES</div><div class="main">银行 200 万 → <b>2 个地铁口 + 15 辆公交</b>，净价 <b>197.6 万</b></div><div class="sub">上海分行（浦东南路 588 号）+ 九江路支行（湖北路 258 号）+ 徐家汇支行（虹桥路 188 号），每个网点 1km；三个网点都有选中。</div></div>
+      <div class="case"><div class="who">FOOD / 3 DISTRICTS BY FOOTFALL</div><div class="main">食品 200 万 → <b>1 个地铁口 + 21 辆公交</b>，净价 <b>198.7 万</b></div><div class="sub">按平台 2023-05 区域人流取前三个商圈：陆家嘴 40% / 人民广场 38% / 徐家汇 22%；公交名额按权重分，不再只砸一个点。</div></div>
+      <div class="case"><div class="who">PARK / 4 HUBS + 24 STATIONS</div><div class="main">乐园 500 万 → <b>5 个地铁口 + 42 辆公交</b>，净价 <b>497.8 万</b></div><div class="sub">人民广场 / 陆家嘴 / 徐家汇 / 迪士尼 4 个客源枢纽 + 24 个在库地铁站；地铁覆盖 5 个区，环园 5km 用公交收口。拖预算 100 ↔ 500、切行业、换档期 → 毫秒级重算。</div></div>
+    </div>
+
+    <div class="two" style="margin-top:2mm">
+      <div>
+        <div class="h2"><span class="no">02</span>数据为什么可信</div>
+        <ul class="list">
+          <li><span class="tag">STOCK</span><b>红豆实时快照</b>：431 条公交 / 861 个地铁口，空位、合同、预定逐条对。</li>
+          <li><span class="tag">COVERAGE</span><b>平台覆盖</b>：10 个锚点、1/3km；银行 3 支行按真实坐标重抓 1km。</li>
+          <li><span class="tag">REACH</span><b>2023-05 人流只作相对权重</b>；无平台标签的口/站显示“无数据”，不估算。</li>
+          <li><span class="tag">PRICE</span><b>刊例价口径</b>：刊例 × 月数 + 制作费；不含税，6% 专票另计；折扣只作示例。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="h2"><span class="no">03</span>技术怎么跑</div>
+        <ul class="list">
+          <li><span class="tag">STATIC</span><b>纯静态前端</b>：无后端依赖，GitHub Pages 可直接打开。</li>
+          <li><span class="tag">ENGINE</span><b>确定性规则引擎</b>：权重、媒体配比、同站 ≤2 口、预算内贪心 + 余量填充；同样输入必得同样结果。</li>
+          <li><span class="tag">MAP</span><b>在线 OSM + 离线瓦片双底图</b>：断网也能放大到 16 级。</li>
+          <li><span class="tag">EXPORT</span><b>单文件 HTML 提案</b>：内嵌底图，可离线打开/打印；另有 CSV 明细。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note"><b>边界与合规：</b>库存是快照，签约前回红豆复核；覆盖只预计算了 10 个锚点，任意地址需现场跑平台；2023 人流不代表 2027 绝对值；银行不写收益/费率，食品不涉疾病治疗；作品不声称与品牌方有真实合作。</div>
+
+    <div class="h2"><span class="no">04</span>赛后怎么用</div>
+    <div class="three">
+      <div><b>销售工作流</b><span>接到 brief 先出一版可讲方案；客户改预算，现场重算，不再回 Excel。</span></div>
+      <div><b>数据资产</b><span>覆盖、人流、库存、报价口径全部可追溯；新锚点/新档期按同一流程增量接入。</span></div>
+      <div><b>多城市复制</b><span>把“锚点 + 覆盖 + 库存”换成当地数据即可；引擎和提案模板不变。</span></div>
+    </div>
+
+    <div class="links">
+      <div class="link"><b>LIVE DEMO</b><span>https://zzr061229-creator.github.io/xinyun-ai-proposal-workbench/</span></div>
+      <div class="link"><b>CODE</b><span>https://github.com/zzr061229-creator/xinyun-ai-proposal-workbench</span></div>
+    </div>
+
+    <div class="pull"><b>改一次预算，不用重做一版提案；<em>重算一次</em>，仍回到真实库存与覆盖。</b><span>NO RE-DECK / SAME DATA, SAME REASONING</span></div>
+
+    <div class="foot"><span>新云传媒 · 预算落图 ATLAS · INTERCITY HACK 湖州场</span><span>02 / 02</span></div>
+  </section>
+</body>
+</html>

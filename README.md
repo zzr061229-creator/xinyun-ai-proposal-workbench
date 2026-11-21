@@ -83,48 +83,37 @@
 
 ## 当前状态
 
-- [x] 资料包 00–08 下载/解析
-- [x] 红豆公交 431 / 地铁 861 真实库存导出
-- [x] 红豆 API 命令行已验证（`tools/fetch_hongdou.py`：431 条 / 可售 1,376；861 / 824）
-- [x] 2027 Q2 档期空车数/合同/预定拆分
-- [x] 大数据覆盖：人民广场 + 和睦家/嘉会/美华 + 迪士尼/陆家嘴/徐家汇，1/3km
-- [x] 覆盖→库存映射：`bus_aliases.json`（156 条 / 152 匹配）、`metro_station_map.json`（27/35 站在库）
-- [x] 陆家嘴人流：70 条公交 + 49 个地铁口（2023-05，平台指标）+ 陆家嘴站人群画像
-- [x] 配置层：pricing / contract / schedule / anchors / industries / footfall
-- [x] 数据 QA / 容量报告 / `data/app_data.json`
-- [x] 银行垂类：浦发 + 陆家嘴 ready（当前默认行业）
-- [x] 项目分析、体检报告、介绍页、数据接入说明
-- [x] 预算现实校验（默认 1.0 与 92 折示例均已复算）
-- [ ] 原型：输入 → 选点 → 报价 → HTML 提案（DS Harness 负责）
-- [ ] 5 行业模板 / 品牌锚点
-- [ ] 预算滑块 / 客户-销售双视图 / 导出
-- [ ] 演示脚本 / 一页纸 / README 运行说明
+- [x] 红豆公交 431 / 地铁 861 真实库存导出；四档期快照（开门红/春季/暑期/中秋国庆）
+- [x] 大数据覆盖 10 个锚点；5 个核心锚点 2023-05 人流；139 条公交几何/人流；24 个在库站坐标
+- [x] 五行业配置：银行 3 支行、食品 3 商圈、乐园 4 枢纽 + 24 站、医院/保健单锚点
+- [x] ATLAS 前端：预算条、地图联动、客户/销售双视图、CSV/HTML 导出、离线瓦片
+- [x] QA：`node src/test_engine.js` 2208 项 ALL PASS；`python tools/qa_data.py` 33 PASS / 2 WARN / 0 FAIL
+- [x] GitHub Pages 已上线全城版（远端 `1cca547`，Pages 从 master 发布）
+- [ ] 团队名/分工表等【待填】占位
+- [ ] `data/app_data.json` 仍是旧单文件包；前端实际用 `src/data.js`，不影响演示
 
 ## 运行
 
-当前只有介绍页和数据脚本：
-
 ```bash
-# 预览介绍页
 cd 新云AI提案工作台
 python -m http.server 8788
-# 打开 http://127.0.0.1:8788/docs/01_项目介绍.html
+# 打开 http://127.0.0.1:8788/src/index-atlas.html
+# 乐园全城：http://127.0.0.1:8788/src/index-atlas.html?industry=park
+```
 
-# 重新解析库存
-python -I tools/parse_inventory.py
+重建数据（可选）：
 
-# 从红豆 API 实时拉取（需要 config.local.json 的 token）
-python -I tools/fetch_hongdou.py --start 2027-04-01 --end 2027-05-15
-
-# 重新提取资料包文本
-python -I tools/extract_docs.py
+```bash
+python src/build_data.py        # 从 ../data 生成 src/data.js
+python src/build_tiles.py       # 下载/补齐离线瓦片（需要网络）
+python src/build_citywide_map.py # 生成全城静态底图
 ```
 
 > `materials/`、`extracted/`、`data/raw/` 体积较大，默认不纳入 Git；`data/*.csv` 与 `inventory_summary.json` 纳入。
 
-## 下一步
+## 当前入口
 
-1. 定主打行业/品牌（建议：私立医院 + 和睦家/嘉会，200 万，2027 Q2）。
-2. 跑 3 个医院锚点的覆盖分析。
-3. 搭 P0：真实库存 → 预算组合 → 报价 → HTML 提案 → 预算滑块。
-4. 再扩乐园/银行现场变招、双视图、导出。
+- 主入口：`src/index-atlas.html`（ATLAS 皮肤）
+- 线上：https://zzr061229-creator.github.io/xinyun-ai-proposal-workbench/
+- 导出：页面「导出提案」生成单文件 HTML；「导出 CSV」出明细
+- 交接：`HANDOFF.md`；演示：`docs/路演脚本_4分钟.md`
