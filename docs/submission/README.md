@@ -25,6 +25,7 @@ https://zzr061229-creator.github.io/xinyun-ai-proposal-workbench/
 - `app-shot3.png`：工作台首屏（银行 200 万）
 - `提交文案.md`：可直接粘贴的作品简介与演示数字
 - `demo-script.md`：60 秒演示视频脚本
+- `budget-100-500.mp4`：19 秒预算变化视频（100 → 500 万，银行开门红）
 - `README.md`：本文件
 
 ## 边界

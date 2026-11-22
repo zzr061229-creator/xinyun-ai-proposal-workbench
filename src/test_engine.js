@@ -79,6 +79,8 @@ assert(Engine.PRICING.discount === 1 || (Engine.configurePricing(data), Engine.P
 
 // ------------------------------------------- 5 industries × 100/200/500 × 4/6
 console.log("\n== 五行业默认锚点 × 100/200/500 万 × 4/6 周（折扣 1.0）==");
+console.log("   注：这一段是单锚点 + 基础库存的通用不变量测试，不是页面默认的 bundle + 档期口径；");
+console.log("       页面实测数字见 docs/路演脚本_4分钟.md 的速查表（银行 200 万 = 2 口 + 15 辆 197.6 万）。");
 for (const ind of data.industries) {
   const radius = ind.radii.indexOf(3000) >= 0 ? 3000 : ind.radii[0];
   for (const budget of [100, 200, 500]) {

@@ -13,7 +13,7 @@
 | `manifest.json` | 15 个覆盖文件的索引（anchor/radius/count/bus/metro） |
 | `bus_aliases.json` | 覆盖公交名 → 库存线路名（156 条，152 匹配） |
 | `metro_station_map.json` | 覆盖站点 → 库存出入口（31 站/93 口查找表） |
-| `app_data.json` | 5.38 MB 单文件数据包：inventory + 6 份 config + 15 个 coverage + 5 份人流 + 5 份几何 |
+| `app_data.json` | **历史单文件包**（2026-11-21 19:27，5 份人流 / 15 份覆盖）；前端实际读 `src/data.js`，演示不要用这个文件 |
 | `footfall/lujiazui_202305.json` | 大数据平台 2023-05：70 条公交 + 49 个地铁口人流/触达，陆家嘴站画像与商圈边界 |
 | `footfall/<anchorId>_202305.json` | 人民广场/徐家汇/美华/迪士尼：公交线 + 地铁口 `dailyReach`、站点 `aggregateReach`、核心站画像；迪士尼无地铁标签 |
 | `geo/lujiazui_media_geo.json` | 陆家嘴：70 条公交折线（简化后 8,043 点）+ 1,779 个站点 + 49 个地铁口坐标 |

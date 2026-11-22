@@ -694,12 +694,17 @@ function syncControls() {
         if (subs.indexOf(s.name) < 0) subs.push(s.name);
       });
     });
-    $("#salesPanel").innerHTML = '<div class="sales-panel">' +
-      '<div><b>当前口径</b> ' + esc(discountLabel(q.discountRate)) + ' · <b>折扣底线</b> <span class="floor">' + Math.round(DISCOUNT_FLOOR * 100) + ' 折（仅销售视图，示例，待销售确认）</span></div>' +
-      '<div><b>合同 / 预定</b> ' + contracts + " / " + reserved + " 辆/口 · <b>空位≤2</b> " + tight + " 条</div>" +
-      '<div><b>替补池</b> <span class="subs">' + (subs.slice(0, 3).map(esc).join(" · ") || "无同级替补") + "</span></div>" +
-      '<div><b>锁定建议</b> 空位≤2 的条目建议 48h 内锁定；签约前回红豆复核。</div>' +
-      "</div>";
+    // 销售视图才写入 DOM；客户视图的源码里不能出现折扣底线/替补池。
+    if (state.view === "sales") {
+      $("#salesPanel").innerHTML = '<div class="sales-panel">' +
+        '<div><b>当前口径</b> ' + esc(discountLabel(q.discountRate)) + ' · <b>折扣底线</b> <span class="floor">' + Math.round(DISCOUNT_FLOOR * 100) + ' 折（仅销售视图，示例，待销售确认）</span></div>' +
+        '<div><b>合同 / 预定</b> ' + contracts + " / " + reserved + " 辆/口 · <b>空位≤2</b> " + tight + " 条</div>" +
+        '<div><b>替补池</b> <span class="subs">' + (subs.slice(0, 3).map(esc).join(" · ") || "无同级替补") + "</span></div>" +
+        '<div><b>锁定建议</b> 空位≤2 的条目建议 48h 内锁定；签约前回红豆复核。</div>' +
+        "</div>";
+    } else {
+      $("#salesPanel").innerHTML = "";
+    }
   }
 
   function row(k, v) { return '<div class="qrow"><span>' + esc(k) + "</span><b>" + esc(v) + "</b></div>"; }
@@ -716,9 +721,10 @@ function syncControls() {
     }
     $("#tableMeta").textContent = p.items.length + " 行 · " + p.summary.busCount + " 辆公交 / " + p.summary.metroCount + " 个口 · 净价 " + wan(p.quote.net) + " 万 · " + discountShort(p.quote.discountRate) + " · 触达口径：" + reachSourceText(p.summary);
     tbody.innerHTML = p.items.map(function (it, i) {
+      var salesView = state.view === "sales";
       var type = it.media === "metro" ? '<span class="type m">地铁口</span>' : '<span class="type b">公交线路</span>';
       var name = it.media === "metro" ? it.station + " " + it.exit : it.name;
-      var subs = (it.substitutes || []).map(function (s) { return s.name + "（空" + s.free + "）"; }).join(" · ") || "无同级替补";
+      var subs = salesView ? ((it.substitutes || []).map(function (s) { return s.name + "（空" + s.free + "）"; }).join(" · ") || "无同级替补") : "";
       return '<tr class="plan-row" data-key="' + esc(it.media === "metro" ? "metro:" + it.id : "bus:" + it.line) + '" data-id="' + esc(it.id) + '">' +
         "<td>" + type + "</td>" +
         '<td class="name">' + esc(name) + "</td>" +
@@ -744,7 +750,7 @@ function syncControls() {
         (it.maintenance ? ev("保养影响", it.maintenance + " 辆/口") : "") +
         (it.stationLines && it.stationLines.length ? ev("覆盖线路", it.stationLines.join(" / ")) : "") +
         '<div class="wide"><span class="lab">选择理由</span><b>' + esc(it.reason) + "</b></div>" +
-        '<div class="wide sales-only"><span class="lab">替补 / 锁定</span><b class="subs">' + esc(subs) + "</b></div>" +
+        (salesView ? '<div class="wide sales-only"><span class="lab">替补 / 锁定</span><b class="subs">' + esc(subs) + "</b></div>" : "") +
         "</div></td></tr>";
     }).join("");
   }
@@ -1701,12 +1707,16 @@ function syncControls() {
       document.body.dataset.view = "client";
       $("#viewClient").classList.add("on");
       $("#viewSales").classList.remove("on");
+      renderQuote();
+      renderTable();
     });
     $("#viewSales").addEventListener("click", function () {
       state.view = "sales";
       document.body.dataset.view = "sales";
       $("#viewSales").classList.add("on");
       $("#viewClient").classList.remove("on");
+      renderQuote();
+      renderTable();
     });
     $("#exportCsv").addEventListener("click", exportCsv);
     $("#exportHtml").addEventListener("click", exportHtml);
