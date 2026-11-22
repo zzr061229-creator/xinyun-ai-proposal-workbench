@@ -6,7 +6,7 @@
 <title>新云 · 预算落图 ATLAS</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="vendor/leaflet.css">
-<link rel="stylesheet" href="styles-atlas.css?v=20261122b">
+<link rel="stylesheet" href="styles-atlas.css?v=20261122j">
 <style>
   .ai-explain{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:9px 16px;margin:10px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
   .ai-explain-head{display:contents}
@@ -140,6 +140,7 @@
     <p class="ai-explain-body" id="aiExplainBody">点“生成解释”，让 AI 用一段话说明为什么是这几条线、几块屏。</p>
   </section>
 
+  <div class="focus-wrap" id="focusWrap">
   <section class="strip-wrap" aria-label="预算分配">
     <div class="strip-head">
       <span>每一万块落在哪 · 按条目切分预算</span>
@@ -155,11 +156,15 @@
       <div class="map-box">
         <div id="map" aria-label="可缩放的真实地图"></div>
         <svg id="mapStatic" hidden role="img" aria-label="离线地图快照"></svg>
+        <div class="map-vignette" aria-hidden="true"></div>
         <div class="map-title">
           <b id="mapTitle">—</b>
           <span id="mapStats">—</span>
         </div>
-        <button type="button" class="map-mode" id="mapModeBtn">在线地图</button>
+        <div class="map-actions">
+          <button type="button" class="map-mode" id="mapModeBtn">在线地图</button>
+          <button type="button" class="map-mode map-full" id="mapFullBtn" aria-pressed="false" title="全屏查看地图">全屏</button>
+        </div>
         <div class="map-badge" id="mapBadge"></div>
         <div class="map-legend"><span><i class="k-line"></i>已选公交线路</span><span><i class="k-metro ring"></i>已选地铁口</span><span><i class="k-line cand"></i><i class="k-cand"></i>候选</span></div>
         <div class="map-attr">© OpenStreetMap contributors</div>
@@ -174,6 +179,7 @@
       <div class="sales-only" id="salesPanel"></div>
     </aside>
   </section>
+  </div>
 
   <!-- 2.5 campaign 假设书：七要素，方案正文逐条回应 -->
   <section class="block" id="assumptionBook" aria-label="campaign 假设书">
@@ -247,8 +253,8 @@
 <script src="map.js"></script>
 <script src="realmap.js?v=20261121g"></script>
 <script src="vendor/leaflet.js"></script>
-<script src="app.js?v=20261122a"></script>
-<script src="atlas.js?v=20261121l"></script>
+<script src="app.js?v=20261122c"></script>
+<script src="atlas.js?v=20261122a"></script>
 <script src="brief.js?v=20261122c" data-ai=""></script>
 <script src="ai-explain.js?v=20261122c" data-ai=""></script>
 <script>

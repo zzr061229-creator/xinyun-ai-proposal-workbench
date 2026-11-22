@@ -121,6 +121,9 @@ var PRICING_CFG = (DATA && DATA.pricing) || {};
     leaflet: null,
     leafletLayers: null,
     tileLayer: null,
+    svgRenderer: null,
+    focusMode: false,
+    focusScrollY: 0,
     tileErrors: 0,
     mapZoom: null,
     mapKey: null
@@ -566,6 +569,7 @@ function syncControls() {
       root.setAttribute("data-radius", String(state.radius));
       root.setAttribute("data-anchor", state.anchor);
       root.setAttribute("data-mapmode", state.mapMode);
+      root.setAttribute("data-mapfull", state.focusMode ? "1" : "0");
       var mb = document.querySelector(".map-box");
       if (mb) {
         var r = mb.getBoundingClientRect();
@@ -861,6 +865,70 @@ function syncControls() {
       : "当前为内置离线底图（OSM z14 快照），不依赖网络；点击尝试在线地图";
   }
 
+  function updateMapFullBtn() {
+    var btn = $("#mapFullBtn");
+    if (!btn) return;
+    btn.textContent = state.focusMode ? "退出全屏" : "全屏";
+    btn.setAttribute("aria-pressed", state.focusMode ? "true" : "false");
+    btn.title = state.focusMode ? "退出全屏（Esc）" : "全屏查看地图（保留预算条和清单）";
+    try {
+      if (new URLSearchParams(window.location.search).get("qa")) {
+        document.documentElement.setAttribute("data-mapfull", state.focusMode ? "1" : "0");
+      }
+    } catch (e) { /* no query */ }
+  }
+
+  function refitAfterFocus() {
+    if (state.leaflet) {
+      try { state.leaflet.invalidateSize(); } catch (e) { /* ignore */ }
+    }
+    state.lastFitSize = null; // force a refit even if the size delta is small
+    refitMapToSize();
+  }
+
+  function setFocusMode(on, useNative) {
+    on = !!on;
+    var wrap = document.getElementById("focusWrap");
+    if (state.focusMode === on) {
+      updateMapFullBtn();
+      if (on) setTimeout(refitAfterFocus, 0);
+      return;
+    }
+    state.focusMode = on;
+    if (on) {
+      state.focusScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.body.classList.add("focus-map");
+      updateMapFullBtn();
+      if (useNative !== false && wrap && wrap.requestFullscreen) {
+        try {
+          var req = wrap.requestFullscreen();
+          if (req && req.catch) req.catch(function () { /* CSS fallback stays */ });
+        } catch (e) { /* CSS fallback stays */ }
+      }
+      setTimeout(refitAfterFocus, 260);
+      setTimeout(function () { if (state.focusMode) refitAfterFocus(); }, 700);
+    } else {
+      document.body.classList.remove("focus-map");
+      updateMapFullBtn();
+      if (document.fullscreenElement) {
+        try {
+          var exit = document.exitFullscreen();
+          if (exit && exit.catch) exit.catch(function () { /* ignore */ });
+        } catch (e) { /* ignore */ }
+      }
+      setTimeout(function () {
+        if (state.focusMode) return;
+        refitAfterFocus();
+        window.dispatchEvent(new Event("resize"));
+        window.scrollTo(0, state.focusScrollY || 0);
+      }, 260);
+    }
+  }
+
+  function toggleFocusMode() {
+    setFocusMode(!state.focusMode, true);
+  }
+
   function leafletZoomFor(radius) {
     if (radius >= 5000) return 13;
     if (radius >= 3000) return 14;
@@ -872,8 +940,10 @@ function syncControls() {
   function frameMap(center, radius, anchors, bounds) {
     if (state.mapZoom) { state.leaflet.setView(center, state.mapZoom); return; }
     state.leaflet.invalidateSize();
+    var pad = state.focusMode ? 40 : 22;
+    var padSingle = state.focusMode ? 32 : 18;
     if (bounds) {
-      state.leaflet.fitBounds([[bounds.minLat, bounds.minLng], [bounds.maxLat, bounds.maxLng]], { padding: [22, 22] });
+      state.leaflet.fitBounds([[bounds.minLat, bounds.minLng], [bounds.maxLat, bounds.maxLng]], { padding: [pad, pad] });
       return;
     }
     if (anchors && anchors.length > 1) {
@@ -883,12 +953,12 @@ function syncControls() {
         var dLng = a.radius / (111320 * Math.cos(a.lat * Math.PI / 180));
         pts.push([a.lat - dLat, a.lng - dLng], [a.lat + dLat, a.lng + dLng]);
       });
-      state.leaflet.fitBounds(pts, { padding: [22, 22] });
+      state.leaflet.fitBounds(pts, { padding: [pad, pad] });
       return;
     }
     var dLat = radius / 111320;
     var dLng = radius / (111320 * Math.cos(center[0] * Math.PI / 180));
-    state.leaflet.fitBounds([[center[0] - dLat, center[1] - dLng], [center[0] + dLat, center[1] + dLng]], { padding: [18, 18] });
+    state.leaflet.fitBounds([[center[0] - dLat, center[1] - dLng], [center[0] + dLat, center[1] + dLng]], { padding: [padSingle, padSingle] });
     if (!state.leaflet.getZoom()) state.leaflet.setView(center, leafletZoomFor(radius));
   }
 
@@ -976,6 +1046,11 @@ function syncControls() {
       }
     }
     if (!state.mapKey) state.mapKey = sample.mapKey || (sample.activeAnchor + "|" + sample.radius);
+    // Selected paths render as SVG so the existing CSS glow/filters apply;
+    // candidates stay on Canvas for performance.
+    if (window.L && typeof window.L.svg === "function" && !state.svgRenderer) {
+      state.svgRenderer = window.L.svg({ padding: 0.5 });
+    }
     // Permanent tooltips live in their own pane; unbind them before clearing or
     // switching industry leaves the previous network's labels on the map.
     function tipDirection(latlng, preferred) {
@@ -1025,7 +1100,7 @@ function syncControls() {
       var latlngs = ln.path.map(function (x) { return [x[1], x[0]]; });
       var pl = window.L.polyline(latlngs, ln.selected ? {
         color: T.busSel, weight: 4.2, opacity: 0.96, lineJoin: "round", lineCap: "round",
-        className: "bus-selected"
+        className: "bus-selected", renderer: state.svgRenderer
       } : {
         color: T.cand, weight: 1, opacity: 0.24, interactive: false, className: "bus-candidate"
       });
@@ -1056,7 +1131,8 @@ function syncControls() {
         weight: p.selected ? 2.6 : (p.stationDot ? 1.6 : 1.2),
         fillColor: p.selected ? T.metroSel : T.cand,
         fillOpacity: p.selected ? 0.35 : (p.stationDot ? 0.12 : 0),
-        className: p.selected ? "metro-selected" : "metro-candidate"
+        className: p.selected ? "metro-selected" : "metro-candidate",
+        renderer: p.selected ? state.svgRenderer : undefined
       });
       marker.bindTooltip(p.label + (p.selected ? " · 已选" : "") + (p.anchorLabel ? " · " + p.anchorLabel : ""), {
         permanent: !!p.selected && !currentBundle(), direction: tipDirection(marker.getLatLng()), className: "map-tip", opacity: 1
@@ -1277,6 +1353,8 @@ function syncControls() {
     if (useLeaflet) staticEl.setAttribute("hidden", "");
     else staticEl.removeAttribute("hidden");
     $("#map").style.display = useLeaflet ? "block" : "none";
+    var vig = document.querySelector(".map-vignette");
+    if (vig) vig.hidden = useLeaflet; // live Leaflet uses #map::after so controls stay above
     if (useLeaflet) renderLeafletMap(sample);
     updateMapModeBtn();
 
@@ -1619,9 +1697,10 @@ function syncControls() {
     }).join("");
 
     setIndustry(DEFAULT_INDUSTRY);
+    var startFocus = false;
 
     // Optional deep link, useful for the demo and for headless QA:
-    // ?industry=bank|hospital|food|health|park（或完整 id）&budget=500&weeks=6&media=both&discount=0.92&view=sales
+    // ?industry=bank|hospital|food|health|park（或完整 id）&budget=500&weeks=6&media=both&discount=0.92&view=sales&mapfull=1
     try {
       var qs = new URLSearchParams(window.location.search);
       var qi = industryIdOf(qs.get("industry"));
@@ -1647,6 +1726,7 @@ function syncControls() {
       if (qmap === "online") state.mapMode = "online";
       var qz = Number(qs.get("zoom"));
       if (qz >= 11 && qz <= 18) state.mapZoom = qz;
+      if (qs.get("mapfull") === "1") startFocus = true;
     } catch (e) { /* no query */ }
 
     if (!window.L) state.mapMode = "offline";
@@ -1702,6 +1782,26 @@ function syncControls() {
       if (state.mapMode === "online" && state.tileLayer) state.tileLayer.redraw();
       renderMap();
     });
+    var mapFullBtn = $("#mapFullBtn");
+    if (mapFullBtn) mapFullBtn.addEventListener("click", toggleFocusMode);
+    document.addEventListener("fullscreenchange", function () {
+      var wrap = document.getElementById("focusWrap");
+      var isNative = !!wrap && document.fullscreenElement === wrap;
+      if (isNative && !state.focusMode) {
+        state.focusScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        state.focusMode = true;
+        document.body.classList.add("focus-map");
+        updateMapFullBtn();
+        setTimeout(refitAfterFocus, 260);
+      } else if (!isNative && state.focusMode) {
+        setFocusMode(false, false);
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !state.focusMode) return;
+      if (document.fullscreenElement) return; // native fullscreen exits itself
+      setFocusMode(false, false);
+    });
     $("#viewClient").addEventListener("click", function () {
       state.view = "client";
       document.body.dataset.view = "client";
@@ -1733,6 +1833,7 @@ function syncControls() {
 
     renderAll();
     runPlan(false);
+    if (startFocus) setTimeout(function () { setFocusMode(true, false); }, 80);
   }
 
   if (document.readyState === "loading") {

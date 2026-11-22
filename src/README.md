@@ -157,6 +157,7 @@ EDGE="C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
 - ATLAS 五行业 `?qa=export&industry=…` 同样通过；`?discount=0.92`、`?map=offline` 通过。
 - 1440×900 首屏截图：`design/design-demos/shots/atlas-{bank,hospital,food,health,park}.png`（五张都能看到选中公交折线）。headless 最小宽约 500，390 截图会被裁，不算 bug。
 - `?qa=1` 写 scrollWidth/rows/mapmode/tiles；`?qa=export` 额外写导出 HTML/CSV 长度与是否含地图/底图/报价。导出 HTML 约 1.1–3.1 MB（含底图 data URI 与折线）。
+- `?mapfull=1`：CSS 全屏聚焦（预算条 + 地图 + 清单），不需要用户手势，适合截图/QA；`?qa=1&mapfull=1` 的 `data-mapfull=1`。正常模式布局和 `?qa=export` 不受影响。
 
 ## 文件
 

@@ -273,6 +273,7 @@
   function fitStage() {
     var stage = $(".stage");
     if (!stage) return;
+    if (document.body.classList.contains("focus-map")) return;
     if (window.innerWidth <= 1180) { stage.style.height = ""; return; }
     var top = stage.getBoundingClientRect().top + window.scrollY;
     var h = Math.max(440, Math.min(820, window.innerHeight - top - 16));
