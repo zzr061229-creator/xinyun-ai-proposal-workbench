@@ -208,13 +208,22 @@
     el.innerHTML = html;
   }
 
-  function run() {
+  function sampleBrief() {
+    var chip = document.querySelector(".preset-chip");
+    return (chip && chip.getAttribute("data-brief")) || "银行 200 万，开门红，地铁和公交";
+  }
+
+  function run(useSample) {
     var input = document.getElementById("aiBriefText");
     var btn = document.getElementById("aiBriefBtn");
     if (!input || !btn || !App.applyBrief) return;
     var text = input.value.trim();
+    if (!text && useSample) {
+      text = sampleBrief();
+      input.value = text;
+    }
     if (!text) {
-      setNote("err", "先说一句需求，例如：银行 200 万，开门红，陆家嘴 3km，地铁为主。");
+      setNote("err", "先说一句需求，例如：银行 200 万，开门红，陆家嘴 3km，地铁为主；或直接按 Enter 跑银行案例。");
       input.focus();
       return;
     }
@@ -254,11 +263,11 @@
     var input = document.getElementById("aiBriefText");
     var btn = document.getElementById("aiBriefBtn");
     if (!input || !btn) return;
-    btn.addEventListener("click", run);
+    btn.addEventListener("click", function () { run(false); });
     input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") { e.preventDefault(); run(); }
+      if (e.key === "Enter") { e.preventDefault(); run(true); }
     });
-    if (aiEndpoint()) setNote("", "AI 模式已配置（组委会模型）；离线时自动回退规则解析。");
+    if (aiEndpoint()) setNote("", "AI 模式已配置（组委会模型）；直接按 Enter 跑银行案例，或输入后点解析。");
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

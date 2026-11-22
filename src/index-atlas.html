@@ -64,7 +64,7 @@
   <section class="brief" aria-label="需求">
     <div class="sentence ai-brief">
       <span class="w">一句话</span>
-      <input id="aiBriefText" type="text" autocomplete="off" spellcheck="false" placeholder="例：银行 200 万，2027 开门红，陆家嘴 3km，地铁为主">
+      <input id="aiBriefText" type="text" autocomplete="off" spellcheck="false" title="按 Enter 直接跑银行 200 万案例" placeholder="例：银行 200 万，2027 开门红，陆家嘴 3km，地铁为主">
       <div class="preset-pills" aria-label="典型场景快捷填入">
         <button type="button" class="chip preset-chip" data-brief="银行 200 万，开门红，地铁和公交">银行 200</button>
         <button type="button" class="chip preset-chip" data-brief="食品饮料 200 万，暑期，地铁和公交">食品 200</button>
@@ -72,7 +72,7 @@
       </div>
       <button id="aiBriefBtn" class="run" type="button">解析</button>
       <span class="ai-progress" id="aiBriefProgress" role="progressbar" aria-label="AI 解析中" hidden><i></i></span>
-      <span class="hint" id="aiBriefNote">说出行业、预算、档期、媒体，自动填下面的表；数字仍由引擎算。</span>
+      <span class="hint" id="aiBriefNote">说出行业、预算、档期、媒体，自动填表；空着按 Enter 跑银行案例。</span>
     </div>
     <div class="sentence s1">
       <span class="w">为</span>
@@ -249,7 +249,7 @@
 <script src="vendor/leaflet.js"></script>
 <script src="app.js?v=20261121z8"></script>
 <script src="atlas.js?v=20261121l"></script>
-<script src="brief.js?v=20261122b" data-ai=""></script>
+<script src="brief.js?v=20261122c" data-ai=""></script>
 <script src="ai-explain.js?v=20261122c" data-ai=""></script>
 <script>
 document.addEventListener("click", function (e) {
