@@ -36,4 +36,4 @@ INTERCITY HACK 湖州场（2026-11-21～22）AI＋办公赛道，命题方上海
 
 - 不要启动 DS Harness（用户说“不要他跑”）。
 - 不要提交 `config.local.json`；红豆 token 已过期，需要时从 IAB 刷新。
-- 提交包 `docs/submission/` 已对齐新版；团队名已填（404 Not Found：朱周睿 / 黄婷蕊），一页纸分工表待确认。
+- 提交包 `docs/submission/` 已对齐新版；团队名与分工已填（404 Not Found：朱周睿全栈；黄婷蕊海报/视觉）。
