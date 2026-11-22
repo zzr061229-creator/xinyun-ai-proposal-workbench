@@ -201,6 +201,8 @@
     var m = App.markers[key];
     var list = Array.isArray(m) ? m : (m ? [m] : []);
     list.forEach(function (marker) {
+      var node = marker.getElement ? marker.getElement() : null;
+      if (node) node.classList.add("map-hot");
       if (typeof marker.getRadius === "function") {          // metro circleMarker
         hot.items.push({ m: marker, radius: marker.getRadius() });
         marker.setRadius(marker.getRadius() + 5);

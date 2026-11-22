@@ -202,8 +202,10 @@ body.focus-map .map-attr{right:16px;bottom:16px;font-size:11px}
 body.focus-map .leaflet-top.leaflet-left{right:16px;bottom:56px}
 body.focus-map .leaflet-control-zoom a{width:40px!important;height:40px!important;line-height:40px!important;font-size:22px!important}
 body.focus-map .map-vignette,body.focus-map #map::after{opacity:.8}
-body.focus-map .leaflet-interactive.bus-selected{filter:drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 7px var(--map-glow-bus))}
-body.focus-map .leaflet-interactive.metro-selected{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 7px var(--map-glow-metro))}
+body.focus-map .leaflet-interactive.bus-selected:hover,
+body.focus-map .leaflet-interactive.bus-selected.map-hot{filter:drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 7px var(--map-glow-bus))}
+body.focus-map .leaflet-interactive.metro-selected:hover,
+body.focus-map .leaflet-interactive.metro-selected.map-hot{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 7px var(--map-glow-metro))}
 body.focus-map .leaflet-tooltip.map-tip{font-size:13px!important;padding:4px 9px!important}
 
 @media (max-width:900px){
@@ -412,13 +414,23 @@ tr.detail td{background:#FAFAF8;white-space:normal;padding:14px 16px;font-family
 .disc-note[hidden]{display:none}
 td .nodata{font-size:12px}
 
-/* Selected media: light up against the grayscale basemap */
+/* Selected media: solid by default; glow only on hover / linked hover */
 .leaflet-interactive.bus-selected{
-  filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 5px var(--map-glow-bus));
+  transition:filter .15s ease;
 }
 .leaflet-interactive.metro-selected{
+  transition:filter .15s ease;
+}
+.leaflet-interactive.bus-selected:hover,
+.leaflet-interactive.bus-selected.map-hot{
+  filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 5px var(--map-glow-bus));
+}
+.leaflet-interactive.metro-selected:hover,
+.leaflet-interactive.metro-selected.map-hot{
   filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px var(--map-glow-metro));
 }
+body.has-hot .leaflet-interactive.bus-selected:not(.map-hot),
+body.has-hot .leaflet-interactive.metro-selected:not(.map-hot){opacity:.28;transition:opacity .15s ease}
 .leaflet-interactive.bus-candidate{filter:saturate(0)}
 .map-legend i.k-metro.ring{border-color:var(--map-metro);background:rgba(11,99,255,.14)}
 
