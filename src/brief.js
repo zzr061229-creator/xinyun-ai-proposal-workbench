@@ -156,15 +156,30 @@
   function aiEndpoint() {
     if (SCRIPT && SCRIPT.dataset && SCRIPT.dataset.ai) return SCRIPT.dataset.ai;
     if (window.BRIEF_AI_ENDPOINT) return window.BRIEF_AI_ENDPOINT;
-    // Demo shortcut: open index-atlas.html?ai=1 with tools/brief_proxy.py running.
+    // Explicit direct mode for testing the static/Pages path.
+    if (/[?&]ai=direct(?:&|$)/.test(location.search)) return "direct";
+    // Local proxy shortcut: open index-atlas.html?ai=1 with tools/brief_proxy.py running.
     if (/[?&]ai=1(?:&|$)/.test(location.search)) return "http://127.0.0.1:8791/api/parse-brief";
+    // Formal static build: call the committee model directly (key in ai-config.js).
+    if (window.AIClient && window.AIClient.configured) return "direct";
     return "";
   }
 
+  function withTimeout(p, ms) {
+    var timer = null;
+    var timeout = new Promise(function (_, reject) {
+      timer = setTimeout(function () { reject(new Error("AI timeout")); }, ms);
+    });
+    return Promise.race([p, timeout]).finally(function () {
+      if (timer) clearTimeout(timer);
+    });
+  }
+
   function parseWithAI(text, endpoint) {
+    if (endpoint === "direct" && window.AIClient) return withTimeout(window.AIClient.parseBrief(text), 25000);
     var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 18000) : null;
-    return fetch(endpoint, {
+    var primary = fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: text }),
@@ -176,6 +191,11 @@
       return j && (j.brief || j);
     }).finally(function () {
       if (timer) clearTimeout(timer);
+    });
+    return primary.catch(function (err) {
+      // Local proxy down/slow: the static Pages path can still call the model.
+      if (window.AIClient && window.AIClient.configured) return withTimeout(window.AIClient.parseBrief(text), 25000);
+      throw err;
     });
   }
 

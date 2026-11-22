@@ -13,7 +13,7 @@
 |---|---|
 | 模型 | `deepseek-v4.1-flash-1017` |
 | OpenAI 兼容地址 | `https://token.b1x.work/v1` |
-| 密钥 | 在 `config.local.json` 的 `ai.apiKey`（已 gitignore，不提交） |
+| 密钥 | 本地代理读 `config.local.json` 的 `ai.apiKey`；正式 Pages 用 `src/ai-config.js` 里的同一把比赛密钥（临时公开，用完即弃） |
 | 额度 | 比赛专用余额，到期 2026-11-22 23:00（北京时间） |
 
 启动（端口 8791 在本机可用；8790 被系统占用）：
@@ -34,10 +34,10 @@ http://127.0.0.1:8788/src/index-atlas.html?ai=1
 
 注意：
 
-- 密钥只在本地代理里，不进前端、不进 Git；`config.local.json` 不要提交。
-- 线上 Pages 是静态站，没有代理；不加 `?ai=1` 或换别人的机器时，自动回退规则解析/模板解释，页面不会坏。
-- 比赛密钥到期后 AI 自动不可用，仍可用规则解析与模板解释。
-- 模型是 reasoning 模型，会先输出 `reasoning_content`；代理已把 `max_tokens` 调高并做一次重试，正常 2–15 秒。
+- **正式 Pages 也走 AI**：`src/ai-config.js` 里放了同一把比赛密钥，浏览器直连 B1X（CORS 已开）；密钥只活到 2026-11-22 23:00，用完即弃。
+- 本地 `?ai=1` 优先走 8791 代理；代理失败/超时会自动直连模型；再失败才回退规则/模板。
+- **模型调用已关闭 thinking**（`thinking: {"type":"disabled"}`）：一句话解析约 1–3 秒，方案解释约 3–8 秒；之前 20–40 秒的超时基本消失。
+- 密钥到期、网络断、B1X 上游故障时，页面仍能回退规则解析/模板解释，不会白屏。
 
 ---
 
@@ -66,7 +66,7 @@ http://127.0.0.1:8788/src/index-atlas.html?ai=1
 | 模式 | 触发条件 | 说明 |
 |---|---|---|
 | 规则解析（离线） | 默认 | 关键词 + 正则，永远可用；不依赖网络 |
-| AI 解析（在线） | `brief.js` 的 `data-ai` 指向代理 | 大模型把自由文本映射成同一组参数；失败/超时自动回退规则解析 |
+| AI 解析（在线） | 本地 `?ai=1` 走代理；正式版读 `src/ai-config.js` 直连 | 大模型把自由文本映射成同一组参数；失败/超时自动回退规则解析 |
 
 界面上会标明是「AI 解析」还是「规则解析（离线）」，不冒充。
 
@@ -74,7 +74,7 @@ http://127.0.0.1:8788/src/index-atlas.html?ai=1
 
 ## 3. 接在线大模型（可选）
 
-> 当前机器状态：已按第 0 节接入组委会模型；`config.local.json` 的 `ai` 指向 `https://token.b1x.work/v1`，密钥不入 Git。代理未启动时仍走规则/模板。
+> 当前机器状态：已接入组委会模型。本地代理读 `config.local.json` 的 `ai`；正式 Pages 读 `src/ai-config.js` 里同一把临时比赛密钥。代理未启动时页面会直连模型；两者都不可用才回退规则/模板。
 
 ### 3.1 配置 key（不进 Git）
 
@@ -124,6 +124,20 @@ curl http://127.0.0.1:8791/health
 也可以不改文件，直接打开 `index-atlas.html?ai=1`，默认连 `http://127.0.0.1:8791/api/parse-brief`。
 
 > 端口 8790 在本机可能被占用；示例用 8791。
+
+### 3.4 正式版直连（当前默认）
+
+`index-atlas.html` 已经加载：
+
+```html
+<script src="ai-config.js"></script>
+<script src="ai-client.js"></script>
+```
+
+- 有 `ai-config.js` 时，页面**默认直连** B1X，不需要 `?ai=1`，线上 Pages 也能用。
+- `?ai=1`：本地优先走 8791 代理；代理失败会自动直连。
+- `?ai=direct`：强制直连，便于测试。
+- 密钥是比赛当天临时公开的，2026-11-22 23:00 到期；到期/断网时自动回退规则/模板。
 
 ---
 
@@ -215,7 +229,7 @@ POST /api/explain       {plan}  → {explanation:"..."}
 
 ### 组委会模型配置（当前）
 
-`config.local.json` 已配置（密钥不入 Git）：
+`config.local.json` 供本地代理使用；正式 Pages 用 `src/ai-config.js` 里同一把比赛密钥（比赛当天临时公开，23:00 到期，用完即弃）。
 
 ```json
 "ai": {

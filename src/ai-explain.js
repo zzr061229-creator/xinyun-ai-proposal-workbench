@@ -25,7 +25,9 @@
   function endpoint() {
     if (SCRIPT && SCRIPT.dataset && SCRIPT.dataset.ai) return SCRIPT.dataset.ai;
     if (window.AI_EXPLAIN_ENDPOINT) return window.AI_EXPLAIN_ENDPOINT;
+    if (/[?&]ai=direct(?:&|$)/.test(location.search)) return "direct";
     if (/[?&]ai=1(?:&|$)/.test(location.search)) return "http://127.0.0.1:8791/api/explain";
+    if (window.AIClient && window.AIClient.configured) return "direct";
     return "";
   }
 
@@ -45,7 +47,7 @@
     var p = s.plan;
     var sm = p.summary || {};
     var st = p.stats || {};
-    var items = (p.items || []).slice(0, 6).map(function (x) {
+    var items = (p.items || []).slice(0, 4).map(function (x) {
       return {
         media: x.media === "metro" ? "地铁口" : "公交线路",
         name: x.media === "metro" ? (x.station + " " + x.exit) : x.name,
@@ -83,7 +85,7 @@
         availableBusFree: st.availableBusFree,
         availableMetroFree: st.availableMetroFree
       },
-      warnings: (p.warnings || []).slice(0, 3),
+      warnings: (p.warnings || []).slice(0, 2),
       items: items
     };
   }
@@ -140,10 +142,21 @@
     lastSig = sig;
   }
 
+  function withTimeout(p, ms) {
+    var timer = null;
+    var timeout = new Promise(function (_, reject) {
+      timer = setTimeout(function () { reject(new Error("AI timeout")); }, ms);
+    });
+    return Promise.race([p, timeout]).finally(function () {
+      if (timer) clearTimeout(timer);
+    });
+  }
+
   function requestExplain(payload, url) {
+    if (url === "direct" && window.AIClient) return withTimeout(window.AIClient.explain(payload), 40000);
     var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 45000) : null;
-    return fetch(url, {
+    var primary = fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ plan: payload }),
@@ -155,6 +168,10 @@
       return j && j.explanation ? String(j.explanation).trim() : "";
     }).finally(function () {
       if (timer) clearTimeout(timer);
+    });
+    return primary.catch(function (err) {
+      if (window.AIClient && window.AIClient.configured) return withTimeout(window.AIClient.explain(payload), 40000);
+      throw err;
     });
   }
 

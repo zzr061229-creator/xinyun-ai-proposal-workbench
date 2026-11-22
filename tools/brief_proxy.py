@@ -132,6 +132,7 @@ def call_llm(ai, system, user, max_tokens=700, temperature=0):
                 {"role": "user", "content": user},
             ],
             "response_format": {"type": "json_object"},
+            "thinking": {"type": "disabled"},
         }
         req = Request(
             url,
