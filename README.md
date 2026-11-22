@@ -73,7 +73,7 @@
 - [x] ATLAS 前端：预算条、地图联动、客户/销售双视图、CSV/HTML 导出、离线瓦片
 - [x] QA：`node src/test_engine.js` 2208 项 ALL PASS；`python tools/qa_data.py` 33 PASS / 2 WARN / 0 FAIL
 - [x] GitHub Pages 已上线全城版（远端 `2179a43`，Pages 从 master 发布）
-- [ ] 团队名/分工表等【待填】占位
+- [x] 团队名已填（404 Not Found：朱周睿 / 黄婷蕊）；一页纸分工表待确认
 - [ ] `data/app_data.json` 仍是旧单文件包；前端实际用 `src/data.js`，不影响演示
 
 ## 运行
